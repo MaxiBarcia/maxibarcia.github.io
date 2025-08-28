@@ -1,149 +1,71 @@
 ---
-# IMPORTANTE: No olvides añadir tu Front Matter aquí. Ejemplo:
-title: "Template Write-up"
-date: 2025-08-26
+title: Título de tu Write-up
+excerpt: "Un resumen breve y atractivo del write-up. Por ejemplo: 'Análisis detallado de la máquina X, con enfoque en vulnerabilidades de Y.'"
 categories:
-  - categoria-1
+  - Write-up
+  - Hacking
 tags:
-  - tag-1
+  - ctf
+  - bug-bounty
+  - metodologia
+toc: true
+toc_label: Report content
+toc_sticky: true
+header: "---\rtitle: \"Título de tu Write-up\"\rexcerpt: \"Un resumen breve y atractivo del write-up. Por ejemplo: 'Análisis detallado de la máquina X, con enfoque en vulnerabilidades de Y.'\"\rcategories:\r  - Write-up\r  - Hacking\rtags:\r  - ctf\r  - bug-bounty\r  - metodologia\rtoc: true\rtoc_label: \"Contenido del Reporte\"\rtoc_sticky: true\rheader:\r  # Opcional: una imagen de banner para la cabecera\r  # overlay_image: /assets/images/headers/nombre-de-tu-imagen.jpg\r  # overlay_filter: 0.5\r  # og_image: /assets/images/headers/nombre-de-tu-imagen.jpg\r---\r\r![Imagen principal del reporte](assets/images/posts/nombre-del-archivo.png){: .align-center}\r\r> Habilidades clave: [Ejemplo: Brute Force, Hash Cracking, Análisis de PDF]\r> {: .notice--primary}\r\r# Resumen Ejecutivo\r\r*Aquí, explica en 2-3 párrafos el objetivo de la máquina o el objetivo de tu auditoría, los hallazgos más importantes y la conclusión general.*\r\r---\r\r# 01 - Reconocimiento\r\r*Detalla la fase de reconocimiento. Describe las herramientas (Nmap, Ping, etc.) y los resultados que obtuviste. Pega los comandos en bloques de código.*\r\r## Nmap\r~~~ bash\rnmap -p- --open -sS unrecover.dl\r# Aquí va el output del comando\r~~~\r\r---\r\r# 02 - Intrusión / Explotación\r\r*En esta sección, explica el proceso de ataque. Muestra cómo usaste los resultados de reconocimiento para encontrar una vulnerabilidad y explotarla. Incluye capturas de pantalla, descripciones de la vulnerabilidad y el impacto.*\r\r## [Nombre de la vulnerabilidad]\r*Descripción de la vulnerabilidad y la evidencia.*\r\r![Evidencia de la explotación](assets/images/posts/nombre-de-la-captura.png){: .align-center}\r\r---\r\r# 03 - Escalada de Privilegios\r\r*Describe cómo lograste obtener privilegios de root o de administrador. Explica la técnica, la vulnerabilidad explotada y las herramientas utilizadas.*\r\r## Escalada de Privilegios\r*Describe el método utilizado.*\r\r~~~ bash\r# Comando de escalada de privilegios\rsudo -l\r~~~\r\r---\r\r# Conclusión\r\r*Termina el reporte con un resumen de los hallazgos y un mensaje final. Puedes incluir recomendaciones generales para mejorar la seguridad.*\r\r---\r\r**NOTA:** No olvides **borrar los comentarios** (`#`) y el texto de ejemplo una vez que termines de redactar tu reporte."
 ---
 
-## Reporte de Auditoría
-*Aquí puedes escribir una introducción general al proyecto y la auditoría.*
+![Imagen principal del reporte](assets/images/posts/nombre-del-archivo.png){: .align-center}
 
----
+> Habilidades clave: [Ejemplo: Brute Force, Hash Cracking, Análisis de PDF]
+> {: .notice--primary}
 
-## Estructura del Reporte
+# Resumen Ejecutivo
 
-- [Tabla de contenidos](#01---index) → Tabla de contenidos.
-- [Resumen Ejecutivo](#02---executive-summary) → Resumen ejecutivo para directivos.
-- [Alcance](#03---scope) → Alcance de la auditoría (sistemas, IPs, exclusiones).
-- [Metodología](#04---methodology) → Marco seguido (OSSTMM, OWASP, MITRE, etc.).
-- [Análisis de Riesgos](#05---risk-assessment) → Matriz de riesgo, impacto, probabilidad, priorización.
-- [Hallazgos](#06---findings) → Hallazgos técnicos (vulnerabilidades detalladas).
-- [Recomendaciones](#07---recommendations) → Acciones sugeridas para mitigar cada hallazgo.
-- [Conclusión](#08---conclusion) → Cierre del informe, estado de seguridad general.
-- [Anexo: Evidencia](#09---annex-evidence) → Evidencias, capturas, outputs de herramientas.
-
----
-
-## Datos del Cliente
-- **Nombre de la empresa / cliente:**
-- **Contacto principal:**
-- **Área / Departamento:**
+*Aquí, explica en 2-3 párrafos el objetivo de la máquina o el objetivo de tu auditoría, los hallazgos más importantes y la conclusión general.*
 
 ---
 
-## Objetivos de la Auditoría
-- Identificar vulnerabilidades técnicas y de configuración.
-- Evaluar el impacto potencial de las mismas.
-- Proveer recomendaciones prácticas de mitigación.
+# 01 - Reconocimiento
+
+*Detalla la fase de reconocimiento. Describe las herramientas (Nmap, Ping, etc.) y los resultados que obtuviste. Pega los comandos en bloques de código.*
+
+## Nmap
+~~~ bash
+nmap -p- --open -sS unrecover.dl
+# Aquí va el output del comando
+~~~
 
 ---
 
-## Consideraciones
-- La información contenida en este documento es **confidencial**.
-- Uso exclusivo para el cliente.
-- No puede ser distribuido sin autorización previa.
+# 02 - Intrusión / Explotación
+
+*En esta sección, explica el proceso de ataque. Muestra cómo usaste los resultados de reconocimiento para encontrar una vulnerabilidad y explotarla. Incluye capturas de pantalla, descripciones de la vulnerabilidad y el impacto.*
+
+## [Nombre de la vulnerabilidad]
+*Descripción de la vulnerabilidad y la evidencia.*
+
+![Evidencia de la explotación](assets/images/posts/nombre-de-la-captura.png){: .align-center}
 
 ---
 
-# 02 - Executive-Summary
+# 03 - Escalada de Privilegios
 
-- **Overall Objective**: …
-- **Methodology summary**: …
-- **Key Findings**: short list of the most critical vulnerabilities.
-- **Key Recommendations**: main actions to be taken.
-- **Overall Security Posture**: Low / Medium / High risk.
+*Describe cómo lograste obtener privilegios de root o de administrador. Explica la técnica, la vulnerabilidad explotada y las herramientas utilizadas.*
 
----
+## Escalada de Privilegios
+*Describe el método utilizado.*
 
-# 03 - Scope
-
-## Scope
-- Assets tested: …
-- Exclusions: …
-- Limitations: …
+~~~ bash
+# Comando de escalada de privilegios
+sudo -l
+~~~
 
 ---
 
-# 04 - Methodology
+# Conclusión
 
-## Methodology
-- Testing type: [Black/Grey/White Box]
-- Frameworks referenced: [OWASP, PTES, NIST…]
-- Main tools: [nmap, burp, metasploit, etc.]
+*Termina el reporte con un resumen de los hallazgos y un mensaje final. Puedes incluir recomendaciones generales para mejorar la seguridad.*
 
 ---
 
-# 05 - Risk Assessment
-
-This section provides an overall risk evaluation of the assessed environment.
-The risk level is determined by combining the likelihood of exploitation and the potential impact on the business.
-
-### Risk Matrix
-
-| Probabilidad \ Impact | Bajo | Medio | Alto | Crítico |
-|---------------------|------|--------|------|---------|
-| Baja                | Bajo | Bajo   | Medio| Medio   |
-| Media               | Bajo | Medio  | Alto | Alto    |
-| Alta                | Medio| Alto   | Alto | Crítico |
-| Muy Alta            | Medio| Alto   | Crítico| Crítico |
-
----
-
-# 06 - Findings
-*Aquí puedes detallar cada vulnerabilidad encontrada. Cada hallazgo debe tener su propio subencabezado (`###`)*.
-### 06.01 - Inyección de Código Remoto (RCE)
-*Aquí puedes escribir un breve resumen del hallazgo.*
-
-#### Descripción de la Vulnerabilidad
-La aplicación web es vulnerable a la inyección de código remoto a través del parámetro de entrada `search`. Esto permite a un atacante ejecutar comandos del sistema operativo en el servidor.
-
-#### Impacto
-- **Confidencialidad:** Acceso no autorizado a archivos sensibles.
-- **Integridad:** Posible alteración de archivos o base de datos.
-- **Disponibilidad:** Podría llevar a una denegación de servicio.
-
-#### Evidencia
-El comando `whoami` fue ejecutado con éxito, revelando que el servidor web se ejecuta con el usuario 'www-data'.
-
-![Captura de pantalla del comando 'whoami'](assets/images/captura-whoami.png)
-
-#### Recomendaciones
-- Implementar validación estricta de entradas.
-- Usar un `Web Application Firewall (WAF)`.
-- Restringir los permisos del usuario de la aplicación.
-
----
-
-# 07 - Recommendations
-
-The following recommendations aim to reduce the identified risks:
-
-1. **Critical findings** must be remediated immediately (< 7 days).
-2. **High findings** should be remediated within 30 days.
-3. **Medium findings** should be addressed within 90 days.
-4. **Low findings** can be resolved as part of routine maintenance.
-
-Each recommendation is aligned with industry standards (OWASP ASVS, NIST CSF, ISO 27001).
-
----
-
-# 08 - Conclusion
-
-The assessment revealed several security issues that range from low to critical severity.
-The organization should prioritize remediation of critical and high vulnerabilities to minimize business impact.
-
----
-
-# 09 - Annex: Evidence
-
-This section contains supporting evidence for each finding, including:
-
-- Screenshots
-- Logs
-- Requests & responses
-- Proof of Concept (PoC) code
-
-> ⚠️ All evidence is provided for internal use only and must not be disclosed externally.
+**NOTA:** No olvides **borrar los comentarios** (`#`) y el texto de ejemplo una vez que termines de redactar tu reporte.
