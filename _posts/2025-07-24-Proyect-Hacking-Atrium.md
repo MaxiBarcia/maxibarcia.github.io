@@ -65,19 +65,19 @@ The `netdiscover` scan allowed us to identify the target machine on the network.
 
 ![Netdiscover result 2](/assets/images/posts/atrium-report/netdiscover-2.png){: .align-center}
 
-**Port and Service Scanning with Nmap**
+## Port and Service Scanning with Nmap
 
 A full port scan was performed to identify all active services.
 
 ![Basic Nmap scan](/assets/images/posts/atrium-report/nmap-basic-scan.png){: .align-center}
 
-**Detected Operating System:**
+### Detected Operating System:
 
 | System | Approximate Version | Detection Method  | Confidence |
 | :----- | :------------------ | :---------------- | :--------- |
 | Linux  | 3.2 - 4.14          | Nmap OS Detection | ✅ 100%     |
 
-**Interesting Services Detected:**
+### Interesting Services Detected:
 
 | Port | Service | Product & Version | Potential |
 | :--- | :--- | :--- | :--- |
