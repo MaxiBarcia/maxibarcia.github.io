@@ -15,7 +15,7 @@
 minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "es-ES"
+locale                   : "en-US"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
 title                    : "My Hacking Notes"
 title_separator          : "-"
@@ -114,20 +114,23 @@ analytics:
 # Site Author
 author:
   name             : "Maxi (Nyx)"
-  avatar           : "/assets/images/author.jpg"
+  avatar           : "/assets/images/nyx.png"
   bio              : "`Cybersecurity Enthusiast 🕵️‍♂️ | CTF Player 🚩 | Ethical Hacking 💻`"
   location         : "España"
   email            :
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/incommatose"
+      url: "https://twitter.com/maxibarcia"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/incommatose"
-    - label: "@incommatose"
+      url: "https://github.com/MaxiBarcia"
+    - label: "Discord"
       icon: "fab da-fw fa-discord"
-      url: "https://discord.com/"
+      url: "https://discord.com/users/kad8222"
+    - label: "Linkedin"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/maxib-sec/"
       
     
     
@@ -135,13 +138,16 @@ footer:
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/incommatose"
+      url: "https://twitter.com/maxibarcia"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/incommatose"
+      url: "https://github.com/MaxiBarcia"
     - label: "@incommatose"
       icon: "fab da-fw fa-discord"
-      url: "https://discord.com/"
+      url: "https://discord.com/users/kad8222"
+    - label: "Linkedin"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/maxib-sec/"
 
 # Reading Files
 include:

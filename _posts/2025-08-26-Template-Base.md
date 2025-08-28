@@ -1,7 +1,7 @@
 ---
 # IMPORTANTE: No olvides añadir tu Front Matter aquí. Ejemplo:
 title: "Título de tu Write-up"
-date: YYYY-MM-DD
+date: 2025-08-26
 categories:
   - categoria-1
 tags:
