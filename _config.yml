@@ -22,9 +22,9 @@ title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "My Hacking Notes"
 description              : "This is a place to learn different pentesting techniques. Here you can find write-ups, cheat sheets or pentesting methodologies for different services."
-url                      : "https://incommatose.github.io"
+url                      : "https://maxibarcia.github.io"
 baseurl                  : # "/"
-repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+repository               : "MaxiBarcia/maxibarcia.github.io"
 teaser                   : # "/assets/images/500x300.png"
 logo                     : # "/assets/images/icon/favicon.ico"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
@@ -90,7 +90,7 @@ baidu_site_verification  :
 
 # Social Sharing
 twitter:
-  username               : "incommatose"
+  username               : "maxibarcia"
 facebook:
   username               :
   app_id                 :
@@ -113,10 +113,10 @@ analytics:
 
 # Site Author
 author:
-  name             : "Andrew (incommatose)"
+  name             : "Maxi (Nyx)"
   avatar           : "/assets/images/author.jpg"
   bio              : "`Cybersecurity Enthusiast 🕵️‍♂️ | CTF Player 🚩 | Ethical Hacking 💻`"
-  location         : "Chile"
+  location         : "España"
   email            :
   links:
     - label: "Twitter"
