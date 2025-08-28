@@ -1,7 +1,7 @@
 main:
   - title: "Search"  
     url: /blog/
-  - title: "Whoami"
+  - title: "whoami"
     url: /whoami/
   - title: "Categories"
     url: /categories/
