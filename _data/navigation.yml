@@ -1,12 +1,14 @@
 main:
-  - title: "Buscar"  
+  - title: "Search"  
     url: /blog/
-  - title: "Sobre mí"
+  - title: "Whoami"
     url: /whoami/
-  - title: "Categorías"
+  - title: "Categories"
     url: /categories/
   - title: "Etiquetas"
     url: /tags/
+  - title: "Contact"
+    url: /contact/
 
 docs:
   - title: "Hacking Web"
