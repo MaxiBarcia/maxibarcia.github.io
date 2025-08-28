@@ -20,6 +20,23 @@ header:
   og_image: /assets/images/headers/atrium-project-banner.jpg # <--- Social media image
 ---
 
+![image-center](/assets/images/posts/atrium-report/atrium-project.png)
+{: .align-center}
+
+**Habilidades:** CVE-2023-45878 -  Unauthenticated Arbitrary File Write in `Gibbon LMS 25.0.1`, MySQL Database Enumeration, Hash Cracking  - `SHA256($salt.$pass)`, Kerberos Client Setup, Credentials Leakage, Abusing GPOs (Group Policy Objects) - `SharpGPOAbuse.exe`
+{: .notice--primary}
+
+# **Project Introduction**
+
+This report documents the entire process of an ethical hacking exercise conducted as the final project for the cybersecurity master's program at Atrium CyberAcademy. The main objective was to simulate a real-world penetration testing scenario, applying a structured methodology to identify, analyze, and exploit vulnerabilities in a controlled environment.
+The project was divided into key phases:
+1. **Reconnaissance and Scanning:** Discovering the network topology and active services on the target machine.    
+2. **Vulnerability Analysis and Exploitation:** Identifying weaknesses in the services and executing controlled tests to gain initial access.    
+3. **Post-Exploitation and Privilege Escalation:** Searching for sensitive information, exploring the system, and escalating privileges to `root` to achieve full control of the machine.    
+
+The purpose of this report is to detail each step of the process, highlight critical findings, and share lessons learned, demonstrating the practical application of the knowledge acquired throughout the program.
+
+
 > **Project Objective:** To perform reconnaissance, scanning, and identify potential vulnerabilities in a selected organization, and then execute controlled tests on a vulnerable machine.
 > **Target Machine:** [https://mega.nz/file/4O0w3Tza#fGAUjHzRiGNmJY8Wlu9Mw3pC5ysP-P-nnBjvJVGTfqE](https://mega.nz/file/4O0w3Tza#fGAUjHzRiGNmJY8Wlu9Mw3pC5ysP-P-nnBjvJVGTfqE)
 > {: .notice--info}
