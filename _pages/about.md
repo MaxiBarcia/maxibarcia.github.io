@@ -6,18 +6,15 @@ last_modified_at: 2025-03-6T16:04:26-04:00
 toc: false
 ---
 
-Hola, mi nombre es Andrés. Soy alguien con gustos por la tecnología y el campo de la ciberseguridad, entre otros diversos temas.
+whoami
 
-Actualmente estoy cursando la carrera de Ingeniería en Informática, además, estudio **hacking** de forma autodidacta. La seguridad informática es un tema que siempre me ha causado curiosidad e interés por aprender.
+I am a cybersecurity professional in continuous learning and practice, with a strong focus on ethical hacking, vulnerability assessment, and incident response. My background includes hands-on experience in enumeration and exploitation within controlled environments, as well as professional technical reporting of findings, always applying clear and reproducible methodologies.
 
-Hago este proyecto con el objetivo de ayudar a principiantes y aportar conocimientos a la comunidad de habla hispana, no digo que soy un experto porque cuando aprendo algo nuevo de este mundo me doy cuenta que aún queda mucho camino.
+Beyond the technical side, I am defined by discipline, adaptability, and analytical thinking. I can work under pressure, prioritize effectively, and communicate findings in a way that is understandable for both technical and non-technical audiences.
 
-Si te interesa lo que hago y quieres enviarme un mensaje puedes contactarme mediante mis redes sociales. Aquí la cita random del día.
+I offer a balance between hard skills (penetration testing, networking, Linux, auditing methodologies, red teaming) and soft skills (critical thinking, teamwork, creative problem-solving, and strategic vision).
 
-> Most of the important things in the world have been accomplished by people who have kept on trying when there seemed to be no hope at all.
-> — Dale Carnegie
-{: notice--info}
-
+My goal is to contribute to security teams by delivering real, actionable value, ensuring not only the detection of vulnerabilities but also the building of trust and the continuous improvement of the organization’s security posture.
 
 
 
