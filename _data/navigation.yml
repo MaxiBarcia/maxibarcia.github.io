@@ -19,3 +19,5 @@ docs:
     url: "/categories/#hackthebox"
   - title: "Dockerlabs"
     url: "/categories/#dockerlabs"
+  - title: "Contact"
+    url: "mailto:maxibarcia@gmail.com"
