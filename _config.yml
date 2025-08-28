@@ -21,7 +21,7 @@ title                    : "My Hacking Notes"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "My Hacking Notes"
-description              : "This is a place to learn different pentesting techniques. Here you can find write-ups, cheat sheets or pentesting methodologies for different services."
+description              : "A portfolio of offensive security projects, documenting detailed vulnerability analysis and ethical hacking methodologies."
 url                      : "https://maxibarcia.github.io"
 baseurl                  : # "/"
 repository               : "MaxiBarcia/maxibarcia.github.io"
@@ -82,7 +82,7 @@ google:
   search_engine_id       : # YOUR_SEARCH_ENGINE_ID
   instant_search         : # false (default), true
 # SEO Related
-google_site_verification : dwCZNbSiEyuRckPXFyluv4JrxgmTHHhlAdoV_FMGoqc
+google_site_verification : F5BEo6GYXrtw-pIemDBKs6nnFMGFg3s0ptQOY-ZoSXE
 bing_site_verification   :
 naver_site_verification  :
 yandex_site_verification :
@@ -137,7 +137,7 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/MaxiBarcia"
-    - label: "@incommatose"
+    - label: "Discord"
       icon: "fab da-fw fa-discord"
       url: "https://discord.com/users/kad8222"
     - label: "Linkedin"

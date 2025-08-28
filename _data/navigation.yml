@@ -5,7 +5,7 @@ main:
     url: /whoami/
   - title: "Categories"
     url: /categories/
-  - title: "Etiquetas"
+  - title: "Tags"
     url: /tags/
   - title: "Contact"
     url: /contact/
