@@ -24,11 +24,11 @@ header:
 {: .align-center}
 
 **Skills Demonstrated** 
-- **Reconnaissance & Scanning**: Nmap scanning, service and version enumeration.    
-- **Initial Access**: HTTP request smuggling, client-side credential bypass, OS command injection via web form.    
-- **Shells & Post-Exploitation**: Netcat reverse shell, Meterpreter session setup, TTY shell upgrade.   
-- **Privilege Escalation**: Kernel exploit (`4.4.0-87-generic`), local exploit enumeration with `Metasploit`, hash cracking (`/etc/shadow`).    
-- **Tools**: Nmap, cURL, Netcat, Metasploit Framework, MSFvenom, Python HTTP Server.
+**Reconnaissance & Scanning**: Nmap scanning, service and version enumeration.    
+**Initial Access**: HTTP request smuggling, client-side credential bypass, OS command injection via web form.    
+**Shells & Post-Exploitation**: Netcat reverse shell, Meterpreter session setup, TTY shell upgrade.   
+**Privilege Escalation**: Kernel exploit (`4.4.0-87-generic`), local exploit enumeration with `Metasploit`, hash cracking (`/etc/shadow`).    
+**Tools**: Nmap, cURL, Netcat, Metasploit Framework, MSFvenom, Python HTTP Server.
 {: .notice--primary}
 
 # **Project Introduction**
