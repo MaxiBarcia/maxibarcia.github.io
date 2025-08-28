@@ -89,8 +89,8 @@ yandex_site_verification :
 baidu_site_verification  :
 
 # Social Sharing
-twitter:
-  username               : "maxibarcia"
+#twitter:
+#  username               : "maxibarcia"
 facebook:
   username               :
   app_id                 :
@@ -115,13 +115,11 @@ analytics:
 author:
   name             : "Maxi (Nyx)"
   avatar           : "/assets/images/nyx.png"
-  bio              : "`Documenting my hacking path 📖 | Cybersecurity Analyst 🕵️ | Ethical Hacking 💻`"
+  bio              : "`Documenting my hacking path 📖   | Cybersecurity Analyst 🕵️          | Ethical Hacking 💻`"
   location         : "España"
   email            :
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/maxibarcia"
+    
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/MaxiBarcia"
@@ -136,9 +134,6 @@ author:
     
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/maxibarcia"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/MaxiBarcia"
