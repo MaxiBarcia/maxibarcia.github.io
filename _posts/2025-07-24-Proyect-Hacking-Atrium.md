@@ -24,11 +24,11 @@ header:
 {: .align-center}
 
 **Skills Demonstrated** 
-**Reconnaissance & Scanning**: Nmap scanning, service and version enumeration.    
-**Initial Access**: HTTP request smuggling, client-side credential bypass, OS command injection via web form.    
-**Shells & Post-Exploitation**: Netcat reverse shell, Meterpreter session setup, TTY shell upgrade.   
-**Privilege Escalation**: Kernel exploit (`4.4.0-87-generic`), local exploit enumeration with `Metasploit`, hash cracking (`/etc/shadow`).    
-**Tools**: Nmap, cURL, Netcat, Metasploit Framework, MSFvenom, Python HTTP Server.
+- **Reconnaissance & Scanning**: Nmap scanning, service and version enumeration.    
+- **Initial Access**: HTTP request smuggling, client-side credential bypass, OS command injection via web form.    
+- **Shells & Post-Exploitation**: Netcat reverse shell, Meterpreter session setup, TTY shell upgrade.   
+- **Privilege Escalation**: Kernel exploit (`4.4.0-87-generic`), local exploit enumeration with `Metasploit`, hash cracking (`/etc/shadow`).    
+- **Tools**: Nmap, cURL, Netcat, Metasploit Framework, MSFvenom, Python HTTP Server.
 {: .notice--primary}
 
 # **Project Introduction**
@@ -50,14 +50,14 @@ The purpose of this report is to detail each step of the process, highlight crit
 
 # 🔍 Phase 1 – Reconnaissance and Scanning
 
-### Network Configuration and Discovery
-* **Attacker Machine:** Kali Linux (IP: `192.168.1.13/24`)
-* **Victim Machine:** (IP: `192.168.1.21/24`)
-* **Network:** Bridge
+**Network Configuration and Discovery**
+* Attacker Machine: Kali Linux (IP: `192.168.1.13/24`)
+* ictim Machine: (IP: `192.168.1.21/24`)
+* Network: Bridge
 
 A successful ping between the Kali machine and the victim confirmed network connectivity.
 
-![Successful ping test](/assets/images/posts/atrium-report/ping-test.png){: .align-center}*
+![Successful ping test](/assets/images/posts/atrium-report/ping-test.png){: .align-center}
 
 The `netdiscover` scan allowed us to identify the target machine on the network.
 
@@ -65,7 +65,7 @@ The `netdiscover` scan allowed us to identify the target machine on the network.
 
 ![Netdiscover result 2](/assets/images/posts/atrium-report/netdiscover-2.png){: .align-center}
 
-### Port and Service Scanning with Nmap
+**Port and Service Scanning with Nmap**
 
 A full port scan was performed to identify all active services.
 
@@ -127,17 +127,17 @@ Based on the scan `nmap -p- --open -A`, these are the **most relevant and potent
 
 **Exploitation of Apache James Server 2.3.2.1 (SMTP / POP3)**
 
-#### 🎯 Objective
+🎯**Objective**
 
 The goal of this exploitation is to demonstrate a **Remote Code Execution (RCE)** in **Apache James Server 2.3.2.1** by abusing its email sending and receiving logic.
 
 Three exposed services are leveraged:
-- **Port 4555** → James administration console.    
-- **Port 25** → **SMTP** service (sending emails).    
-- **Port 110** → **POP3** service (receiving emails).    
+- *Port 4555* → James administration console.    
+- *Port 25* → *SMTP* service (sending emails).    
+- *Port 110* → *POP3* service (receiving emails).    
 
-#### ⚙️ Attack vector
-The attack involves sending a malicious email containing a **JSP payload**, which will later be processed by the James server. This allows code injection and remote execution.
+⚙️ **Attack vector**
+The attack involves sending a malicious email containing a JSP payload, which will later be processed by the James server. This allows code injection and remote execution.
 
 Malicious email :
 
@@ -153,17 +153,17 @@ Runtime.getRuntime().exec("touch /tmp/pwned.txt");
 QUIT  
 ```
 
-#### ✅ Expected outcome
+✅**Expected outcome**
 The execution of this payload creates the file `/tmp/pwned.txt` on the target server, proving the ability to execute arbitrary commands remotely.
 
 ![Successful ping test](/assets/images/posts/atrium-report/telnet-conect.png)
 
- **Vulnerable Panel — /login_1/**
+ *Vulnerable Panel — /login_1/*
 
 Location
 [[http://192.168.0.1X/login_1/](http://192.168.0.1X/login_1/)]
 
-**Vulnerability**
+*Vulnerability*
 - Client-side credential validation (JavaScript)    
 - Username and password were hardcoded:    
 
@@ -177,7 +177,7 @@ if (document.form.password.value=='supersecret' && document.form.login.value=='a
 
 ---
 
-**🔥 Critical Vulnerability Detected — /login_2/**
+🔥 **Critical Vulnerability Detected — /login_2/**
 
 When performing a POST request to `/login_2/index.php` with invalid credentials:
 `curl -X POST http://192.168.0.18/login_2/index.php -d "login=admin&password=test" -i`
@@ -215,6 +215,8 @@ Proof of Concept
 🎯 Objective:
 Obtain a **reverse shell** through the `/ping/` form parameter, which executes system commands directly from user input.
 ![RCE vulneravility find](/assets/images/posts/atrium-report/vuln-rce.png)
+
+----------
 
 
 
