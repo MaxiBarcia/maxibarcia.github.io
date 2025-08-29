@@ -356,16 +356,15 @@ run
 # 6. Conclusion and Remediation
 
 ### Vulnerability Summary
-
 The penetration test successfully identified and exploited multiple critical vulnerabilities.
 
-|---|---|---|---|
-| Vulnerability | CVE / Reference | Severity | Impact |
-| **Command Injection (RCE)** | N/A | **Critical** | An unauthenticated attacker can execute arbitrary code on the system. |
-| **Outdated Software** | `CVE-2007-6283` (James) | **High** | The vulnerable Apache James server allowed potential RCE. |
-| **Hardcoded Credentials** | N/A | **Medium** | Exposed credentials in client-side code grant unauthorized access. |
-| **Kernel Privilege Escalation** | `CVE-2017-15265` | **Critical** | A low-privileged user can gain full root access to the system. |
-| **Anonymous FTP Access** | N/A | **Low** | Allows information disclosure, such as the initial `flag.txt` file. |
+Vulnerability	CVE / Reference	Severity	Impact
+Command Injection (RCE)	N/A	Critical	An unauthenticated attacker can execute arbitrary code on the system.
+Outdated Software	CVE-2007-6283 (James)	High	The vulnerable Apache James server allowed potential RCE.
+Hardcoded Credentials	N/A	Medium	Exposed credentials in client-side code grant unauthorized access.
+Kernel Privilege Escalation	CVE-2017-15265	Critical	A low-privileged user can gain full root access to the system.
+Anonymous FTP Access	N/A	Low	Allows information disclosure, such as the initial flag.txt file.
+
 ### Remediation & Recommendations
 
 To mitigate the identified risks and improve the overall security posture, the following recommendations are provided.
