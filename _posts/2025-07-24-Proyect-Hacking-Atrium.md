@@ -87,12 +87,12 @@ The `netdiscover` scan allowed us to identify the target machine on the network.
 
 ![Netdiscover result 1](/assets/images/posts/atrium-report/netdiscover-1.png){: .align-center}
 
-### Port and Service Scanning with Nmap
+#### Port and Service Scanning with Nmap
 
 A comprehensive Nmap scan was performed to identify all open ports, running services, and the operating system of the target. 
 ![Basic Nmap scan](/assets/images/posts/atrium-report/nmap-basic-scan.png){: .align-center}
 
-### Detected Operating System:
+#### Detected Operating System:
 
 The scan identified the following OS with high confidence:
 
@@ -102,7 +102,7 @@ The scan identified the following OS with high confidence:
 
 Exportar a Hojas de cálculo
 
-### Identified Services and Findings:
+#### Identified Services and Findings:
 
 The following table summarizes the most interesting services found during the scan.
 
@@ -114,9 +114,9 @@ The following table summarizes the most interesting services found during the sc
 |**110**|POP3|`JAMES pop3d 2.3.2.1`|Brute-force credentials|
 |**119**|NNTP|`JAMES nntpd`|Investigable|
 
-Exportar a Hojas de cálculo
 
-**Relevant Observations:**
+
+## **Relevant Observations:**
 
 - The **FTP service allows anonymous login** and contains a `flag.txt` file, which indicates a potential unauthenticated entry point.
     
@@ -130,7 +130,7 @@ Exportar a Hojas de cálculo
     
 - The operating system was identified as **Linux**, with a kernel version range between 3.2 and 4.14, commonly found in distributions such as Ubuntu 16.04 or similar.
 
-# 4 Phase 2 – Vulnerability Analysis and Exploitation
+# 4-Pashe 2 - Vulnerability Analysis and Exploitation
 
 **Attack Vector Selection**
 
