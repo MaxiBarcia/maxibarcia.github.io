@@ -129,8 +129,6 @@ Exportar a Hojas de cálculo
 - The HTTP server has a `robots.txt` file that **restricts `/cyberacademy`**, which is a clear clue for targeted analysis (often pointing to sensitive directories or test environments).
     
 - The operating system was identified as **Linux**, with a kernel version range between 3.2 and 4.14, commonly found in distributions such as Ubuntu 16.04 or similar.
-    
-
 
 # 4. Phase 2 – Vulnerability Analysis and Exploitation
 
