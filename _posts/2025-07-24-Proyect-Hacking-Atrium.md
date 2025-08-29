@@ -130,9 +130,9 @@ Exportar a Hojas de cálculo
     
 - The operating system was identified as **Linux**, with a kernel version range between 3.2 and 4.14, commonly found in distributions such as Ubuntu 16.04 or similar.
 
-# 4. Phase 2 – Vulnerability Analysis and Exploitation
+# 4 Phase 2 – Vulnerability Analysis and Exploitation
 
-### Attack Vector Selection
+**Attack Vector Selection**
 
 Based on the reconnaissance findings, a strategic approach was devised to exploit the most promising vulnerabilities.
 
@@ -147,15 +147,12 @@ Based on the reconnaissance findings, a strategic approach was devised to exploi
 
 Exportar a Hojas de cálculo
 
-### Exploitation of Apache James Server 2.3.2.1 (SMTP / POP3)
+Exploitation of Apache James Server 2.3.2.1 (SMTP / POP3)
 
 The goal of this exploitation was to demonstrate a **Remote Code Execution (RCE)** in **Apache James Server 2.3.2.1** by abusing its email sending and receiving logic. The attack leveraged three exposed services:
-
-- **Port 4555:** James administration console.
-    
-- **Port 25:** **SMTP** service (sending emails).
-    
-- **Port 110:** **POP3** service (receiving emails).
+- *Port 4555:* James administration console.    
+- *Port 25:* **SMTP** service (sending emails).    
+- *Port 110:** **POP3* service (receiving emails).
     
 
 The attack involved sending a malicious email containing a JSP payload, which would later be processed by the James server. This allows code injection and remote execution.
@@ -189,7 +186,7 @@ QUIT
 
 ![Captured Flag](/assets/images/posts/atrium-report/flag1.png )
 
-#### Critical Vulnerability — `/login_2/`
+**Critical Vulnerability** — `/login_2/`
 
 - **Location:** `http://192.168.0.1X/login_2/`
     
@@ -299,7 +296,7 @@ Once executed on the victim, the handler caught the connection, and a **Meterpre
 
 # 5. Phase 3: Post-Exploitation and Privilege Escalation
 
-### Initial Context
+**Initial Context**
 
 The primary goal was to escalate privileges from the low-privileged `www-data` user to `root`.
 
@@ -326,9 +323,7 @@ To identify potential privilege escalation vectors, tools like **LinPEAS** and *
 
 The hash for the `deloitte` user was copied from `/etc/shadow` and passed to **John the Ripper** with a wordlist attack. **Hash:** `deloitte:xxxxxWnCp/$jCaUM7F57.NTzp60E2x2d/:17507:0:99999:7:::`
 
-Bash
-
-```
+```bash
 john --wordlist=/usr/share/wordlists/rockyou.txt shadow.txt
 ```
 ![Showing `run.sh`](/assets/images/posts/atrium-report/phoenix-run.png)
