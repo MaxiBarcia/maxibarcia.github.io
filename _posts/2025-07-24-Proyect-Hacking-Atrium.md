@@ -21,8 +21,7 @@ header:
   og_image: /assets/images/headers/atrium-project-banner.jpg
 ---
 
-
----
+![image-center](/assets/images/headers/atrium-project-banner.jpg)
 {: .align-center}
 
 **Skills Demonstrated**
