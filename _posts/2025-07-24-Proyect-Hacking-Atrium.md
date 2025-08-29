@@ -353,7 +353,7 @@ run
 
 ---
 
-# 6. Conclusion and Remediation
+## 6. Conclusion and Remediation
 
 ### Vulnerability Summary
 The penetration test successfully identified and exploited multiple critical vulnerabilities.
