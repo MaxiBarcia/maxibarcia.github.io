@@ -360,7 +360,7 @@ run
 The penetration test successfully identified and exploited multiple critical vulnerabilities.
 
 | Vulnerability | CVE / Reference | Severity | Impact |
-| :--- | :--- | :--- | :--- |
+|---|---|---|---|
 | **Command Injection (RCE)** | N/A | **Critical** | An unauthenticated attacker can execute arbitrary code on the system. |
 | **Outdated Software** | `CVE-2007-6283` (James) | **High** | The vulnerable Apache James server allowed potential RCE. |
 | **Hardcoded Credentials** | N/A | **Medium** | Exposed credentials in client-side code grant unauthorized access. |
