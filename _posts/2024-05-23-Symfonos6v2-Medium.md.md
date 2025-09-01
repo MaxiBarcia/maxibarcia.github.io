@@ -163,7 +163,6 @@ The penetration test successfully identified and exploited multiple critical vul
 |**YAML Configuration**|**Medium**|Exposed API routes and potential for sensitive data leakage.|
 |**Weak Authentication**|**Medium**|Client-side credentials and HTTP method bypass make login vulnerable.|
 
-Exportar a Hojas de cálculo
 
 ### Remediation & Recommendations
 
