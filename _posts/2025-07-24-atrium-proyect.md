@@ -1,5 +1,5 @@
 ---
-title: "Atrium CyberAcademy | Final Ethical Hacking Project"
+title: "Atrium CyberAcademy | Final Project"
 excerpt: "A detailed report on the final project for the Atrium Cybersecurity Master, covering reconnaissance, exploitation, and privilege escalation on a vulnerable machine."
 seo_description: "A complete penetration testing analysis and write-up of the Atrium CyberAcademy ethical hacking final project, documenting exploitation and root escalation."
 categories:
