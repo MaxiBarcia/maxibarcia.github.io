@@ -25,7 +25,6 @@ header:
 ---
 
 ![image-center](/assets/images/headers/vulnhub-banner.jpg)
-
 {: .align-center}
 
 ### **Project Overview**
@@ -35,7 +34,7 @@ This report documents an ethical hacking exercise conducted on **symfonos: 6.1**
 The target is a Linux-based virtual machine with DHCP enabled, allowing it to automatically acquire an IP address on the network. The following document details the systematic process of reconnaissance, vulnerability analysis, and exploitation to achieve a full compromise of this intentionally vulnerable environment.
 
 
-  URL: ![Symfonos6.1](https://www.vulnhub.com/entry/symfonos-61,458/)
+  URL: (https://www.vulnhub.com/entry/symfonos-61,458/)
 
 ---
 
