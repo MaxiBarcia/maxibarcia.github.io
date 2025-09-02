@@ -1,5 +1,5 @@
 ---
-title: Unrecover - Medium (Dockerlabs)
+title: Unrecover - (Dockerlabs) - Medium
 permalink: /Unrecover-Dockerlabs-Writeup/
 tags:
   - "Linux"
