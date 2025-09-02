@@ -1,5 +1,5 @@
 ---
-title: Symfonos6v2 - VulnHub - Medium/Hard
+title: Symfonos6v2 - (VulnHub) - Medium/Hard
 excerpt: '"A detailed report documenting the reconnaissance, exploitation, and privilege escalation on the Symfonos6v2 vulnerable machine."'
 seo_description: ' "A complete penetration testing analysis and write-up of the Symfonos6v2 vulnerable machine, documenting exploitation and system compromise."'
 categories:
