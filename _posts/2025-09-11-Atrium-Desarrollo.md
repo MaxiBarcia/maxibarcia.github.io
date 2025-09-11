@@ -51,6 +51,7 @@ Para la ejecución del laboratorio **WackoPicko**, se utilizó un contenedor de 
 **Comandos de Docker utilizados:**
 
 1. **Clonar el repositorio:**
+
 ```bash
 git clone https://github.com/<usuario>/WackoPicko.git
 cd WackoPicko
@@ -78,6 +79,7 @@ sudo docker ps -a -q: lista todos los contenedores, activos o detenidos.
 sudo docker images -q: lista IDs de todas las imágenes.
 
 sudo docker volume ls -q: lista IDs de todos los volúmenes.
+
 ```
 
 
