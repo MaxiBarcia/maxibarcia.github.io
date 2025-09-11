@@ -81,37 +81,46 @@ sudo docker images -q: lista IDs de todas las imágenes.
 sudo docker volume ls -q: lista IDs de todos los volúmenes.
 
 ```
-
-
 ## 📄 Informe Técnico – Evaluación de Seguridad en WackoPicko
 
 ### 0. Resumen Ejecutivo
 
 Se realizó una **evaluación de seguridad controlada** sobre la aplicación vulnerable **WackoPicko**, desplegada en un entorno **Docker** y analizada desde **Kali Linux**.  
-El objetivo fue **identificar debilidades en autenticación, validación de entradas y manejo de archivos**.
+El objetivo principal fue **identificar debilidades en autenticación, validación de entradas y manejo de archivos**.
 
-Durante el ejercicio se explotaron múltiples vectores que evidencian una **superficie de ataque crítica**.
+Durante la práctica se explotaron múltiples vectores que evidencian una **superficie de ataque crítica**.
 
-#### Principales hallazgos
+---
 
-- 🔴 **Login de usuarios expuesto a fuerza bruta**  
-    El formulario de login devuelve mensajes de error explícitos al introducir credenciales inválidas, facilitando ataques automatizados con Hydra/BurpSuite Intruder.    
-- 🔴 **Login de administradores vulnerable a inferencia por longitud**  
-    Aunque no se muestran mensajes de error, se observó una **respuesta fija de 266 bytes** en intentos fallidos. Esto permitió configurar ataques basados en el `content-length`, logrando identificar credenciales válidas.    
-- 🔴 **Falta de validación en subida de archivos**  
-    El sistema permite subir archivos sin restricciones adecuadas. Se pudo cargar un archivo **PHP malicioso** camuflado como imagen, el cual otorgó acceso a la ejecución de comandos en el servidor.    
-- 🔴 **Ejecución Remota de Comandos (RCE)**  
-    Mediante el archivo PHP malicioso, se consiguió ejecutar comandos arbitrarios en el servidor, obteniendo control completo del sistema. Este vector implica un **riesgo crítico** que compromete la confidencialidad, integridad y disponibilidad de toda la aplicación.
-    
+### 🔎 Principales Hallazgos
 
-#### Riesgo principal
+1. 🔴 **Login de usuarios expuesto a fuerza bruta**  
+   - El formulario de login devuelve mensajes de error explícitos al introducir credenciales inválidas.  
+   - Esto facilita ataques automatizados con herramientas como **Hydra** o **BurpSuite Intruder**.
 
-La combinación de:
-- **Fuerza bruta en formularios de login**    
-- **Subida insegura de archivos**    
-- **Ejecución remota de comandos (RCE)**    
+2. 🔴 **Login de administradores vulnerable a inferencia por longitud**  
+   - Aunque no se muestran mensajes de error, se observó una **respuesta fija de 266 bytes** en intentos fallidos.  
+   - Este comportamiento permitió configurar ataques basados en el **`content-length`**, logrando identificar credenciales válidas.
 
-conduce a un **compromiso total del sistema**. Un atacante podría escalar privilegios, robar información sensible, modificar contenidos o pivotar hacia otros sistemas internos.
+3. 🔴 **Falta de validación en subida de archivos**  
+   - El sistema permite subir archivos sin restricciones adecuadas.  
+   - Se pudo cargar un archivo **PHP malicioso** camuflado como imagen, lo cual otorgó acceso a la ejecución de comandos en el servidor.
+
+4. 🔴 **Ejecución Remota de Comandos (RCE)**  
+   - Mediante el archivo PHP malicioso, se consiguió ejecutar **comandos arbitrarios** en el servidor.  
+   - Este vector implica un **riesgo crítico** que compromete la **confidencialidad, integridad y disponibilidad (CIA)** de toda la aplicación.
+
+---
+
+### ⚠️ Riesgo Principal
+
+La combinación de vulnerabilidades encontradas incrementa la criticidad:
+
+- **Fuerza bruta en formularios de login**  
+- **Subida insegura de archivos**  
+- **Ejecución remota de comandos (RCE)**  
+
+👉 Estas fallas permiten un **compromiso total del sistema** por parte de un atacante con conocimientos básicos y herramientas disponibles públicamente. Un atacante podría escalar privilegios, robar información sensible, modificar contenidos o pivotar hacia otros sistemas internos.
 
 #### Recomendaciones clave
 
