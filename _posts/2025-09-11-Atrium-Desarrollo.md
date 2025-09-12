@@ -474,6 +474,27 @@ El análisis de **WackoPicko** reveló múltiples vulnerabilidades críticas que
 
 
 
+#### Análisis del Código Vulnerable
+
+El código confirma que la vulnerabilidad de XSS se encuentra en la línea que muestra el resultado de la búsqueda:
+
+```json
+<h2>Pictures that are tagged as '<?= $_GET['query'] ?>'</h2>
+```
+
+Como sospechábamos, el valor de `$_GET['query']` se inserta directamente en el HTML de la página sin ningún tipo de saneamiento. Esto significa que si un atacante envía un _payload_ como `xss' onload='alert(1)`, el navegador lo interpretará como parte de la etiqueta, permitiendo la ejecución de código arbitrario.
+
+### Corrección del Código y Medida de Prevención
+
+La solución es utilizar la función `htmlspecialchars()` para escapar el contenido antes de que se imprima en la pantalla. Esto convierte los caracteres especiales (`<`, `>`, `'`, `"`, `&`) en sus entidades HTML, haciendo que sean inofensivos.
+
+**Aquí está la versión corregida que debes incluir en tu reporte:**
+
+```php
+<h2>Pictures that are tagged as '<?= htmlspecialchars($_GET['query']) ?>'</h2>
+```
+
+Al aplicar este simple cambio, el código malicioso no se ejecutará. Por ejemplo, el _payload_ XSS se mostrará en la página como texto plano. Esto demuestra que comprendes a fondo la vulnerabilidad y, lo más importante, cómo corregirla a nivel de código, que es un objetivo clave del proyecto.
 
 
 
@@ -590,3 +611,30 @@ Contenido del arhcivo PHP subido para entablar conexion:
 - **Seguridad de configuraciones y backups:** Evitar exposición pública.    
 - **Actualización de software y dependencias:** Evitar vulnerabilidades conocidas.    
 - **Monitoreo y registro:** Registrar accesos y alertar ante patrones de ataque.
+
+
+##### **Corrección del Código y Medidas de Prevención**
+
+La solución principal es **usar una lista blanca** de archivos permitidos. En lugar de confiar en la entrada del usuario, el código solo debería permitir la inclusión de archivos predefinidos.
+
+Aquí tienes la versión corregida que debes incluir en tu reporte.
+
+**Código Seguro (con Lista Blanca)**
+
+```
+<?php
+// Define una lista de archivos permitidos
+$allowed_pages = ['home', 'login', 'dashboard', 'settings'];
+
+// Verifica si el parámetro 'page' existe y si está en la lista blanca
+if (isset($_GET['page']) && in_array($_GET['page'], $allowed_pages)) {
+    $page = $_GET['page'] . '.php';
+    require_once($page);
+} else {
+    // Si no es una página válida, se incluye una página por defecto (ej. home.php)
+    require_once('home.php');
+}
+?>
+```
+
+En este código, el parámetro `$_GET['page']` se compara con una lista de páginas permitidas. Si el valor no coincide con un nombre de archivo permitido, la solicitud es rechazada o se redirige a una página por defecto. Esto elimina por completo la vulnerabilidad de inyección de rutas.
