@@ -491,7 +491,9 @@ La solución es utilizar la función `htmlspecialchars()` para escapar el conten
 **Aquí está la versión corregida que debes incluir en tu reporte:**
 
 ```php
+
 <h2>Pictures that are tagged as '<?= htmlspecialchars($_GET['query']) ?>'</h2>
+
 ```
 
 Al aplicar este simple cambio, el código malicioso no se ejecutará. Por ejemplo, el _payload_ XSS se mostrará en la página como texto plano. Esto demuestra que comprendes a fondo la vulnerabilidad y, lo más importante, cómo corregirla a nivel de código, que es un objetivo clave del proyecto.
