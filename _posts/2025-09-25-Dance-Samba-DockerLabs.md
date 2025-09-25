@@ -1,6 +1,6 @@
 ---
-title: Samba-Dance Lab - Acceso y Escalada de Privilegios (SSH/SMB)
-excerpt: Documentación de la explotación manual del laboratorio de Docker Samba-Dance. Cubre el reconocimiento, la fuerza bruta de FTP/SSH, la inyección de clave RSA vía SMB y la escalada de privilegios a través de binarios Sudoers.
+title: Samba-Dance Lab - Access and Privilege Escalation (SSH/SMB)
+excerpt: Documentation of the manual exploitation of the Samba-Dance Docker lab. Covers reconnaissance, FTP/SSH brute-force, RSA key injection via SMB, and privilege escalation through Sudoers binaries.
 categories:
   - Write-up
   - Privilege Escalation
@@ -16,20 +16,20 @@ tags:
   - sudoers
   - docker
 toc: true
-toc_label: Contenido del Reporte
+toc_label: Report Content
 toc_sticky: true
 header:
   overlay_image: /assets/images/headers/dace-samba.png
   overlay_filter: 0.7
 og_image: /assets/images/headers/dace-samba.png
-seo_title: Samba-Dance Lab - Acceso y Escalada de Privilegios
-seo_description: Reporte detallado de la explotación de vulnerabilidades en el laboratorio Samba-Dance, enfocado en el bypass de autenticación FTP anónima, inyección de claves SSH a través de Samba, y escalada de privilegios Sudoers.
+seo_title: Samba-Dance Lab - Access and Privilege Escalation
+seo_description: Detailed Report on Vulnerability Exploitation in the Samba-Dance Lab, This report details the exploitation of vulnerabilities in the Samba-Dance Docker lab, focusing on bypassing anonymous FTP authentication, SSH key injection via Samba, and Sudoers privilege escalation.
 author: Maxi Barcia
 date: 2025-09-25
 draft: false
 ---
 
-![](/assets/images/headers/dace-samba.png)
+![image-center](/assets/images/headers/dace-samba.png)
 
 
 ## 0. Executive Summary 🎯
