@@ -178,7 +178,7 @@ su root
 # Password: rooteable2
     ```
     
-![Root Pwrend](/assets/images/posts/DockerLabs/dace-samba/root.png)  {: .align-center} 
+![Root Pwrend](/assets/images/posts/DockerLabs/dace-samba/root.png){: .align-center} 
     
     
 
