@@ -30,7 +30,7 @@ date: 2025-09-11
 draft: false
 ---
 
-![image-center](/assets/images/headers/wackopicko-banner.jpg)
+![image-center](/assets/images/headers/wackopicko-banner.jpg){: .align-center}
 
 
 
