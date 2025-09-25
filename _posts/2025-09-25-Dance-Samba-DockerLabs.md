@@ -29,7 +29,7 @@ date: 2025-09-25
 draft: false
 ---
 
-![image-center](/assets/images/headers/dace-samba.png)
+![image-center](/assets/images/headers/dace-samba.png){: .align-center}
 
 
 ## 0. Executive Summary 🎯
