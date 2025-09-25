@@ -118,24 +118,24 @@ nmap -sCV -p 21,22,139,445 -n -Pn 172.17.0.3 -oN allServices
 
 The possibility of **anonymous FTP access** was identified.
 
-### 1. **Anonymous FTP:** We logged in as `anonymous` to the FTP server and downloaded the file **`nota.txt`**.
+1. **Anonymous FTP:** We logged in as `anonymous` to the FTP server and downloaded the file **`nota.txt`**.
     
-### 2. **Key Message:** The content of `nota.txt` revealed a username hint: `"I don't know what to do with Macarena, she's obsessed with donald."`.
+2. **Key Message:** The content of `nota.txt` revealed a username hint: `"I don't know what to do with Macarena, she's obsessed with donald."`.
     
-### 3. **SSH Brute-Force (Failure):** An attempt to use `macarena` and `donald` against password lists with **Hydra** failed.
+3. **SSH Brute-Force (Failure):** An attempt to use `macarena` and `donald` against password lists with **Hydra** failed.
     
     ```bash
     hydra -L /usr/share/seclists/Usernames/top-usernames-shortlist.txt -P /usr/share/wordlists/rockyou.txt ssh://172.17.0.3 -V -t 64 -w 2
     ```
     
-### **SMB Enumeration (smbmap):** We used **`smbmap`** to test common name combinations and the hint (`macarena`, `donald`).
+**SMB Enumeration (smbmap):** We used **`smbmap`** to test common name combinations and the hint (`macarena`, `donald`).
 
 - **Credentials Found:** The successful combination was **`macarena`** (User) and the password **`donald`** (implied in the report due to the correlation of the note and subsequent success, although the final password from the hash was different).
-![SMB Client](/assets/images/headers/smbclient.png)
+![SMB Client](/assets/images/posts/DockerLabs/dace-samba/smbclient.png)
         
-### **Key Permissions:** Access to the `macarena` share was confirmed with **Read/Write** permissions.
+**Key Permissions:** Access to the `macarena` share was confirmed with **Read/Write** permissions.
 
-![SMB MAP](/assets/images/headers/smbmap.png)
+![SMB MAP](/assets/images/posts/DockerLabs/dace-samba/smbmap.png)
 
 ## 3. Obtaining Additional Credentials (Hash)
 
@@ -150,28 +150,28 @@ Although cracking the hash was initially unsuccessful, the ability to **create a
 
 Using the user **`macarena`** and the password **`welcome1`**, we proceeded to inject an RSA key via the write access granted on the SMB share.
 
-### 1. **Key Generation:** An RSA key pair was generated: `ssh-keygen -t rsa -b 4096`.
-![RSA](/assets/images/headers/rsa.png)
+1. **Key Generation:** An RSA key pair was generated: `ssh-keygen -t rsa -b 4096`.
+![RSA](/assets/images/posts/DockerLabs/dace-samba/rsa.png)
     
-### 2. **Injection:** The **`.ssh`** directory was created, and the public key (`id_rsa.pub`) was uploaded and renamed to **`authorized_keys`** using `smbclient`.
+ 2. **Injection:** The **`.ssh`** directory was created, and the public key (`id_rsa.pub`) was uploaded and renamed to **`authorized_keys`** using `smbclient`.
     
-### 3. **Final Access:** SSH access was successfully achieved without a password: `ssh macarena@172.17.0.3`.
- ![Access](/assets/images/headers/access.png)
+3. **Final Access:** SSH access was successfully achieved without a password: `ssh macarena@172.17.0.3`.
+ ![Access](/assets/images/posts/DockerLabs/dace-samba/access.png)
     
 
 ## 5. Privilege Escalation to Root
 
 Once the **`macarena`** shell was established, the **LinPEAS** enumeration script was executed to identify potential vulnerabilities.
 
-### 1. **Hidden Credential Found:** LinPEAS revealed a hidden file in the **`secret`** folder containing the encoded string (`MMZVM522LBFHUWSXJYYWG3KWO5MVQTT2MQZDS6K2IE6T2===`).
+1. **Hidden Credential Found:** LinPEAS revealed a hidden file in the **`secret`** folder containing the encoded string (`MMZVM522LBFHUWSXJYYWG3KWO5MVQTT2MQZDS6K2IE6T2===`).
     
     - This string was cracked in **CyberChef** (using double Base64 decoding) and resulted in the potential password **"rooteable2"**.
         
-### 2. **Exploitable Sudoers Binary:** The `sudo -l` permissions scan revealed that the user **`macarena`** was allowed to execute the **`file`** binary as **`root`** without a password (`NOPASSWD`).
-    ![Command File](/assets/images/headers/file.png)
+2. **Exploitable Sudoers Binary:** The `sudo -l` permissions scan revealed that the user **`macarena`** was allowed to execute the **`file`** binary as **`root`** without a password (`NOPASSWD`).
+    ![Command File](/assets/images/posts/DockerLabs/dace-samba/file.png)
     
-### 3. **Sudoers Exploitation (GTFOBins):** The **`file`** binary was used in conjunction with the discovered root password (**`rooteable2`**) from the `.txt` file in `/opt` (another LinPEAS finding) to obtain a **root shell**.
-    ![opt file](/assets/images/headers/opt.png)
+3. **Sudoers Exploitation (GTFOBins):** The **`file`** binary was used in conjunction with the discovered root password (**`rooteable2`**) from the `.txt` file in `/opt` (another LinPEAS finding) to obtain a **root shell**.
+    ![opt file](/assets/images/posts/DockerLabs/dace-samba/opt.png)
     
     
     ```bash
@@ -180,7 +180,7 @@ su root
 # Password: rooteable2
     ```
     
-![Root Pwrend](/assets/images/headers/root.png)   
+![Root Pwrend](/assets/images/posts/DockerLabs/dace-samba/root.png)   
     
     
 
