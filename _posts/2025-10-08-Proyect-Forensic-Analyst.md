@@ -21,9 +21,9 @@ toc: true
 toc_label: Report Contents
 toc_sticky: true
 header:
-  overlay_image: /assets/images/headers/phishing-banner.jpg
+  overlay_image: /assets/images/headers/atrium-project-banner.jpg
   overlay_filter: 0.7
-og_image: /assets/images/headers/phishing-og.png
+og_image: /assets/images/headers/atrium-project-banner.jpg
 seo_title: Forensic Report — Phishing and Credential Exfiltration Incident (Invent S.L.)
 seo_description: Professional forensic analysis of the phishing incident. Includes IoC extraction from PCAP, correlation tests, containment plan, and security recommendations.
 author: Fabián Maximiliano Barcia
@@ -31,6 +31,8 @@ date: 2025-10-08
 draft: false
 license: CC-BY-4.0
 ---
+
+![image-center](/assets/images/headers/atrium-project-banner.jpg){: .align-center}
 
 
 # 🧾 **Informe Forense Final – Incidente de Phishing y Fuga Masiva de Credenciales (Sede Australia)**
@@ -107,7 +109,8 @@ Se siguió un proceso basado en el **Ciclo de Respuesta ante Incidentes (NIST SP
 El primer hallazgo confirmó la exfiltración del usuario `mgarcia` (Línea **10597**).
 en la siguiente captura se puede apreciar el paquete en detalle de WireShark con el contenido de la cadena en Base64, ip y port y todo lo necesario para iniciar la investigacion.
 
-![[Pasted image 20251008112617.png|800]]
+
+![WireShark](assets\images\posts\analisisforense/wireshark.png)
 
 |LÍNEA|HORA|VÍCTIMA (IP)|C2 (IP)|_PAYLOAD_|
 |---|---|---|---|---|
@@ -119,7 +122,9 @@ en la siguiente captura se puede apreciar el paquete en detalle de WireShark con
 
 Al investigar la URL secundaria (`https://pastebin.com/2R0Fem3C`), se obtuvo una lista de **cuatro credenciales comprometidas**, lo que indica que el servidor C2 ha recopilado múltiples víctimas del _phishing_.
 
-![[Pasted image 20251008134821.png|500]]
+
+
+![Users](assets\images\posts\analisisforense/users.png)
 
 |Correo Electrónico Afectado|Contraseña Robada|Estatus|
 |---|---|---|
