@@ -41,7 +41,7 @@ license: CC-BY-4.0
 **Curso:** Proyecto Final – Análisis Forense Digital (Atrium Cybersecurity)  
 **Fecha de Análisis:** Octubre 2025  
 **Evidencia Principal:** `australia.pcap`  
-**Estado Actual:** 🟥 **Alerta Roja – Fuga Confirmada y Múltiples Víctimas**
+**Estado Actual:** 🟥 **Alerta Roja – Fuga Confirmada y Múltiples Víctimas**.
 
 
 ## 🧩 Índice General
