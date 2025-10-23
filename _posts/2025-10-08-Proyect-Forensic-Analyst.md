@@ -25,7 +25,7 @@ header:
   overlay_filter: 0.7
 og_image: /assets/images/headers/atrium-project-banner.jpg
 seo_title: Forensic Report — Phishing and Credential Exfiltration Incident (Invent S.L.)
-seo_description: Professional forensic analysis of the phishing incident. Includes IoC extraction from PCAP, correlation tests, containment plan, and security recommendations.
+seo_description: Professional Forensic Report on Phishing
 author: Fabián Maximiliano Barcia
 date: 2025-10-08
 draft: false
