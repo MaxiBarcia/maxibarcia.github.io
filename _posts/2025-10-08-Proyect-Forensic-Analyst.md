@@ -24,7 +24,7 @@ header:
   overlay_image: /assets/images/headers/atrium-project-banner.jpg
   overlay_filter: 0.7
 og_image: /assets/images/headers/atrium-project-banner.jpg
-seo_title: Forensic Report — Phishing and Credential Exfiltration Incident (Invent S.L.)
+seo_title: Forensic Report.
 seo_description: Professional Forensic Report on Phishing
 author: Fabián Maximiliano Barcia
 date: 2025-10-08
