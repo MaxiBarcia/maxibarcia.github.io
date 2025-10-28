@@ -30,21 +30,23 @@ author: Fabián Maximiliano Barcia
 date: 2025-10-08
 draft: false
 license: CC-BY-4.0
+
 ---
 
 ![image-center](/assets/images/headers/atrium-project-banner.jpg){: .align-center}
+
 
 
 # 🧾 **Informe Forense Final – Incidente de Phishing y Fuga Masiva de Credenciales (Sede Australia)**
 
 **Autor:** Fabián Maximiliano Barcia  
 **Curso:** Proyecto Final – Análisis Forense Digital (Atrium Cybersecurity)  
-**Fecha de Análisis:** Octubre 2025  
+**Fecha de Análisis:** Octubre 2025- 
 **Evidencia Principal:** `australia.pcap`  
 **Estado Actual:** 🟥 **Alerta Roja – Fuga Confirmada y Múltiples Víctimas**.
 
 
-## 🧩 Índice General
+## 🧩 Índice General.
 1. **Resumen Ejecutivo y Alcance del Proyecto**
     
 2. **Análisis por Sede**    
