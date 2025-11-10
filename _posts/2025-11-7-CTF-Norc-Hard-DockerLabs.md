@@ -401,7 +401,7 @@ Debido a problemas de inestabilidad y cierres inesperados de la consola, se opt√
 Y al final se consiguio el RevShell con el metodo atenrior de modificar el Plugin:
 
 
-![Plugin](/assets/images/posts/DockerLabs/norc/plugin1.png){: .align-center}
+![Plugin](/assets/images/posts/DockerLabs/norc/plugin2.png){: .align-center}
 
 
 ## ## 5. Post-Exploitation y Preparaci√≥n para la Escalada de Privilegios
