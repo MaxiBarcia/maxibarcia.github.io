@@ -452,7 +452,7 @@ La primera etapa de la escalada de privilegios se logró explotando una tarea pr
 
 Expuesto el codigo y dejandonos ver su funcionamiento para posterior realizar la modificacion y beneficio en la escalada de privilegios como muestra la siguiente captura de pantalla. 
 
-![Scrpt](/assets/images/posts/DockerLabs/norc/script1.png){: .align-center}
+![Script](/assets/images/posts/DockerLabs/norc/script1.png){: .align-center}
 ![[Pasted image 20251104161455.png]]
 El uso de eval sin tratamiento adecuado en un script cron representa una vulnerabilidad crítica. Permite ejecutar comandos arbitrarios si se controla el contenido del archivo **‘/var/www/html/.wp-encrypted.txt’**.
 
