@@ -34,7 +34,7 @@ draft: false
 
 
 ### Lanzamiento laboratorio
-![[Pasted image 20251030213115.png|500]]
+
 ![DockerLabs](/assets/images/posts/DockerLabs/norc/docker1.png){: .align-center}
 
 Se procede a lanzar el docker sobre la maquina a vulnerar con numero de ip --> 172.17.0.2
@@ -280,6 +280,7 @@ Vuln: Inyeccion SQL
 ```
 
 
+
 ### 3.1. Obtención de Credenciales Vía Inyección SQL
 
 La vulnerabilidad se centró en el _plugin_ **WP Fastest Cache (v1.2.1)**, asociado a **CVE-2023-6063**, que permitía a un atacante no autenticado ejecutar consultas SQL arbitrarias. `https://github.com/thesafdari/CVE-2023-6063` 
@@ -304,7 +305,10 @@ sudo sqlmap --dbms=mysql -u "http://norc.labs/wp-login.php" --cookie='wordpress_
 ```
 
 Debido a que tarda mucho esta explotacion decido buscar la estructura de wordpress para poder ir directo a las columnas que requiero.
-![[Pasted image 20251102112601.png|500]]
+
+![Wordpress](/assets/images/posts/DockerLabs/norc/wordpres1.png){: .align-center}
+
+
 
 ```js
 # Comando de extracción de credenciales
@@ -333,7 +337,8 @@ Se actualizó la resolución de DNS local y se accedió al subdominio. La navega
 La contraseña obtenida fue utilizada exitosamente para la **autenticación administrativa** en el panel de WordPress
 
 
-![Wordpress](/assets/images/posts/DockerLabs/norc/wordpres2.png){: .align-center}
+
+![Credenciales](/assets/images/posts/DockerLabs/norc/credentials_1.png){: .align-center}
 
 ### 3.3. Establecimiento de Ejecución Remota de Código (RCE)
 
