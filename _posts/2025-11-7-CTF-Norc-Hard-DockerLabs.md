@@ -92,11 +92,8 @@ nmap -p- --open --min-rate=5000 -sS -v -Pn -n -A 172.17.0.2 -oX nmap.xml
 ![Nmap](/assets/images/posts/DockerLabs/norc/nmap.png){: .align-center}
 ![Nmap_2](/assets/images/posts/DockerLabs/norc/nmap2.png){: .align-center}
 
-| Puerto | Servicio | Versión                                       | Estado |
-| :----- | :------- | :-------------------------------------------- | :----- |
-| 22/tcp | ssh      | OpenSSH 9.2p1 Debian 2+deb12u3 (protocol 2.0) | open   |
-| 80/tcp | http     | Apache httpd 2.4.59 ((Debian))                | open   |
-Se adjunta la captura de los resultados del escaneo inicial y la tabla resumida de servicios detectados.
+| Puerto 22/tcp | Servicio: ssh | Versión: OpenSSH 9.2p1 Debian 2+deb12u3 (protocol 2.0)  
+| Puerto 80/tcp | Servicio: tcp | Version: Apache httpd 2.4.59 ((Debian))   
 
 ### 1.2. Análisis del Servicio Web (Puerto 80)
 
