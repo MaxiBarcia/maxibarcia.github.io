@@ -35,10 +35,10 @@ draft: false
 {: .align-center}
 
 ![DockerLabs](/assets\images\posts\DockerLabs\norc\docker1.png)
-
+{: .align-center}
 
 Se procede a lanzar el docker sobre la maquina a vulnerar con numero de ip --> 172.17.0.2
-{: .align-center}
+
 
 
 ## 🎯 0. Executive Summary (Resumen Ejecutivo)
