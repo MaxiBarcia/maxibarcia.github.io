@@ -376,10 +376,10 @@ Como metodología alternativa al ataque de inyección directa en el tema (`funct
 
 1. **Carga del Plugin:** Se utilizó la función de carga de plugins del panel de administración de WordPress para subir un _plugin_ preexistente que contenía una _reverse shell_ (`reverse-shell-v1.4.0.zip`).
 
-![Credentials](/assets/images/posts/DockerLabs/norc/credentials_1.png){: .align-center}   
+![Plugin Upload](/assets/images/posts/DockerLabs/norc/plugin2.png){: .align-center}   
     
 2. **Activación y Ejecución:** Tras la carga y activación del _plugin_ "rev shell", la conexión de _reverse shell_ se iniciaba al acceder a la URL del _plugin_ inyectado, proporcionando una consola interactiva al atacante.
-    
+
 
 Esta técnica confirmó una **falta de control de integridad del código** en el panel de administración, permitiendo la inyección de código PHP con privilegios de ejecución del servidor web (`www-data`).
 
@@ -392,7 +392,9 @@ Tras obtener la Ejecución Remota de Código (RCE) como el usuario de baja prior
 ### 4.1. Refinamiento del Acceso Persistente
 
 Inicialmente, se intentó utilizar la metodología de inyección de código mediante la carga de un _plugin_ de _reverse shell_ pre-construido.
-![[Pasted image 20251104102803.png|500]]
+
+![Plugin Upload](/assets/images/posts/DockerLabs/norc/plugin.png){: .align-center}  
+
 Debido a problemas de inestabilidad y cierres inesperados de la consola, se optó por la técnica de _backdoor_ directa en el código del tema (`functions.php`), ya implementada para el RCE, asegurando una conexión más fiable y controlada para la fase de post-explotación.
 [GitHub Plugin Rev Shell para Wordpress](https://github.com/4m3rr0r/Reverse-Shell-WordPress-Plugin/blob/main/reverse-shell.php)
 
