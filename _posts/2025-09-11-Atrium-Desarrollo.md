@@ -1,6 +1,6 @@
 ---
 title: WackoPicko - Secure Development Final Project
-excerpt: Comprehensive analysis and manual exploitation of vulnerabilities in the WackoPicko web application, including SQLi, XSS, LFI/RCE, and brute-force techniques.
+excerpt: Comprehensive analysis and manual exploitation of vulnerabilities in the WackoPicko web.
 categories:
   - Write-up
   - Web Security

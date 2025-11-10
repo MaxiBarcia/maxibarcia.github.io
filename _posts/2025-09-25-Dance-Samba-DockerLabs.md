@@ -1,6 +1,6 @@
 ---
 title: Samba-Dance Lab - Access and Privilege Escalation (SSH/SMB)
-excerpt: Documentation of the manual exploitation of the Samba-Dance Docker lab. Covers reconnaissance, FTP/SSH brute-force, RSA key injection via SMB, and privilege escalation through Sudoers binaries.
+excerpt: Documentation of the manual exploitation of the Samba-Dance Docker labs.
 categories:
   - Write-up
   - Privilege Escalation
