@@ -265,7 +265,7 @@ Para verificar si existían vulnerabilidades conocidas en la infraestructura det
 En la siguiente foto se puede ver como se intenta un acceso pero automaticamente dice que solo quedan 2 intentos, es decir que el panel cuenta con contramedidas para la fuerza bruta.
 
 
-![Wordpress](/assets/images/posts/DockerLabs/norc/wordpres1.png){: .align-center}
+![Wordpress](/assets/images/posts/DockerLabs/norc/wordpres2.png){: .align-center}
 
 
 
