@@ -16,7 +16,7 @@ tags:
   - cronjob
   - capabilities
 toc: true
-toc_label: Contenido del Reporte
+toc_label: Report Contents
 toc_sticky: true
 header:
   # Ruta de la imagen de cabecera que aparecerá en el banner del post
