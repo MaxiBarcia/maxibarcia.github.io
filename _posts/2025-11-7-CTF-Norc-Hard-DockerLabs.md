@@ -1,5 +1,6 @@
 ---
 title: "Write-up Dockerlabs - Hard - Norc"
+excerpt: Detailed  report on the phishing campaign.
 categories:
   - Write-up
   - Privilege Escalation
