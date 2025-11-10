@@ -20,9 +20,9 @@ toc_label: Contenido del Reporte
 toc_sticky: true
 header:
   # Ruta de la imagen de cabecera que aparecerá en el banner del post
-  overlay_image: 
+  overlay_image: /assets/images/headers/dockerlabs.png
   overlay_filter: 0.7
-og_image: /assets/images/headers/dockerlabs.png
+og_image: 
 seo_title: Write-up de Hacking en Dockerlabs - Norc (SQLi, RCE, PrivEsc con Cron)
 seo_description: Análisis detallado de la vulneración de la máquina Norc de Dockerlabs, incluyendo inyección SQL, RCE y escalada de privilegios mediante Cronjob.
 author: Maxi Barcia
@@ -31,11 +31,9 @@ draft: false
 ---
 
 
-![image-center](/assets/images/headers/dockerlabs.png)
-{: .align-center}
+![image-center](/assets/images/headers/dockerlabs.png){: .align-center}
 
-![DockerLabs](/assets\images\posts\DockerLabs\norc\docker1.png)
-{: .align-center}
+![DockerLabs](/assets\images\posts\DockerLabs\norc\docker1.png){: .align-center}
 
 Se procede a lanzar el docker sobre la maquina a vulnerar con numero de ip --> 172.17.0.2
 
