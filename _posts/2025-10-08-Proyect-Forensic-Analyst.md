@@ -1,6 +1,6 @@
 ---
 title: Phishing Incident - Invent S.L. - Australia Branch 
-excerpt: Detailed forensic report on the phishing campaign that led to credential exfiltration at Invent S.L.'s Australia branch. Includes evidence (PCAP), technical analysis, IoCs, response plan, and mitigation recommendations.
+excerpt: Detailed forensic report.
 categories:
   - Forensics
   - Incident Response
