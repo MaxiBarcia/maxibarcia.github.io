@@ -20,7 +20,7 @@ toc_label: Contenido del Reporte
 toc_sticky: true
 header:
   # Ruta de la imagen de cabecera que aparecerá en el banner del post
-  overlay_image: /assets/images/headers/dockerlabs.png
+  overlay_image: 
   overlay_filter: 0.7
 og_image: /assets/images/headers/dockerlabs.png
 seo_title: Write-up de Hacking en Dockerlabs - Norc (SQLi, RCE, PrivEsc con Cron)
