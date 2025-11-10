@@ -34,11 +34,12 @@ draft: false
 ![image-center](/assets/images/headers/dockerlabs.png)
 {: .align-center}
 
+![DockerLabs](/assets\images\posts\DockerLabs\norc\docker1.png)
 
 
-![[Pasted image 20251030213115.png|500]]
 Se procede a lanzar el docker sobre la maquina a vulnerar con numero de ip --> 172.17.0.2
 {: .align-center}
+
 
 ## 🎯 0. Executive Summary (Resumen Ejecutivo)
 
