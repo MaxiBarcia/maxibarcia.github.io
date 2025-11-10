@@ -1,5 +1,5 @@
 ---
-title: Samba-Dance Lab - Access and Privilege Escalation (SSH/SMB)
+title: Samba-Dance Lab - Access Privilege Escalation (SSH/SMB)
 excerpt: Documentation of the manual exploitation of the Samba-Dance Docker labs.
 categories:
   - Write-up

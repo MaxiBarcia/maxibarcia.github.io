@@ -8,10 +8,7 @@ categories:
   - dockerlabs
 tags:
   - nmap
-  - hydra
-  - smbmap
-  - ssh
-  - samba
+  - sqli
   - sqlmap
   - wordpress
   - cronjob
