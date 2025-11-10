@@ -31,8 +31,8 @@ draft: false
 
 ![image-center](/assets/images/headers/dockerlabs.png){: .align-center}
 
-#### Lanzamiento laboratorio:
 
+**Lanzamiento laboratorio:**
 Desde la web se realiza la instalaccion del laboratorio.
 [DockerLabs Web](https://dockerlabs.es/)
 
