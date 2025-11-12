@@ -112,7 +112,7 @@ El primer hallazgo confirmó la exfiltración del usuario `mgarcia` (Línea **10
 en la siguiente captura se puede apreciar el paquete en detalle de WireShark con el contenido de la cadena en Base64, ip y port y todo lo necesario para iniciar la investigacion.
 
 
-![WireShark](assets\images\posts\analisisforense/wireshark.png)
+![WireShark](assets/images/posts/analisisforense/wireshark.png)
 
 |LÍNEA|HORA|VÍCTIMA (IP)|C2 (IP)|_PAYLOAD_|
 |---|---|---|---|---|
@@ -126,7 +126,7 @@ Al investigar la URL secundaria (`https://pastebin.com/2R0Fem3C`), se obtuvo una
 
 
 
-![Users](assets\images\posts\analisisforense/users.png)
+![Users](assets/images/posts/analisisforense/users.png)
 
 |Correo Electrónico Afectado|Contraseña Robada|Estatus|
 |---|---|---|
