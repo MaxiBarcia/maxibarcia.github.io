@@ -42,6 +42,7 @@ sidebar:
 seo-title: NorC - Hard - DockerLabs
 seo_description: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
 excerpt: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
+hide_title_image: true # Añade esta línea
 header:
   #overlay_image: /assets/images/posts/DockerLabs/norc/norc.png
   overlay_filter: 0.7
