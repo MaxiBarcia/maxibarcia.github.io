@@ -4,7 +4,7 @@ permalink: /norc-dockerlabs-writeup/
 date: 2025-11-07
 pin: false
 image:
- path: /assets/images/posts/dockerlabs/norc/norc.png
+ path: /assets/images/posts/DockerLabs/norc/norc.png
 tags:
   - linux
   - hard
@@ -43,14 +43,14 @@ seo-title: NorC - Hard - DockerLabs
 seo_description: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
 excerpt: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
 header:
-  overlay_image: /assets/images/posts/dockerlabs/norc/norc.png
+  overlay_image: /assets/images/posts/DockerLabs/norc/norc.png
   overlay_filter: 0.7
-  og_image: /assets/images/posts/dockerlabs/norc/norc.png
+  og_image: /assets/images/posts/DockerLabs/norc/norc.png
 ---
 
 
 
-![image-center](/assets/images/posts/dockerlabs/norc/norc.png){: .align-center}
+![image-center](/assets/images/posts/DockerLabs/norc/norc.png){: .align-center}
 
 
 
