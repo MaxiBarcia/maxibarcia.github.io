@@ -53,7 +53,6 @@ hide_title_image: true # Añade esta línea
 
 
 
-![image-center](/assets/images/posts/DockerLabs/norc/norc.png){: .align-center}
 
 
 
