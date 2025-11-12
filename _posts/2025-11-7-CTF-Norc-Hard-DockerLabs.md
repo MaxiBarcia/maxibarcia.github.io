@@ -26,6 +26,30 @@ seo_description: Análisis detallado de la vulneración de la máquina Norc de D
 author: Maxi Barcia
 date: 2025-11-07
 draft: false
+
+layout: post
+title: "Write-up Dockerlabs - Hard - Norc"
+
+# El resumen se usa para la tarjeta en la página principal
+excerpt: Detailed report on the phishing campaign.
+
+# --- CONFIGURACIÓN DE IMAGEN PARA CHIRPY ---
+# Reemplaza la ruta si tu imagen de portada no se llama 'dockerlabs.png' 
+# o si la pusiste en otra carpeta bajo /assets/img/
+image:
+  path: /assets/images/headers/dockerlabs.png
+  alt: Dockerlabs Norc
+
+# Chirpy requiere que las categorías y tags estén en formato de lista [ ]
+categories: [Write-up, Privilege Escalation, Laboratory, dockerlabs]
+tags: [nmap, sqli, sqlmap, wordpress, cronjob, capabilities]
+
+# --- DATOS ESENCIALES ---
+date: 2025-11-07 10:00:00 +0100
+toc: true
+
+# Campos de Minimal Mistakes ELIMINADOS: header:, toc_label:, og_image:, seo_title:, etc.
+
 ---
 
 
