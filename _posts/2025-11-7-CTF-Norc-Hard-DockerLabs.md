@@ -1,56 +1,34 @@
 ---
-title: "Write-up Dockerlabs - Hard - Norc"
-excerpt: Detailed  report on the phishing campaign.
-categories:
-  - Write-up
-  - Privilege Escalation
-  - Laboratory
-  - dockerlabs
+title: NorC - Hard (Dockerlabs)
+permalink: /Norc-Dockerlabs-Writeup/
 tags:
-  - nmap
-  - sqli
-  - sqlmap
-  - wordpress
-  - cronjob
-  - capabilities
+  - "Linux"
+  - "Hard"
+  - "Wordpress"
+  - "SQL Injection" 
+  - "CVE-2023-6063"
+  - "Command Injection"
+  - "Capabilities"
+categories:
+  - writeup
+  - hacking
+  - dockerlabs
+  - "hacking web"
 toc: true
-toc_label: Report Contents
+toc_label: Topics
 toc_sticky: true
+sidebar:
+  - main
+  - docs
+seo-title: NorC - Hard (Dockerlabs)
+seo-description: Pon a prueba tus habilidades de enumeración de Wordpress, explotación de SQL Injection y abuso de capabilities para vencer NorC.
+excerpt: Pon a prueba tus habilidades de enumeración de Wordpress, explotación de SQL Injection y abuso de capabilities para vencer NorC.
 header:
-  # Ruta de la imagen de cabecera que aparecerá en el banner del post
-  overlay_image: /assets/images/headers/dockerlabs.png
+  overlay_image: /assets/images/posts/DockerLabs/norc/norc.png
   overlay_filter: 0.7
-og_image: /assets/images/headers/dockerlabs.png
-seo_title: Write-up de Hacking en Dockerlabs - Norc 
-seo_description: Análisis detallado de la vulneración de la máquina Norc de Dockerlabs, incluyendo inyección SQL, RCE y escalada de privilegios mediante Cronjob.
-author: Maxi Barcia
-date: 2025-11-07
-draft: false
-
-layout: post
-title: "Write-up Dockerlabs - Hard - Norc"
-
-# El resumen se usa para la tarjeta en la página principal
-excerpt: Detailed report on the phishing campaign.
-
-# --- CONFIGURACIÓN DE IMAGEN PARA CHIRPY ---
-# Reemplaza la ruta si tu imagen de portada no se llama 'dockerlabs.png' 
-# o si la pusiste en otra carpeta bajo /assets/img/
-image:
-  path: /assets/images/headers/dockerlabs.png
-  alt: Dockerlabs Norc
-
-# Chirpy requiere que las categorías y tags estén en formato de lista [ ]
-categories: [Write-up, Privilege Escalation, Laboratory, dockerlabs]
-tags: [nmap, sqli, sqlmap, wordpress, cronjob, capabilities]
-
-# --- DATOS ESENCIALES ---
-date: 2025-11-07 10:00:00 +0100
-toc: true
-
-# Campos de Minimal Mistakes ELIMINADOS: header:, toc_label:, og_image:, seo_title:, etc.
-
+  og_image: /assets/images/headers/norc-dockerlabs.jpg
 ---
+
 
 
 ![image-center](/assets/images/headers/dockerlabs.png){: .align-center}
