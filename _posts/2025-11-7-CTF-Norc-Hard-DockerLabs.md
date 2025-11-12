@@ -1,5 +1,6 @@
 ---
 title: NorC - Hard - DockerLabs
+excerpt: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
 permalink: /norc-dockerlabs-writeup/
 date: 2025-11-07
 pin: false
@@ -34,19 +35,20 @@ categories:
   - writeup
   - dockerlabs
 toc: true
-toc_label: Topics
-toc_sticky: true
-sidebar:
-  - main
-  - docs
-seo-title: NorC - Hard - DockerLabs
-seo_description: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
-excerpt: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
 hide_title_image: true # Añade esta línea
-header:
+
+
+#header:
   #overlay_image: /assets/images/posts/DockerLabs/norc/norc.png
-  overlay_filter: 0.7
+  #overlay_filter: 0.7
   #og_image: /assets/images/posts/DockerLabs/norc/norc.png
+#toc_label: Topics
+#toc_sticky: true
+#sidebar:
+#  - main
+#  - docs
+#seo-title: NorC - Hard - DockerLabs
+#seo_description: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
 ---
 
 
