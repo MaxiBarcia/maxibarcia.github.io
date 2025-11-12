@@ -99,7 +99,7 @@ Se ejecutó un escaneo exhaustivo de los 65535 puertos para identificar servicio
 
 **Comando de Escaneo:**
 
-```json
+```bash
 nmap -p- --open --min-rate=5000 -sS -v -Pn -n -A 172.17.0.2 -oA <nombre_de_la_maquina>
 xsltproc nmap.xml -o nmap.html
 python3 -m http.server 4444
@@ -120,7 +120,7 @@ nmap -p- --open --min-rate=5000 -sS -v -Pn -n -A 172.17.0.2 -oX nmap.xml
 
 Una detección de servicios más profunda (`-sCV`) en el puerto 80 reveló una configuración crítica de redireccionamiento.
 A service scan was performed, exposing a file named **"nota.txt"** inside the FTP service with the **anonymous** user.
-```json
+```bash
 nmap -sCV -p 22,80 -n -Pn 172.17.0.2 -oN allPorts
 
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-10-30 16:49 EDT
@@ -425,7 +425,7 @@ Y al final se consiguio el RevShell con el metodo atenrior de modificar el Plugi
 ![Plugin](/assets/images/posts/DockerLabs/norc/plugin2.png){: .align-center}
 
 
-## ## 5. Post-Exploitation y Preparación para la Escalada de Privilegios
+## 5. Post-Exploitation y Preparación para la Escalada de Privilegios
 
 Una vez que se estableció la _reverse shell_ inicial como el usuario de baja prioridad `www-data`, la fase de post-explotación se centró en estabilizar la consola y auditar el sistema para identificar el vector de escalada de privilegios.
 ### 5.1. Estabilización de Consola Interactiva (TTY)
