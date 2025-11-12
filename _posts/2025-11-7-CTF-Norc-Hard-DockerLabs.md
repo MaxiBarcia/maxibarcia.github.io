@@ -1,19 +1,38 @@
 ---
 title: NorC - Hard - DockerLabs
-permalink: /Norc-Dockerlabs-Writeup/
+permalink: /norc-dockerlabs-writeup/
+date: 2025-11-07
+pin: false
+image:
+ path: /assets/images/posts/dockerlabs/norc/norc.png
 tags:
-  - "Linux"
-  - "Hard"
-  - "Wordpress"
-  - "SQL Injection" 
-  - "CVE-2023-6063"
-  - "Command Injection"
-  - "Capabilities"
+  - linux
+  - hard
+  - dockerlabs
+  - fuzzing_web
+  - sqli
+  - sqli_blind
+  - data_leaks
+  - wordpress
+  - cron_abuse
+  - rce
+  - cve
+  - interactive_tty
+  - capabilities
+  - ssh
+  - http
+  - tcp
+  - information_gathering
+  - web_analysis
+  - cve_exploitation
+  - foothold
+  - lateral_movement
+  - privilege_escalation
+  - CVE-2023-6063
+  - command_injection
 categories:
   - writeup
-  - hacking
   - dockerlabs
-  - "hacking web"
 toc: true
 toc_label: Topics
 toc_sticky: true
@@ -24,14 +43,14 @@ seo-title: NorC - Hard - DockerLabs
 seo_description: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
 excerpt: Test your skills in Wordpress enumeration, SQL Injection exploitation, and capabilities abuse to defeat NorC.
 header:
-  overlay_image: /assets/images/posts/DockerLabs/norc/norc.png
+  overlay_image: /assets/images/posts/dockerlabs/norc/norc.png
   overlay_filter: 0.7
-  og_image: /assets/images/headers/norc-dockerlabs.png
+  og_image: /assets/images/posts/dockerlabs/norc/norc.png
 ---
 
 
 
-![image-center](/assets/images/headers/dockerlabs.png){: .align-center}
+![image-center](/assets/images/posts/dockerlabs/norc/norc.png){: .align-center}
 
 
 
