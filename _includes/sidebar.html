@@ -62,6 +62,10 @@
           {%- capture url -%}
             javascript:location.href = 'mailto:' + ['{{ email[0] }}','{{ email[1] }}'].join('@')
           {%- endcapture -%}
+        {% when 'pdf' %} 
+          {% assign url = entry.url | relative_url %}
+          {% assign icon_class = 'fa-solid fa-file-pdf' %}
+          {% capture link_types %}{{ link_types }} pdf{% endcapture %}
         {% when 'rss' %}
           {% assign url = '/feed.xml' | relative_url %}
         {% else %}
