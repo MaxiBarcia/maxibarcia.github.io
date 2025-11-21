@@ -43,6 +43,11 @@ social:
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     - https://www.linkedin.com/in/maxib-sec/
+    # --- NUEVO ENLACE AL CV CON ICONO ---
+    # Usamos la sintaxis estándar de enlaces sociales de Chirpy.
+    # El enlace debe ser la URL completa a tu archivo en GitHub Pages.
+    # El icono será un enlace genérico o, si Chirpy lo detecta, un icono de documento.
+    - https://maxibarcia.github.io/assets/pdf/CV_es.pdf
 
 # Site Verification Settings
 webmaster_verifications:
