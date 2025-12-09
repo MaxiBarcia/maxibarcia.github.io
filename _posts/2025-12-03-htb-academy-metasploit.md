@@ -14,6 +14,9 @@ tags:
 estado: "Completado"
 cve: "CVE-2017-7269" # El exploit inicial de IIS
 toc: true
+hide_title_image: true # Añade esta línea
+
+toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
 header:
@@ -23,6 +26,7 @@ og_image: /assets/images/headers/msf6.jpg
 ---
 
 
+![Metasploit](/assets/images/headers/msf6.jpg){: .align-center}
 
 ## 📄 Metasploit Post-Explotación en Windows: Escalada y Volcado de Credenciales
 
