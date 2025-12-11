@@ -27,7 +27,6 @@ og_image: /assets/images/headers/msf6.jpg
 ---
 
 
-![Metasploit](/assets/images/headers/msf6.jpg){: .align-center}
 
 ##  Metasploit Post-Explotación en Windows: Escalada y Volcado de Credenciales
 
