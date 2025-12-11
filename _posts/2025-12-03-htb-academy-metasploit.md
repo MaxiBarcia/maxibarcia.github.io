@@ -29,9 +29,9 @@ og_image: /assets/images/headers/msf6.jpg
 
 ![Metasploit](/assets/images/headers/msf6.jpg){: .align-center}
 
-## 📄 Metasploit Post-Explotación en Windows: Escalada y Volcado de Credenciales
+##  Metasploit Post-Explotación en Windows: Escalada y Volcado de Credenciales
 
-### 1. ⚙️ Ficha Técnica y Reconocimiento Inicial
+### 1.  Ficha Técnica y Reconocimiento Inicial
 
 
 
@@ -42,7 +42,7 @@ og_image: /assets/images/headers/msf6.jpg
 |**Servicio Explotado**|Microsoft IIS httpd 6.0 (Puerto 80/TCP)|Confirmado vía `db_nmap -sV`.|
 |**Exploit Inicial**|`exploit/windows/iis/iis_webdav_upload_asp`|CVE-2004-xxxx (Acceso RCE/WebDAV)|
 
-### 2. 💥 Fase de Explotación y Acceso Inicial
+### 2.  Fase de Explotación y Acceso Inicial
 
 El objetivo fue comprometido usando una vulnerabilidad de WebDAV en IIS 6.0 que permite la carga y ejecución de archivos `.asp`.
 
@@ -71,7 +71,7 @@ El objetivo fue comprometido usando una vulnerabilidad de WebDAV en IIS 6.0 que 
 
 > **ARTIFACTO 1 (Respuesta 1):** El usuario inicial de la sesión fue: **`[Coloca aquí tu primera respuesta]`**
 
-### 3. ⬆️ Fase de Escalada de Privilegios (Privilege Escalation)
+### 3. Fase de Escalada de Privilegios (Privilege Escalation)
 
 Dado que el `getuid` reveló un usuario de bajo nivel (`NETWORK SERVICE`), la extracción de hashes (`hashdump`) falló con el error: `Operation failed: Incorrect function`. Esto confirma la necesidad de elevar los permisos a `NT AUTHORITY\SYSTEM`.
 
@@ -115,7 +115,7 @@ Dado que el `getuid` reveló un usuario de bajo nivel (`NETWORK SERVICE`), la ex
     - **Resultado Esperado:** `Server username: NT AUTHORITY\SYSTEM` (¡Acceso de administrador total!)
         
 
-### 4. 💰 Fase de Volcado de Credenciales (Looting)
+### 4. Fase de Volcado de Credenciales (Looting)
 
 Con el nivel de `SYSTEM`, ahora podemos acceder al **Security Account Manager (SAM)** y extraer los hashes.
 
