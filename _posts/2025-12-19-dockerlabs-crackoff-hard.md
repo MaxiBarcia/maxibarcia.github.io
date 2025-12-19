@@ -426,7 +426,7 @@ hydra -l alice -P /usr/share/wordlists/rockyou.txt localhost -s 8080 http-get /m
 ```
 ![Usuario Tomcat](/assets/images/posts/dockerlabs/cracoff/user1.png){: .align-center}
 
-> [!CHECK] **Resultado de Autenticación** El ataque confirmó las credenciales filtradas anteriormente, permitiendo el acceso al **Tomcat Web Application Manager**. Este panel es el vector definitivo para lograr la ejecución remota de código (RCE).
+**Resultado de Autenticación** El ataque confirmó las credenciales filtradas anteriormente, permitiendo el acceso al **Tomcat Web Application Manager**. Este panel es el vector definitivo para lograr la ejecución remota de código (RCE).
 
  Esta sección documenta el paso crítico de la **Intrusión** al sistema a través de la ejecución remota de código (RCE). Aquí tienes el Markdown optimizado para tu Obsidian:
 
@@ -479,7 +479,7 @@ curl -X PUT http://127.0.0.1:8080/pwn.jsp/ --data '<% out.println("pwned"); %>'
 - **Impacto**: Si el servidor responde con un código `201 Created`, cualquier usuario puede subir una _Webshell_ completa y tomar control del servidor sin autenticación previa.
     
 
-> [!WARNING] **Nota de Seguridad** Esta vulnerabilidad es común en servidores mal endurecidos. Si el comando anterior devuelve un código `403 Forbidden` o `405 Method Not Allowed`, significa que el método `PUT` está correctamente restringido o el parámetro `readonly` está en su valor por defecto (`true`).
+**Nota de Seguridad** Esta vulnerabilidad es común en servidores mal endurecidos. Si el comando anterior devuelve un código `403 Forbidden` o `405 Method Not Allowed`, significa que el método `PUT` está correctamente restringido o el parámetro `readonly` está en su valor por defecto (`true`).
 
 ---------
 ## 10. Post-Explotación: Estabilización de la Shell (TTY Upgrade)
