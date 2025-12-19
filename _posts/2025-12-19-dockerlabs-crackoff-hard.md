@@ -656,7 +656,7 @@ Aprovechando que el archivo es editable por cualquier usuario, se procedió a in
 
 ### Ejecución y Shell Obtenida
 
-![[Pasted image 20251219143403.png]]
+![Acceso root](/assets/images/posts/dockerlabs/cracoff/root.png){: .align-center}
 
 
 
