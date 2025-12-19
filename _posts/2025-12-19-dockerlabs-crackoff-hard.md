@@ -78,9 +78,6 @@ python3 -m http.server 4444
 |**80/tcp**|HTTP|Apache httpd 2.4.58|Open|Punto de entrada principal (Web App).|
 |**8080/tcp**|HTTP|Apache Tomcat|Open|**Critical:** Panel Manager expuesto.|
 
-> [!INFO] Nota Técnica:
-> 
-> El descubrimiento del puerto 8080 ejecutando Apache Tomcat cambió la prioridad del ataque hacia la enumeración del panel /manager, lo que eventualmente proporcionó el primer acceso al sistema.
 
 
 -------
@@ -131,7 +128,6 @@ Durante el reconocimiento, se identificó la posibilidad de acceso anónimo en s
 - **Hallazgo:** El archivo contenía referencias que permitieron pivotar el ataque hacia el puerto **8080 (Tomcat)**, resultando en un vector mucho más directo.
     
 
-> [!WARNING] **Insight de Auditoría** El uso de `' or 1=1-- -` es un indicador de que la aplicación web inicial carece de desinfección básica, lo que refuerza la teoría de configuraciones débiles en todo el entorno `CrackOff`.
 
 -------------
 
@@ -162,9 +158,6 @@ Progress: 18452 / 18452 (100.00%)
 Finished
 ===============================================================
 ```
-
-### 3.0 SQLMap con request de burpsuite
-
 
 
 
@@ -294,7 +287,7 @@ El ataque fue exitoso, identificando una credencial válida para el usuario **ro
 
 ![Acces Rosa](/assets/images/posts/dockerlabs/cracoff/rosa.png){: .align-center}
 
-> [!SUCCESS] **Primer Acceso al Sistema (Footprint)** Con las credenciales `rosa:ultramegaverypasswordhack`, se logró establecer la primera sesión interactiva en la máquina **CrackOff**, permitiendo iniciar la fase de enumeración local para la posterior escalada a Mario y Alice.
+
 
 --------------------
 
@@ -467,7 +460,6 @@ El archivo `shell.war` se cargó directamente a través de la interfaz web del *
 3. **Activación:** Se accedió a la ruta de la aplicación desplegada: `http://localhost:8080/shell/`.
     
 
-> [!SUCCESS] **Shell Obtenida** La ejecución del archivo JSP devolvió una conexión exitosa, otorgando acceso inicial como el usuario de servicio `tomcat` o el usuario bajo el cual corre el servicio web.
 
 ----------
 ### 9.3. Vector Alternativo: RCE vía HTTP PUT (CVE-2017-12615)
@@ -664,7 +656,6 @@ Aprovechando que el archivo es editable por cualquier usuario, se procedió a in
 
 ![[Pasted image 20251219143403.png]]
 
-> [!SUCCESS] **Status: ROOT ACCESSED** Confirmación de privilegios mediante comando `id`: `uid=0(root) gid=0(root) groups=0(root)`
 
 
 ### 11.1 Backdoor con id_rsa
@@ -702,10 +693,5 @@ Para acceder desde tu terminal utilizando la llave privada:
 ```bash
 ssh -i ./id_rsa_root root@127.17.0.2
 ```
-
-> [!TIP] Si el servidor tiene `PermitRootLogin no` en el archivo `/etc/ssh/sshd_config`, cámbialo a `yes` o `prohibit-password` y reinicia el servicio con `systemctl restart ssh` para que la llave funcione.
-
-
-
 
 
