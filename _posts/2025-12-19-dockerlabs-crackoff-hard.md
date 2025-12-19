@@ -491,7 +491,7 @@ Tras recibir la conexión reversa del archivo `shell.war`, se obtuvo una shell l
 
 Se aplicó la técnica de **Full TTY Upgrade** para obtener una consola robusta que permita la gestión de señales de control (como `Ctrl+C`) sin perder la conexión.
 
-> Tratamiento de la tty una vez dentro.
+Tratamiento de la tty una vez dentro.
 ```bash
 script /dev/null -c bash
   #         control + z   
