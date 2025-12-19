@@ -12,7 +12,6 @@ tags:
   - Privilege-Escalation 
   - Custom-Script-Exploit
 estado: "Completado"
-toc: true
 hide_title_image: true
 image:
   path: /assets/images/posts/dockerlabs/cracoff/banner.png
@@ -20,7 +19,7 @@ image:
 
 ##  1. Executive Summary (Resumen Ejecutivo)
 
-# Resumen Ejecutivo: Compromiso Total (Root) - CrackOff
+### Resumen Ejecutivo: Compromiso Total (Root) - CrackOff
 
 **Estado:** 🔴 **CRÍTICO** **Objetivo:** Servidor `CrackOff` (`172.17.0.2`)
 
