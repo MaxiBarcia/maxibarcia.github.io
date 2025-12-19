@@ -67,7 +67,7 @@ xsltproc nmap.xml -o nmap.html
 # Exposición temporal del reporte para análisis remoto
 python3 -m http.server 4444
 ```
-![nmap](/assets/images/posts/dockerlabs/cracoff/nmap.png){: .align-center}
+![nmap](/assets/images/posts/dockerlabs/cracoff/nmap.png)
 
 ### 📊 Servicios Identificados
 
@@ -117,7 +117,7 @@ En la página principal, se detectó un campo de entrada donde se probó una car
 - **Resultado:** Aunque el bypass directo no comprometió la base de datos de inmediato, el comportamiento de la aplicación sugirió que el foco debía desplazarse hacia la gestión de servicios adicionales.
     
 
-![Web](/assets/images/posts/dockerlabs/cracoff/crack.png){: .align-center}
+![Web](/assets/images/posts/dockerlabs/cracoff/crack.png) 
 
 ### 📂 Análisis de Servicio Adicional (FTP/Nota)
 
@@ -165,7 +165,7 @@ Finished
 Tras interceptar el tráfico de autenticación con **Burp Suite**, se utilizó el archivo de solicitud (`request.txt`) para automatizar la extracción de datos.
 
 **Comando de Enumeración de DBs:**
-```Bash
+```bash
 sqlmap -r request.txt --batch --dbs --risk=3 --level=5 --random-agent
 ```
 
