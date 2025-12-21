@@ -3,15 +3,16 @@ title: "DockerLabs - CrackOff Hard (Write-up)"
 platform: "DockerLabs"
 date: 2025-12-19
 tags:
-  - Linux 
-  - SQLi 
-  - Tomcat-Exploitation 
-  - Chisel 
-  - Port-Forwarding 
-  - KeePass-Cracking 
-  - Privilege-Escalation 
+  - Linux
+  - SQLi
+  - Tomcat-Exploitation
+  - Chisel
+  - Port-Forwarding
+  - KeePass-Cracking
+  - Privilege-Escalation
   - Custom-Script-Exploit
 estado: "Completado"
+toc: true
 hide_title_image: true
 image:
   path: /assets/images/posts/dockerlabs/cracoff/banner.png
