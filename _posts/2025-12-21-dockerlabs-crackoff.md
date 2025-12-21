@@ -1,7 +1,7 @@
 ---
 title: "DockerLabs - CrackOff Hard (Write-up)"
 platform: "dockerlabs"
-date: 2025-12-19
+date: 2025-12-21
 tags:
   - Linux
   - SQLi
