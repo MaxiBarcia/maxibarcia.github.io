@@ -1,6 +1,6 @@
 ---
 title: "DockerLabs - CrackOff Hard (Write-up)"
-platform: "DockerLabs"
+platform: "dockerlabs"
 date: 2025-12-19
 tags:
   - Linux
@@ -87,23 +87,21 @@ python3 -m http.server 4444
 
 Una detección de servicios más profunda (`-sCV`) en el puerto 80 reveló una configuración crítica de redireccionamiento.
 A service scan was performed, exposing a file named **"nota.txt"** inside the FTP service with the **anonymous** user.
+
 ```bash
 nmap -sCV -p 22,80 -n -Pn 172.17.0.2 -oN servis
 
 PORT   STATE SERVICE VERSION
 22/tcp open  ssh     OpenSSH 9.6p1 Ubuntu 3ubuntu13.4 (Ubuntu Linux; protocol 2.0)
-| ssh-hostkey: 
-|   256 3d:fc:bd:41:cb:81:e8:cd:a2:58:5a:78:68:2b:a3:04 (ECDSA)
-|_  256 d8:5a:63:27:60:35:20:30:a9:ec:25:36:9e:50:06:8d (ED25519)
-80/tcp open  http    Apache httpd 2.4.58 ((Ubuntu))
+80/tcp open  http    Apache httpd 2.4.58 
 |_http-title: CrackOff - Bienvenido
 | http-methods: 
 |_  Supported Methods: GET HEAD POST OPTIONS
 |_http-server-header: Apache/2.4.58 (Ubuntu)
 MAC Address: 02:42:AC:11:00:02 (Unknown)
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
 ```
+
 **Resultados clave:**
 - **Servidor:** Apache 2.4.58 (Ubuntu).    
 - **Título:** "CrackOff - Bienvenido".    
