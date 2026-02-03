@@ -19,7 +19,7 @@ toc: true
 toc_label: Report Content
 toc_sticky: true
 image:
-  path: /assets/images/posts/vulnhub/symfonos1/symfonos_banner.png
+  path: /assets/images/headers/dace-samba.png
 seo_title: Samba-Dance Lab - Access and Privilege Escalation
 seo_description: Detailed Report on Vulnerability Exploitation in the Samba-Dance Lab, This report details the exploitation of vulnerabilities in the Samba-Dance Docker lab, focusing on bypassing anonymous FTP authentication, SSH key injection via Samba, and Sudoers privilege escalation.
 author: Maxi Barcia
