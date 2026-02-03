@@ -1,5 +1,5 @@
 ---
-title: "DockerLabs - CrackOff Hard (Write-up)"
+title: "DockerLabs - CrackOff - (write-up)"
 platform: "dockerlabs"
 date: 2025-12-21
 tags:

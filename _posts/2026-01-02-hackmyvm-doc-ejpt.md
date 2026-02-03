@@ -1,5 +1,5 @@
 ---
-title: "hackmyvm: DOC - eJPT"
+title: "HackMyVM: doc - (write-up)"
 platform: "HackMyVM"
 date: 2026-02-03
 author: "maxibarcia"
