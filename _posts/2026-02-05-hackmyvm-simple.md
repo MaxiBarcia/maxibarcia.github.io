@@ -1,5 +1,5 @@
 ---
-title: "HTB / eJPT - SIMPLE"
+title: "HackMyVM - simple (write-up)"
 platform: "Lab / Windows"
 date: 2026-02-05
 tags:
