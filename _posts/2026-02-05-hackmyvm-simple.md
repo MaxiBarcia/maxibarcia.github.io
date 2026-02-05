@@ -1,6 +1,6 @@
 ---
-title: "HackMyVM - simple (write-up) "
-platform: "Lab / Windows"
+title: HackMyVM - simple
+platform: HacklMyVM / Windows
 date: 2026-02-05
 tags:
   - Windows
@@ -10,7 +10,7 @@ tags:
   - NTLM-Reflection
   - SeImpersonatePrivilege
   - Privilege-Escalation
-estado: "Completado"
+estado: Completado
 image:
   path: /assets/images/posts/hackmyvm/simple/simple-banner1.png
 toc: true
