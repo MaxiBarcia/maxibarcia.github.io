@@ -20,7 +20,7 @@ toc_sticky: true
 
 ## 1 - Reporte Ejecutivo
 
-Se ha realizado una auditoría de seguridad sobre el host **10.0.2.8 (SIMPLE)**. El análisis reveló una cadena de vulnerabilidades críticas que permiten a un atacante remoto sin privilegios iniciales tomar el control total del servidor. La explotación exitosa se basó en la reutilización de credenciales, permisos de escritura mal configurados en el servicio SMB y la explotación de privilegios de impersonación en el sistema operativo Windows Server 2019.
+Se ha realizado una auditoría de seguridad sobre el host **10.0.2.8 (SIMPLE)**. El análisis reveló una cadena de vulnerabilidades críticas que permiten a un atacante remoto sin privilegios iniciales tomar el control total del servidor. La explotación exitosa se basó en la reutilización de credenciales, permisos de escritura mal configurados en el servicio SMB y la explotación de privilegios de impersonación en el sistema operativo Windows Server 2019 .
 
 ## 2 - Resumen
 
