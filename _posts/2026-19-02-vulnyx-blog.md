@@ -1,4 +1,26 @@
-
+---
+title: Vulnyx - Blog
+platform: Vulnyx | Linux (Debian)
+date: 2026-02-05
+tags:
+  - Linux
+  - Web
+  - CMS
+  - Nibbleblog
+  - File-Upload-Bypass
+  - Remote-Code-Execution
+  - Brute-Force
+  - Credential-Attack
+  - Sudo-Misconfiguration
+  - Privilege-Escalation
+  - Post-Exploitation
+estado: Completado
+image:
+  path: /assets/images/posts/vulnyx/blog/blog-banner.png
+toc: true
+toc_label: Contenido del Reporte
+toc_sticky: true
+---
 
 ## Reconocimiento
 
