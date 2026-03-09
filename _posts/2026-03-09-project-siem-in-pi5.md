@@ -251,7 +251,16 @@ Hydra es una herramienta de inicio de sesión en red que puede realizar ataques 
 **5.1.1. Preparación del Diccionario**  
 En la máquina `Nyx`, creamos un pequeño diccionario de contraseñas para la prueba.
 ```bash
-cupp 
+cupp -i  (entrar en modo interactivo en la herramienta)
+(a continuación lo que se rellena, lo que no aparezca se completa como vacío o negativo (No))
+
+> First Name: Luis
+> Surname: 
+> Nickname: TLuisillo_o
+> Birthdate (DDMMYYYY): 09101981
+
+> Do you want to add some key words about the victim? Y/[N]: y
+> Please enter the words, separated by comma. [i.e. hacker,juice,black], spaces will be removed: 19131337
 ```
 
 
