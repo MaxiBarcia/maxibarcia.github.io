@@ -38,6 +38,9 @@ El sistema se basa en **Wazuh**, una plataforma de seguridad de código abierto
 - Aprender a navegar e investigar alertas en la interfaz de Wazuh/Kibana.
 - Documentar todo el proceso para futuras referencias y aprendizaje.
 
+
+
+
 #### **3. Arquitectura de la Red e Infraestructura**
 
 La infraestructura consta de los siguientes componentes principales:
@@ -52,6 +55,9 @@ La infraestructura consta de los siguientes componentes principales:
 
 **Flujo de Datos:**  
 Los ataques desde `Nyx` hacia el contenedor en `CTF-Labs` generan logs en el contenedor. A través de un volumen de Docker, estos logs se sincronizan con el sistema de archivos del host `CTF-Labs`, donde el agente Wazuh los lee y los envía al Manager en la Raspberry Pi para su análisis y visualización.
+
+
+
 
 
 
