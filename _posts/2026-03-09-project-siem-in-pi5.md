@@ -221,6 +221,7 @@ _Captura: Instalación del agente Wazuh en la máquina CTF-Labs._
 **4.2.4. Configuración del Agente para Leer Logs**
 - En `/var/ossec/etc/ossec.conf` del host, se añadieron bloques `<localfile>` para monitorear los archivos de log relevantes, especialmente `/var/log/apache2/access.log` y `error.log`.
 - Se configuró el formato de log como `apache` para un correcto parseo.
+
 ```bash
 <localfile>
   <log_format>apache</log_format>
