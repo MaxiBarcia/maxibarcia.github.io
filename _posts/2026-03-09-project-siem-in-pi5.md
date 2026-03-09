@@ -400,8 +400,22 @@ docker exec -it wazuh-demo1-wazuh.indexer-1 /usr/share/wazuh-indexer/plugins/ope
 ```
 
 
+#### 9. Conclusión y Próximos Pasos
 
+La implementación de este laboratorio SIEM casero con Wazuh sobre una Raspberry Pi 5 ha sido un éxito rotundo. Más allá de tener un sistema funcional, el verdadero valor del proyecto ha sido el viaje: enfrentarse a problemas reales de compatibilidad ARM64, lidiar con permisos en sistemas de archivos, comprender las complejidades de la red en Docker y, finalmente, ver cómo un ataque simulado de fuerza bruta se traduce en alertas enriquecidas con MITRE ATT&CK en un dashboard profesional.
 
+Este entorno no es solo un "juguete", sino una plataforma de entrenamiento sólida que replican los flujos de trabajo de un Centro de Operaciones de Ciberseguridad (SOC) real.
+
+**¿Y ahora qué?** El laboratorio está listo para seguir creciendo. Algunas ideas para la versión 3.0 podrían ser:
+
+*   **Mejorar la telemetría de red:** Integrar **Suricata** en la máquina `CTF-Labs` para capturar el tráfico de red y ver la IP real del atacante (`192.168.0.27`) en las alertas, en lugar de la IP del bridge de Docker.
+*   **Automatizar respuestas:** Configurar **Active Response** en Wazuh para bloquear automáticamente una IP que supere un umbral de intentos fallidos.
+*   **Ampliar la monitorización:** Añadir como agentes otros dispositivos de la red doméstica (un NAS, un servidor multimedia) o nuevas máquinas virtuales con diferentes sistemas operativos.
+*   **Profundizar en Threat Hunting:** Utilizar la consola de Wazuh para buscar patrones de amenazas específicos en los logs históricos.
+
+Este proyecto es la base. Ahora el límite lo pone tu curiosidad y las ganas de seguir aprendiendo. ¡El mundo del SOC y la Detección de Amenazas es fascinante y este es solo el primer paso!
+
+Si tienes preguntas o quieres compartir cómo evoluciona tu laboratorio, no dudes en dejar un comentario.
 
 
 
