@@ -42,12 +42,13 @@ El sistema se basa en **Wazuh**, una plataforma de seguridad de código abierto
 
 La infraestructura consta de los siguientes componentes principales:
 
-|Componente|Hardware/SO|IP/Dirección|Rol Principal|
-|---|---|---|---|
-|**Servidor Wazuh (Manager)**|Raspberry Pi 5 (64GB SD + 2TB Disco Externo) con Raspberry Pi OS|`192.168.0.200:8443`|Centraliza logs, gestiona agentes, panel web Kibana.|
-|**Máquina Objetivo (Agente)**|Máquina Virtual (CTF-Labs - KALI)`\|`192.168.0.21` \| Ejecuta el agente Wazuh y contenedores vulnerables. \||||
-|**Máquina Atacante**|Máquina Virtual (Nyx - Kali Linux)|`192.168.0.27`|Punto desde donde se lanzan los ataques simulados.|
-|**Contenedor Vulnerable**|Docker en CTF-Labs (Imagen "escolares")|`192.168.0.21:8080`|Contenedor con WordPress/Apache que actúa como víctima.|
+| Componente | Hardware/SO | IP/Dirección | Rol Principal |
+|------------|-------------|--------------|---------------|
+| **Servidor Wazuh (Manager)** | Raspberry Pi 5 (64GB SD + 2TB Disco Externo) con Raspberry Pi OS | `192.168.0.200:8443` | Centraliza logs, gestiona agentes, panel web Kibana. |
+| **Máquina Objetivo (Agente)** | Máquina Virtual (CTF-Labs - KALI) | `192.168.0.21` | Ejecuta el agente Wazuh y contenedores vulnerables. |
+| **Máquina Atacante** | Máquina Virtual (Nyx - Kali Linux) | `192.168.0.27` | Punto desde donde se lanzan los ataques simulados. |
+| **Contenedor Vulnerable** | Docker en CTF-Labs (Imagen "escolares") | `192.168.0.21:8080` | Contenedor con WordPress/Apache que actúa como víctima. |
+
 
 **Flujo de Datos:**  
 Los ataques desde `Nyx` hacia el contenedor en `CTF-Labs` generan logs en el contenedor. A través de un volumen de Docker, estos logs se sincronizan con el sistema de archivos del host `CTF-Labs`, donde el agente Wazuh los lee y los envía al Manager en la Raspberry Pi para su análisis y visualización.
