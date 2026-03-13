@@ -74,7 +74,10 @@ Los ataques desde `Nyx` hacia el contenedor en `CTF-Labs` generan logs en el
 
 - Se instaló Raspberry Pi OS (64-bit) en una tarjeta microSD de 64GB.
     
-- Se siguieron las guías de los videos: [Video 1 - Configuración Inicial](https://www.youtube.com/watch?v=xRsxs5eBpmI&t) y [Video 2 - Acceso SSH](https://www.youtube.com/watch?v=-7vvELophxU&t) para habilitar y conectar por SSH.
+- Se siguieron las guías de los videos: 
+https://www.youtube.com/watch?v=xRsxs5eBpmI&t
+https://www.youtube.com/watch?v=-7vvELophxU&t
+
     
 
 **4.1.2. Instalación de Portainer (Opcional pero Recomendado):**
@@ -95,8 +98,8 @@ Los ataques desde `Nyx` hacia el contenedor en `CTF-Labs` generan logs en el
 
 **4.1.4. Generación de Certificados**  
 Utilizamos las herramientas oficiales para generar la infraestructura de clave pública (PKI) necesaria para la comunicación segura entre los componentes.
-
-[https:///assets/images/posts/project/wazuh/cert.png](https://assets/images/posts/project/wazuh/cert.png)  
+![Certificados](/assets/images/posts/project/wazuh/cert.png)
+ 
 
 
 _Captura: Descarga y generación del script de certificados._
@@ -104,7 +107,7 @@ _Captura: Descarga y generación del script de certificados._
 **Nota técnica para ARM64**: Debido a que el script de generación original estaba compilado para `amd64`, en algunos pasos tuvimos que intervenir manualmente con **OpenSSL** para asegurar la compatibilidad con la arquitectura de la Raspberry Pi 5.
 
 ## **4.1.5. Configuración del `docker-compose.yml`**
-[[SIEM Docker-Compose.yml de SIEM]]         <------------- Docker-Compose SIEM
+Docker-Compose.yml 
 
 
 **Resolución de Conflictos (Port 443)**  
@@ -120,13 +123,13 @@ nyx-pi@Nyx-Pi:/mnt/datos/wazuh-docker/wazuh-demo1 $ docker compose up -d
 
 **Estado de los Contenedores**  
 Verificamos que todos los servicios estuvieran en estado `Up` (saludable):  
-[https:///assets/images/posts/project/wazuh/docker-up.png](https://assets/images/posts/project/wazuh/docker-up.png)  
+![Docker Up](/assets/images/posts/project/wazuh/docker-up.png)
 
 _Captura: Contenedores de Wazuh corriendo junto a Pi-hole y Portainer._
 
 **4.1.7. Acceso al Dashboard**  
 Finalmente, accedimos a la interfaz web a través del puerto configurado (**8443**).  
-[https:///assets/images/posts/project/wazuh/wazuh_1.png](https://assets/images/posts/project/wazuh/wazuh_1.png)  
+![Wazuh Dashboard](/assets/images/posts/project/wazuh/wazuh_1.png)
 
 _Captura: Dashboard de Wazuh operativo tras el Health Check inicial._
 
@@ -213,7 +216,7 @@ sudo apt update
 sudo apt install wazuh-agent -y
 ```
 
-[https:///assets/images/posts/project/wazuh/agent.png](https://assets/images/posts/project/wazuh/agent.png)  
+![Agente Wazuh](/assets/images/posts/project/wazuh/agent.png)  
 
 _Captura: Instalación del agente Wazuh en la máquina CTF-Labs._
 
@@ -439,7 +442,7 @@ El archivo de configuración completo del agente en `/var/ossec/etc/ossec.conf` 
 **4.2.5. Verificación de la Conexión del Agente**  
 Una vez configurado, verificamos que el agente se conectaba correctamente al manager desde el dashboard de Wazuh.
 
-[https:///assets/images/posts/project/wazuh/wazuh_2.png](https://assets/images/posts/project/wazuh/wazuh_2.png)  
+![Agente conectado](/assets/images/posts/project/wazuh/wazuh_2.png)
 
 _Captura: Agente 'CTF-Labs-nyx' conectado y activo en el panel de Wazuh._
 
@@ -616,8 +619,7 @@ done
 
 La configuración final del agente en `/var/ossec/etc/ossec.conf` incluye múltiples entradas para garantizar la captura de todos los logs:
 
-xml
-
+```xml
 <!-- Monitoreo de logs de Apache desde contenedores -->
 <localfile>
   <log_format>apache</log_format>
@@ -632,6 +634,7 @@ xml
   <log_format>syslog</log_format>
   <location>/home/cft/logs_victima/*.log</location>
 </localfile>
+```
 
 **Nota:** Se observaron advertencias de archivos duplicados (`WARNING: (1958): Log file is duplicated`), pero no afectan el funcionamiento del sistema.
 
@@ -699,7 +702,7 @@ wpscan --url http://192.168.0.21:8080/wordpress \
 Mientras se ejecutaban los ataques, se monitorizaron los logs en la máquina objetivo para verificar que el tráfico llegaba.
 
 **En CTF-Labs (host):**  
-`sudo tail -f /var/log/apache2/access.log | grep --color=auto -E "POST|wp-login|luisillo|Hydra"`
+```sudo tail -f /var/log/apache2/access.log | grep --color=auto -E "POST|wp-login|luisillo|Hydra"```
 
 ##### **5.4. Verificación del Estado del Agente en el Manager**
 
