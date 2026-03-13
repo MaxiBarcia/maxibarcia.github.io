@@ -23,21 +23,6 @@ toc: true
 ---
 
 
-## 📑 **Índice**
-- [Resumen Ejecutivo](#resumen-ejecutivo)
-- [Objetivos del Proyecto](#objetivos-del-proyecto)
-- [Arquitectura de Red](#arquitectura-de-la-red-e-infraestructura)
-- [Configuración Raspberry Pi](#configuración-de-la-raspberry-pi-5-servidor-wazuh)
-- [Configuración Agente](#configuración-de-la-máquina-objetivo-ctf-labs---ip-21)
-- [Simulación de Ataques](#simulación-de-ataques-y-validación)
-- [Resultados](#resultados-y-análisis-en-wazuh)
-- [Lecciones Aprendidas](#lecciones-aprendidas-y-desafíos-superados)
-- [Troubleshooting](#comandos-de-verificación-y-troubleshooting)
-- [Conclusión](#conclusión-y-próximos-pasos)
-- [Apéndices](#apéndices)
-
----
-
 #### **1. Resumen Ejecutivo**
 
 Este documento describe la implementación de un laboratorio de seguridad (SIEM) en un entorno doméstico utilizando una Raspberry Pi 5 como servidor central y una máquina virtual (CTF-Labs) como objetivo de pruebas.  
