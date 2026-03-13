@@ -740,7 +740,7 @@ Tras los ataques, se procedió a analizar las alertas generadas en el dashboard 
 ##### **6.1. Detección de Intentos de Login (Regla 31509)**
 
 Cada intento de login, tanto de Hydra como de WPScan, generó una alerta de nivel 3.  
-![[Pasted image 20260309172224.png|800]]  
+
 _Captura: Múltiples alertas de tipo "CMS (WordPress or Joomla) login attempt." (regla 31509) desde la IP 172.17.0.1._
 
 **Detalle de una alerta de Hydra:**
@@ -760,7 +760,6 @@ _Captura: Múltiples alertas de tipo "CMS (WordPress or Joomla) login attempt." 
 ##### **6.2. Correlación y Detección de Fuerza Bruta (Regla 31510)**
 Al acumularse múltiples intentos fallidos en un corto periodo de tiempo, Wazuh correlacionó los eventos y elevó la alerta a **nivel 8** (fuerza bruta).
 
-![[Pasted image 20260309172626.png|800]]  
 _Captura: Alerta de "CMS (WordPress or Joomla) brute force attempt." (regla 31510) con nivel 8._
 
 **Detalle de la alerta de fuerza bruta:**
