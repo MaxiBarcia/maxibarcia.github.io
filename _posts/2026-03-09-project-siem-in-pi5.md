@@ -97,7 +97,8 @@ Los ataques desde `Nyx` hacia el contenedor en `CTF-Labs` generan logs en el
 Utilizamos las herramientas oficiales para generar la infraestructura de clave pública (PKI) necesaria para la comunicación segura entre los componentes.
 
 [https:///assets/images/posts/project/wazuh/cert.png](https://assets/images/posts/project/wazuh/cert.png)  
-![[Pasted image 20260305185510.png|700]]  
+
+
 _Captura: Descarga y generación del script de certificados._
 
 **Nota técnica para ARM64**: Debido a que el script de generación original estaba compilado para `amd64`, en algunos pasos tuvimos que intervenir manualmente con **OpenSSL** para asegurar la compatibilidad con la arquitectura de la Raspberry Pi 5.
@@ -120,13 +121,13 @@ nyx-pi@Nyx-Pi:/mnt/datos/wazuh-docker/wazuh-demo1 $ docker compose up -d
 **Estado de los Contenedores**  
 Verificamos que todos los servicios estuvieran en estado `Up` (saludable):  
 [https:///assets/images/posts/project/wazuh/docker-up.png](https://assets/images/posts/project/wazuh/docker-up.png)  
-![[Pasted image 20260306105756.png|800]]  
+
 _Captura: Contenedores de Wazuh corriendo junto a Pi-hole y Portainer._
 
 **4.1.7. Acceso al Dashboard**  
 Finalmente, accedimos a la interfaz web a través del puerto configurado (**8443**).  
 [https:///assets/images/posts/project/wazuh/wazuh_1.png](https://assets/images/posts/project/wazuh/wazuh_1.png)  
-![[Pasted image 20260306110418.png|800]]  
+
 _Captura: Dashboard de Wazuh operativo tras el Health Check inicial._
 
 **Detalles Técnicos de Acceso**
@@ -213,7 +214,7 @@ sudo apt install wazuh-agent -y
 ```
 
 [https:///assets/images/posts/project/wazuh/agent.png](https://assets/images/posts/project/wazuh/agent.png)  
-![[Pasted image 20260306160205.png]]  
+
 _Captura: Instalación del agente Wazuh en la máquina CTF-Labs._
 
 **4.2.2. Configuración de Red y Permisos**
@@ -439,7 +440,7 @@ El archivo de configuración completo del agente en `/var/ossec/etc/ossec.conf` 
 Una vez configurado, verificamos que el agente se conectaba correctamente al manager desde el dashboard de Wazuh.
 
 [https:///assets/images/posts/project/wazuh/wazuh_2.png](https://assets/images/posts/project/wazuh/wazuh_2.png)  
-![[Pasted image 20260306155956.png]]  
+
 _Captura: Agente 'CTF-Labs-nyx' conectado y activo en el panel de Wazuh._
 
 
