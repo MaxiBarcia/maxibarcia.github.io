@@ -107,7 +107,7 @@ _Captura: Descarga y generación del script de certificados._
 **Nota técnica para ARM64**: Debido a que el script de generación original estaba compilado para `amd64`, en algunos pasos tuvimos que intervenir manualmente con **OpenSSL** para asegurar la compatibilidad con la arquitectura de la Raspberry Pi 5.
 
 ## **4.1.5. Configuración del `docker-compose.yml`**
-Docker-Compose.yml 
+Docker-Compose
 
 
 **Resolución de Conflictos (Port 443)**  
@@ -702,7 +702,9 @@ wpscan --url http://192.168.0.21:8080/wordpress \
 Mientras se ejecutaban los ataques, se monitorizaron los logs en la máquina objetivo para verificar que el tráfico llegaba.
 
 **En CTF-Labs (host):**  
-```sudo tail -f /var/log/apache2/access.log | grep --color=auto -E "POST|wp-login|luisillo|Hydra"```
+```bash
+sudo tail -f /var/log/apache2/access.log | grep --color=auto -E "POST|wp-login|luisillo|Hydra"
+```
 
 ##### **5.4. Verificación del Estado del Agente en el Manager**
 
