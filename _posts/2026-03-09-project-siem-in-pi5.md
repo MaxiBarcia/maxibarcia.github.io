@@ -27,14 +27,14 @@ toc: true
 - [Resumen Ejecutivo](#1-resumen-ejecutivo)
 - [Objetivos del Proyecto](#2-objetivos-del-proyecto)
 - [Arquitectura de Red](#3-arquitectura-de-la-red-e-infraestructura)
-- [Configuración Raspberry Pi](#4-configuración-de-la-raspberry-pi-5-servidor-wazuh)
-- [Configuración Agente](#42-configuración-de-la-máquina-objetivo-ctf-labs---ip-21)
-- [Simulación de Ataques](#5-simulación-de-ataques-y-validación)
-- [Resultados](#6-resultados-y-análisis-en-wazuh)
-- [Lecciones Aprendidas](#7-lecciones-aprendidas-y-desafíos-superados)
-- [Troubleshooting](#8-comandos-de-verificación-y-troubleshooting)
-- [Conclusión](#9-conclusión-y-próximos-pasos)
-- [Apéndices](#apéndices)
+- [Configuración Raspberry Pi](#4-configuracion-de-la-raspberry-pi-5-servidor-wazuh)
+- [Configuración Agente](#42-configuracion-de-la-maquina-objetivo-ctf-labs---ip-21)
+- [Simulación de Ataques](#5-simulacion-de-ataques-y-validacion)
+- [Resultados](#6-resultados-y-analisis-en-wazuh)
+- [Lecciones Aprendidas](#7-lecciones-aprendidas-y-desafios-superados)
+- [Troubleshooting](#8-comandos-de-verificacion-y-troubleshooting)
+- [Conclusión](#9-conclusion-y-proximos-pasos)
+- [Apéndices](#apendices)
 
 ---
 
