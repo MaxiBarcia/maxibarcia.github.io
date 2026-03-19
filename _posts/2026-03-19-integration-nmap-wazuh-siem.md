@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Integración Nmap-Wazuh: Detección Automatizada de Escaneos de Red"
-date: 2026-03-19 10:00:00 -0300
 description: "Guía completa para integrar Nmap con Wazuh y detectar escaneos de red automáticamente. Incluye scripts, reglas personalizadas y mapeo MITRE ATT&CK T1046."
 categories: [wazuh, siem, nmap, threat-detection, soc]
 tags: [wazuh, nmap, siem, threat-hunting, mitre-attack, python, raspberry-pi, security-monitoring, network-scanning, t1046]
