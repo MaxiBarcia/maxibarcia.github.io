@@ -5,7 +5,7 @@ description: "Guía completa para integrar Nmap con Wazuh y detectar escaneos de
 categories: [wazuh, siem, nmap, threat-detection, soc]
 tags: [wazuh, nmap, siem, threat-hunting, mitre-attack, python, raspberry-pi, security-monitoring, network-scanning, t1046]
 image:
-  path: /assets/images/posts/nmap-wazuh/banner-integracion.png
+  path: /assets/images/posts/project/nmap-wazuh/banner-integracion.png
   alt: "Integración Nmap-Wazuh - Dashboard de alertas"
   featured: true
 author: maximiliano-barcia
