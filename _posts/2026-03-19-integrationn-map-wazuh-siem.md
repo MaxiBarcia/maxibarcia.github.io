@@ -302,7 +302,7 @@ Dado que los logs se generan en formato JSON, Wazuh puede procesarlos automátic
 
 Al introducir este log en la herramienta **Decoders Test** del dashboard de Wazuh, se confirma que alcanza la **Phase 2 (decoding)** sin necesidad de un decoder personalizado.
 
-![Decoders](/assets/images/posts/project/nmap-wazuh/decoders.png)
+![Decoders](/assets/images/posts/project/nmap-wazuh/decoder.png)
 
 _Captura: Resultado del test de decoder mostrando Phase 2._
 
