@@ -1,0 +1,36 @@
+---
+# Jekyll front matter
+---
+@import "main";
+
+/* --- ESTILOS PERSONALIZADOS NYX BLOG --- */
+
+/* Forzar proporción 16:9 en las imágenes de la lista de posts (Home) */
+#post-list .post-preview img {
+  aspect-ratio: 16 / 9 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 8px;
+}
+
+/* Estilo para los Banners dentro del contenido del post */
+/* Se activa automáticamente si el archivo tiene "banner" en el nombre */
+.post-content img[src*="banner"] {
+  display: block;
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  border: 1px solid #1a1d24;
+  box-shadow: 0 10px 30px rgba(0, 170, 255, 0.2);
+}
+
+/* Efecto hover en las tarjetas del home */
+#post-list .post-preview:hover img {
+  filter: brightness(1.2) contrast(1.1);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+  transition: all 0.3s ease-in-out;
+}
