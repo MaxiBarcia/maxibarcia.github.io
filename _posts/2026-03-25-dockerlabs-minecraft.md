@@ -17,7 +17,7 @@ toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
 header:
-  overlay_image: /assets/images/headers/dockerlabs.png
+  overlay_image: /assets/images/posts/DockerLabs/minecraft/banner.png
   overlay_filter: 0.7
 og_image: /assets/images/posts/DockerLabs/minecraft/banner.png
 seo_title: DockerLabs - Hackeando Minecraft - Backdoor, RCE y Root
