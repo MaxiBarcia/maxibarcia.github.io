@@ -1,7 +1,6 @@
 ---
 title: Vulnyx - Blog
 platform: Vulnyx | Linux (Debian)
-date: 2026-02-05
 tags:
   - Linux
   - Web
@@ -21,6 +20,11 @@ toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
 ---
+
+**Técnicas:** Enumeración web con ffuf, descubrimiento de CMS Nibbleblog, exposición de archivos sensibles (users.xml, config.xml), fuerza bruta con Hydra a panel admin, bypass de subida de archivos con cabecera GIF, reverse shell PHP, escalada por sudo misconfiguration (git, mcedit), crontab persistence.  
+**Herramientas:** Nmap, arp-scan, ffuf, Hydra, Burp Suite, revshell.com payloads, mcedit.  
+**Metodologías:** Reconocimiento de red, fuzzing recursivo, enumeración de archivos XML en `/content/private/`, credential stuffing, file upload bypass (GIF89a;), tratamiento de TTY, enumeración de sudoers, abuso de binarios con privilegios.
+
 
 ## Reconocimiento
 

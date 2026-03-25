@@ -18,6 +18,11 @@ toc_label: Contenido del Reporte
 toc_sticky: true
 ---
 
+**Técnicas:** Enumeración SMB con crackmapexec, credenciales por defecto (bogo:bogo), extracción de credenciales desde logs SMB (marcos:SuperPassword), subida de webshell ASPX, ejecución remota vía UNC path con impacket-smbserver, migración de proceso en Meterpreter, identificación de SeImpersonatePrivilege, escalada con MS16-075 (Rotten Potato) a NT AUTHORITY\SYSTEM.  
+**Herramientas:** Nmap, crackmapexec, smbclient, msfvenom, impacket-smbserver, Metasploit (ms16_075_reflection).  
+**Metodologías:** Reconocimiento de red con arp-scan/Nmap, enumeración de recursos SMB, fuerza bruta por diccionario, análisis de logs, despliegue de webshell, evasión de antivirus con ejecución UNC, escalada de privilegios por impersonación.
+
+
 ## 1 - Reporte Ejecutivo
 
 Se ha realizado una auditoría de seguridad sobre el host **10.0.2.8 (SIMPLE)**. El análisis reveló una cadena de vulnerabilidades críticas que permiten a un atacante remoto sin privilegios iniciales tomar el control total del servidor. La explotación exitosa se basó en la reutilización de credenciales, permisos de escritura mal configurados en el servicio SMB y la explotación de privilegios de impersonación en el sistema operativo Windows Server 2019 .
