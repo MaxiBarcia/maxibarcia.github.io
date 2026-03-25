@@ -29,15 +29,7 @@ date: 2026-03-25
 draft: false
 ---
 
-**DockerLabs - "Hackeando Minecraft"**
-
-|Herramienta|Versión|Uso|
-|---|---|---|
-|Nmap|7.95|Escaneo de puertos y servicios|
-|Gobuster|3.8|Fuzzing de directorios|
-|Node.js|18.x|Runtime para cliente de Minecraft|
-|mineflayer|4.22.0|Cliente de Minecraft para Node.js|
-|curl|7.88.1|Peticiones HTTP manuales|
+Técnicas: Web Cloning con HTTrack, fuzzing con Gobuster, análisis de archivos residuales, descubrimiento de backdoor en plugin de Minecraft, automatización con Node.js/mineflayer, RCE como root. Herramientas: Nmap, Gobuster, HTTrack, mineflayer.
 
 ---
 
