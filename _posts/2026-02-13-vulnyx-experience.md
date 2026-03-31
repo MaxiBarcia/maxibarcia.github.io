@@ -20,6 +20,13 @@ toc_label: Contenido del Reporte
 toc_sticky: true
 ---
 
+**Técnicas:** Enumeración SMB con Nmap scripts, detección de vulnerabilidades críticas (MS08-067, MS17-010 EternalBlue), explotación con Metasploit, obtención de shell como NT AUTHORITY\SYSTEM, hashdump con Meterpreter, cracking de hashes NTLM con John the Ripper, post-explotación en Windows Legacy.  
+**Herramientas:** Nmap (smb-vuln-* scripts), Metasploit (ms08_067_netapi, ms17_010_psexec), Meterpreter, John the Ripper, arp-scan.  
+**Metodologías:** Reconocimiento de red, detección de SO por TTL, escaneo de puertos, fingerprinting de vulnerabilidades SMB, explotación RCE sin autenticación, extracción de credenciales, análisis de hashes.
+
+
+
+
 ## 1 - Reporte Ejecutivo
 
 Durante la auditoría de seguridad realizada sobre la máquina **Experience (Windows XP)** en la plataforma Vulnyx, se identificaron vulnerabilidades críticas en el servicio SMB expuesto en el puerto 445/TCP.

@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "Laboratorio SIEM Casero: Wazuh en Raspberry Pi 5"
-date: 2026-03-09 10:00:00 -0300
 description: "Guía completa para montar tu propio centro de operaciones de seguridad (SOC) en casa con Wazuh sobre Raspberry Pi 5, incluyendo simulación de ataques y detección con MITRE ATT&CK."
 categories: [ciberseguridad, wazuh, raspberry-pi, siem, homelab]
 tags: [wazuh, raspberry-pi-5, siem, soc, elastic-stack, docker, arm64, threat-hunting, mitre-attack, cybersecurity]
