@@ -1,43 +1,54 @@
-# Chirpy Starter
+<!-- Header -->
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com/?lines=Maxi+Barcia;Writeups+%7C+CTF+%7C+Hacking;Red+Team+%7C+Blue+Team+SOC&font=Fira%20Code&center=true&width=440&height=45&color=f75c7e&vCenter=true&size=22">
+</p>
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+<h1 align="center">📝 maxibarcia.github.io</h1>
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+<p align="center">
+  <strong>Mi blog técnico de ciberseguridad</strong> · Writeups detallados · CTF · Pentesting · SOC
+</p>
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+<p align="center">
+  <a href="https://maxibarcia.github.io"><img src="https://img.shields.io/badge/🌐_Visitar_Portfolio-ff69b4?style=flat-square&logo=github&logoColor=white"></a>
+  <a href="https://github.com/MaxiBarcia"><img src="https://img.shields.io/badge/🐙_GitHub-181717?style=flat-square&logo=github&logoColor=white"></a>
+  <a href="https://linkedin.com/in/maxib-sec"><img src="https://img.shields.io/badge/🔗_LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white"></a>
+</p>
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+---
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
-```
+## 🎯 ¿Qué encontrarás aquí?
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+Este repositorio contiene el código fuente de mi **portfolio y blog de ciberseguridad**, donde publico:
 
-## Usage
+| Tipo | Descripción |
+|------|-------------|
+| **🐧 Writeups de máquinas** | Resoluciones paso a paso de HackMyVM, DockerLabs, CTFs |
+| **🛠️ Proyectos técnicos** | SIEM casero con Wazuh, automatizaciones, scripts |
+| **📚 Apuntes y guías** | Técnicas de pentesting, Active Directory, hardening |
+| **🔍 Investigación** | Pruebas de concepto, herramientas, metodologías |
 
-Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+---
 
-## Contributing
+## 🚀 Últimos writeups
 
-This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
+<!-- Puedes actualizar esta sección manualmente o dejar que se genere automágicamente -->
+- 🖥️ **[DC01 - HackMyVM](https://maxibarcia.github.io/posts/hackmyvm-dc01/)** · Enumeración SMB, Kerberoasting, RID brute force
+- 🏠 **[SIEM casero con Wazuh en Raspberry Pi 5](https://maxibarcia.github.io/posts/project-siem-in-pi5/)** · Implementación completa
 
-## License
+> 👉 **[Ver todos los writeups →](https://maxibarcia.github.io)**
 
-This work is published under [MIT][mit] License.
+---
 
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+## 🧠 Tecnologías con las que está construido
+
+![Jekyll](https://img.shields.io/badge/Jekyll-CC0000?style=flat-square&logo=jekyll&logoColor=white)
+![Ruby](https://img.shields.io/badge/Ruby-CC342D?style=flat-square&logo=ruby&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=flat-square&logo=sass&logoColor=white)
+![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat-square&logo=markdown&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=githubpages&logoColor=white)
+
+---
+
+## 📂 Estructura del repositorio
