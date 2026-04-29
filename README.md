@@ -50,8 +50,3 @@ Este repositorio contiene el código fuente de mi **portfolio y blog de ciberseg
 ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=githubpages&logoColor=white)
 
 
-<p align="center"> <img src="https://komarev.com/ghpvc/?username=MaxiBarcia&label=Visitas+al+repo&color=0e75b6&style=flat-square"> <br> <sub>⚡ Si te sirven mis writeups, ¡dale ⭐ al repo!</sub> </p>
-
----
-
-## 📂 Estructura del repositorio
