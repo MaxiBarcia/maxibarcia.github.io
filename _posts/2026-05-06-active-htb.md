@@ -20,10 +20,14 @@ toc_label: "Contenido"
 toc_sticky: true
 
 ---
+# 📊 Resumen Ejecutivo
+> [!SUMMARY] TL;DR
+> Compromiso total del Domain Controller **Active** mediante enumeración SMB anónima, 
+> explotación de Group Policy Preferences (GPP) para extraer credenciales de `SVC_TGS`,
+> y escalada a Domain Admin mediante Kerberoasting al usuario `Administrator`.
 
 
-
-# 🖼️ Machine Info
+## 🖼️ Machine Info
 | Clave | Valor |
 |-------|-------|
 | **Nombre** | Active |
@@ -35,11 +39,7 @@ toc_sticky: true
 | **Skills** | AD Enum, GPP, Kerberoasting, PtH, DCSync |
 | **Fecha** | 2026-05-08 |
 ---
-## 📊 Resumen Ejecutivo
-> [!SUMMARY] TL;DR
-> Compromiso total del Domain Controller **Active** mediante enumeración SMB anónima, 
-> explotación de Group Policy Preferences (GPP) para extraer credenciales de `SVC_TGS`,
-> y escalada a Domain Admin mediante Kerberoasting al usuario `Administrator`.
+
 ### 🔗 Kill Chain
 
 ```graph LR
