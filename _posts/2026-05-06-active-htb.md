@@ -1,5 +1,5 @@
 ---
-title: "HTB - Active"
+title: "HTB - Active - AD, SMB"
 platform: "[[HackTheBox]]"
 os: "Windows"
 tags:
