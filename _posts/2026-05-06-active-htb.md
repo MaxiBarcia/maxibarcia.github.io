@@ -26,7 +26,7 @@ toc_sticky: true
 > y escalada a Domain Admin mediante Kerberoasting al usuario `Administrator`.
 
 
-## 🖼️ Machine Info
+## Machine Info
 | Clave | Valor |
 |-------|-------|
 | **Nombre** | Active |
@@ -39,9 +39,8 @@ toc_sticky: true
 | **Fecha** | 2026-05-08 |
 ---
 
-### 🔗 Kill Chain
+### Kill Chain
 
-```graph LR
     A[Port Scan] -->|445 SMB| B[Anonymous Access]
     B -->|Replication Share| C[Groups.xml]
     C -->|gpp-decrypt| D[SVC_TGS Password]
@@ -51,9 +50,9 @@ toc_sticky: true
     
     style G fill:#ff0000,color:#fff
     style A fill:#4a90d9,color:#fff
-```
 
-### 🚨 Riesgos Identificados
+
+### Riesgos Identificados
 
 |Riesgo|Impacto|Probabilidad|Severidad|
 |---|---|---|---|
@@ -63,7 +62,7 @@ toc_sticky: true
 |DC Windows 2008 R2 sin hardening|Alto|Confirmado|🟠 ALTA|
 |NTDS.dit extraíble con credenciales DA|Crítico|Confirmado|🔴 CRÍTICA|
 
-### ✅ Plan de Remediación
+### Plan de Remediación
 
 1. **Inmediato:** Deshabilitar SMB anonymous access
 2. **Inmediato:** Eliminar `Groups.xml` y rotar contraseña de `SVC_TGS`
@@ -73,15 +72,15 @@ toc_sticky: true
 
 ---
 
-## 🔍 Reconocimiento (Reconnaissance)
+## Reconocimiento (Reconnaissance)
 
-### 🎯 Target Scoping
+### Target Scoping
 
 - **IP Objetivo:** `10.129.29.159`
 - **Hostname Detectado:** `Active`
 - **Sistema:** Windows Server 2008 R2 SP1 (Domain Controller)
 
-### 📡 Escaneo de Puertos
+### Escaneo de Puertos
 
 #### Escaneo Inicial (Full Port Scan)
   
@@ -100,7 +99,7 @@ cat allPorts | awk '{print $1}' FS="/" | grep "^[0-9]" | tr '\n' ','
 nmap -p <Puerto> -sCV -v -N $target -oN allPorts
 ```
 
-### 📊 Servicios Identificados
+### Servicios Identificados
 
 |Puerto|Servicio|Versión|Notas|
 |---|---|---|---|
