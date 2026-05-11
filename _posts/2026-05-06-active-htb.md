@@ -21,8 +21,7 @@ toc_sticky: true
 
 ---
 # 📊 Resumen Ejecutivo
-> [!SUMMARY] TL;DR
-> Compromiso total del Domain Controller **Active** mediante enumeración SMB anónima, 
+> Compromiso  del Domain Controller **Active** mediante enumeración SMB anónima, 
 > explotación de Group Policy Preferences (GPP) para extraer credenciales de `SVC_TGS`,
 > y escalada a Domain Admin mediante Kerberoasting al usuario `Administrator`.
 
