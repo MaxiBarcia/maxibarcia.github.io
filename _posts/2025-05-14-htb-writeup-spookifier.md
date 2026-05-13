@@ -21,7 +21,7 @@ tags:
 
 El sitio web proporciona una funcionalidad sencilla, permite ingresar texto que luego es transformado a distintos estilos de fuentes.
 
-![](assets/img/htb-writeup-spookifier/spookifier1.png)
+![](/assets/img/htb-writeup-spookifier/spookifier1.png)
 
 ```terminal
 /home/kali/Documents/htb/challenges/spookifier:-$ unzip Spookifier.zip 
@@ -75,7 +75,7 @@ from flask_mako import MakoTemplates
 
 Teniendo en cuenta esto, realizo una prueba de Server-Side Template Injection específica para Mako. El resultado mostrado por la aplicación es 49, lo cual confirma que la presencia de la vulnerabilidad SSTI.
 
-![](assets/img/htb-writeup-spookifier/spookifier2.png)
+![](/assets/img/htb-writeup-spookifier/spookifier2.png)
 
 ---
 ## Vulnerability Exploitation
@@ -86,7 +86,7 @@ Consultando [PayloadsAllTheThings](https://github.com/swisskyrepo/PayloadsAllThe
 ${self.module.cache.util.os.popen('id').read()}
 ```
 
-![](assets/img/htb-writeup-spookifier/spookifier3.png)
+![](/assets/img/htb-writeup-spookifier/spookifier3.png)
 
 La vulnerabilidad permite la lectura arbitraria de archivos y la ejecución de comandos. A partir de esto, accedo al contenido de la flag alojada en el directorio raíz.
 
@@ -94,7 +94,7 @@ La vulnerabilidad permite la lectura arbitraria de archivos y la ejecución de c
 ${self.module.cache.util.os.popen('cat /flag.txt').read()}
 ```
 
-![](assets/img/htb-writeup-spookifier/spookifier4.png)
+![](/assets/img/htb-writeup-spookifier/spookifier4.png)
 
 > <a href="https://labs.hackthebox.com/achievement/challenge/1521382/413" target="_blank">***Litio7 has successfully solved Spookifier from Hack The Box***</a>
 {: .prompt-info style="text-align:center" }

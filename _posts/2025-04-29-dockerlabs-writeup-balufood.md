@@ -75,7 +75,7 @@ http://172.17.0.2:5000 [200 OK] Bootstrap, Country[RESERVED][ZZ], Frame, HTML5, 
 
 El servicio web inicial presenta una interfaz simple con funcionalidades básicas visibles.
 
-![](assets/img/dockerlabs-writeup-balufood/balufood1_1.png)
+![](/assets/img/dockerlabs-writeup-balufood/balufood1_1.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/balufood:-$ dirb http://172.17.0.2:5000/
@@ -88,12 +88,12 @@ El servicio web inicial presenta una interfaz simple con funcionalidades básica
 
 Pruebo autenticarme en `/login` con credenciales comunes y el par `admin`:`admin` permite acceder exitosamente al panel `/admin`.
 
-![](assets/img/dockerlabs-writeup-balufood/balufood1_2.png)
-![](assets/img/dockerlabs-writeup-balufood/balufood1_3.png)
+![](/assets/img/dockerlabs-writeup-balufood/balufood1_2.png)
+![](/assets/img/dockerlabs-writeup-balufood/balufood1_3.png)
 
 Analizando el código fuente del panel `/admin`, identifico credenciales comentadas, `sysadmin`:`backup123`.
 
-![](assets/img/dockerlabs-writeup-balufood/balufood1_4.png)
+![](/assets/img/dockerlabs-writeup-balufood/balufood1_4.png)
 
 Estas credenciales permiten acceso por ssh como el usuario `sysadmin`.
 
@@ -123,7 +123,7 @@ En el directorio `/home/sysadmin` se encuentra un archivo llamado `app.py`, que 
 sysadmin@6fa083db4c91:~$ head app.py
 ```
 
-![](assets/img/dockerlabs-writeup-balufood/balufood1_5.png)
+![](/assets/img/dockerlabs-writeup-balufood/balufood1_5.png)
 
 La cadena se utiliza como contraseña del usuario `balulero` y permite autenticarse exitosamente.
 

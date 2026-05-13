@@ -90,11 +90,11 @@ Comenzando con el escaneo del servicio SMB, pude ver que el recurso compartido `
 /home/kali/Documents/dockerlabs/raas:-$ smbclient -L //127.17.0.2/ -N 
 ```
 
-![](assets/img/dockerlabs-writeup-raas/raas1_1.png)
+![](/assets/img/dockerlabs-writeup-raas/raas1_1.png)
 
 No puede enumerar ningun recurso compartido.
 
-![](assets/img/dockerlabs-writeup-raas/raas1_2.png)
+![](/assets/img/dockerlabs-writeup-raas/raas1_2.png)
 
 Utilicé enum4linux para enumerar los usuarios del sistema y luego intentar realizar un ataque de diccionario.
 
@@ -102,7 +102,7 @@ Utilicé enum4linux para enumerar los usuarios del sistema y luego intentar real
 /home/kali/Documents/dockerlabs/raas:-$ enum4linux 127.17.0.2
 ```
 
-![](assets/img/dockerlabs-writeup-raas/raas1_3.png)
+![](/assets/img/dockerlabs-writeup-raas/raas1_3.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/raas:-$ echo 'patricio\nbob\ncalamardo' > users.txt
@@ -112,7 +112,7 @@ Utilicé enum4linux para enumerar los usuarios del sistema y luego intentar real
 SMB         127.17.0.2      445    KALI             [+] KALI\patricio:basketball
 ```
 
-![](assets/img/dockerlabs-writeup-raas/raas1_4.png)
+![](/assets/img/dockerlabs-writeup-raas/raas1_4.png)
 
 Una vez obtenida la credencial válida para el usuario `patricio`, accedí al recurso SMB.
 
@@ -120,7 +120,7 @@ Una vez obtenida la credencial válida para el usuario `patricio`, accedí al re
 /home/kali/Documents/dockerlabs/raas:-$ smbclient //127.17.0.2/ransomware -U patricio%basketball
 ```
 
-![](assets/img/dockerlabs-writeup-raas/raas1_5.png)
+![](/assets/img/dockerlabs-writeup-raas/raas1_5.png)
 
 Dentro del recurso compartido, descargué varios archivos, `private.txt`, `nota.txt` y `pokemongo`. Al revisar el contenido de `nota.txt`, observé que el objetivo es descifrar el archivo `private.txt`.
 
@@ -128,7 +128,7 @@ Dentro del recurso compartido, descargué varios archivos, `private.txt`, `nota.
 /home/kali/Documents/dockerlabs/raas:-$ cat nota.txt
 ```
 
-![](assets/img/dockerlabs-writeup-raas/raas2_1.png)
+![](/assets/img/dockerlabs-writeup-raas/raas2_1.png)
 
 ---
 
@@ -141,7 +141,7 @@ En este paso, realizo ingeniería inversa con [Decompiler Explorer](https://dogb
 
 Al observar el código, se identificaron dos valores en formato hexadecimal que corresponden a claves de cifrado`local_438 = 0x3837363534333231;`:`local_430 = 0x3635343332313039;`. Estas claves están siendo utilizadas en la función `encrypt_files_in_directory`, lo que sugiere que son relevantes para desencriptar los archivos.
 
-![](assets/img/dockerlabs-writeup-raas/raas2_2.png)
+![](/assets/img/dockerlabs-writeup-raas/raas2_2.png)
 
 El fragmento de código muestra que el programa obtiene el nombre del host y, si es "dockerlabs", verifica la existencia de ciertos archivos. Si ambos archivos existen, se invoca la función `recon` y luego se configuran las claves de cifrado
 
@@ -161,7 +161,7 @@ El resultado es que el IV (vector de inicialización) que se utiliza para el cif
 
 * `IV = 1234567895601234`.
 
-![](assets/img/dockerlabs-writeup-raas/raas2_3.png)
+![](/assets/img/dockerlabs-writeup-raas/raas2_3.png)
 
 En este fragmento de código de la función `recon`, se están concatenando varias cadenas de texto a `param_1` utilizando la función `builtin_strncpy`. Al examinar las cadenas que se copian, podemos construir la segunda clave en formato ASCII.
 
@@ -195,7 +195,7 @@ eTBxcGZqeGJkNzkwNDc5MjlldzBvbXFhZDNmNGdzY2w=
 MTIzNDU2Nzg5MDEyMzQ1Ngo=
 ```
 
-![](assets/img/dockerlabs-writeup-raas/raas2_4.png)
+![](/assets/img/dockerlabs-writeup-raas/raas2_4.png)
 
 De esta forma, obtengo las credenciales SSH. `las credenciales ssh son: bob:56000nmqpL`.
 

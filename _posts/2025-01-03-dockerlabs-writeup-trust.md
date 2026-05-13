@@ -73,7 +73,7 @@ http://127.18.0.2 [200 OK] Apache[2.4.57], Country[RESERVED][ZZ], HTTPServer[Deb
 
 La página web inicial parece ser una plantilla predeterminada de Apache.
 
-![](assets/img/dockerlabs-writeup-trust/trust1.png)
+![](/assets/img/dockerlabs-writeup-trust/trust1.png)
 
 Durante el proceso de fuzzing, encuentro una pagina PHP accesible, ```secret.php```.
 
@@ -84,7 +84,7 @@ Durante el proceso de fuzzing, encuentro una pagina PHP accesible, ```secret.php
 + http://127.18.0.2/secret.php (CODE:200|SIZE:927)
 ```
 
-![](assets/img/dockerlabs-writeup-trust/trust2.png)
+![](/assets/img/dockerlabs-writeup-trust/trust2.png)
 
 ---
 ## Vulnerability Exploitation
@@ -96,7 +96,7 @@ En este punto, decido realizar un ataque de fuerza bruta al servicio SSH utiliza
 [22][ssh] host: 172.17.0.2   login: mario   password: chocolate
 ```
 
-![](assets/img/dockerlabs-writeup-trust/trust3.png)
+![](/assets/img/dockerlabs-writeup-trust/trust3.png)
 
 El ataque tiene éxito y obtengo las credenciales SSH.
 
@@ -132,7 +132,7 @@ User mario may run the following commands on kali:
 
 Consultando [GTFOBins](https://gtfobins.github.io/gtfobins/vim/#sudo), encuentro que vim puede ser utilizado para ejecutar una shell con privilegios elevados cuando se invoca con sudo.
 
-![](assets/img/dockerlabs-writeup-trust/trust4.png)
+![](/assets/img/dockerlabs-writeup-trust/trust4.png)
 
 ```terminal
 mario@kali:~$ sudo /usr/bin/vim -c ':!/bin/sh'

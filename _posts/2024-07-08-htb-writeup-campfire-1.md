@@ -55,8 +55,8 @@ El ataque de kerberoasting explota la funcionalidad del servicio Kerberos para o
 ---
 ### **`Q1.`** **Analyzing Domain Controller Security Logs, can you confirm the date & time when the kerberoasting activity occurred?**
 
-![](assets/img/htb-writeup-campfire-1/campfire-11.png)
-![](assets/img/htb-writeup-campfire-1/campfire-12.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-11.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-12.png)
 
 Para detectar kerberoasting en los logs de seguridad de un controlador de dominio (DC).
 
@@ -65,13 +65,13 @@ Para detectar kerberoasting en los logs de seguridad de un controlador de domini
 
 <https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=4769>
 
-![](assets/img/htb-writeup-campfire-1/campfire-13.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-13.png)
 
 El evento que cumple con todos los criterios indica el momento en que ocurrió la actividad de kerberoasting.
 
 Los eventos muestran una marca de tiempo que indica las 00hs (mi hora local). Al convertir esta hora a UTC, obtengo la hora del evento 03:18:09. O tambien, se puede revisar los detalles del evento donde figura el tiempo en UTC.
 
-![](assets/img/htb-writeup-campfire-1/campfire-14.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-14.png)
 
 > **`A1.`** **2024-05-21 03:18:09**
 
@@ -79,7 +79,7 @@ Los eventos muestran una marca de tiempo que indica las 00hs (mi hora local). Al
 
 En el evento relacionado con kerberoasting, se identificó el servicio objetivo a través del atributo 'Service Name'.
 
-![](assets/img/htb-writeup-campfire-1/campfire-15.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-15.png)
 
 El servicio solicitado fue: MSSQLService.
 
@@ -89,7 +89,7 @@ El servicio solicitado fue: MSSQLService.
 
 El evento relevante contiene la información sobre el cliente que realizó la solicitud.
 
-![](assets/img/htb-writeup-campfire-1/campfire-16.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-16.png)
 
 Al analizar el registro, se identifica el valor correspondiente al campo 'Client Address' como 172.17.79.129.
 
@@ -99,17 +99,17 @@ Al analizar el registro, se identifica el valor correspondiente al campo 'Client
 
 Análisis de los registros de PowerShell
 
-![](assets/img/htb-writeup-campfire-1/campfire-17.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-17.png)
 
 Específicamente filtrando por ID de evento 4104, me permite visualizar los comandos y scripts ejecutados en la estación de trabajo comprometida. Este ID está asociado con la ejecución de bloques de script en PowerShell.
 
 Según los registros de seguridad del controlador de dominio, la actividad ocurrió a las 03:18:09 UTC. Filtrando los eventos 4104 alrededor de esta hora, se identifica una actividad sospechosa a las 03:16 UTC, dos minutos antes del ataque de Kerberoasting. En el análisis de los eventos cercanos a este horario, se identificó que el atacante ejecutó un script utilizando el parámetro '-ep bypass', lo que indica que la política de ejecución de PowerShell fue desactivada para ejecutar scripts sin restricciones.
 
-![](assets/img/htb-writeup-campfire-1/campfire-18.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-18.png)
 
 Al analizar el contenido del bloque de script registrado, se detectó que la herramienta utilizada era PowerView.ps1, una herramienta comúnmente utilizada en ataques para enumerar objetos de Active Directory. 
 
-![](assets/img/htb-writeup-campfire-1/campfire-19.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-19.png)
 
 > **`A4.`** **powerview.ps1**
 
@@ -117,7 +117,7 @@ Al analizar el contenido del bloque de script registrado, se detectó que la her
 
 El primer evento registrado tiene un timestamp de 2024-05-21 03:16:32 UTC. Este es el momento en el que se ejecutó el script powerview.ps1, justo dos minutos antes del ataque de Kerberoasting identificado en los registros de seguridad del controlador de dominio.
 
-![](assets/img/htb-writeup-campfire-1/campfire-110.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-110.png)
 
 > **`A5.`** **2024-05-21 03:16:32**
 
@@ -128,11 +128,11 @@ Análisis de los archivos Prefetch.
 El comando ```PECmd.exe -d "C:\Users\litio7\Documents\htb\campfire-1\Triage\Workstation\2024-05-21T033012_triage_asset\C\Windows\prefetch" --csv . --csvf prefetch_output.csv``` generó dos archivos CSV con los detalles de los programas ejecutados.
 Estos archivos los carge en Timeline Explorer, donde se analize las entradas relevantes para identificar programas ejecutados alrededor de las 03:18:09 UTC, momento del ataque de Kerberoasting.
 
-![](assets/img/htb-writeup-campfire-1/campfire-111.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-111.png)
 
 Identifique un programa ejecutable llamado Rubeus.exe, conocido por ser una herramienta ofensiva para ataques basados en Kerberos. Su ejecución ocurrió 1 segundo antes del evento malicioso registrado en los logs del controlador de dominio.
 
-![](assets/img/htb-writeup-campfire-1/campfire-112.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-112.png)
 
 > **`A6.`** **C:\USERS\ALONZO.SPIRE\DOWNLOADS\RUBEUS.EXE**
 
@@ -140,7 +140,7 @@ Identifique un programa ejecutable llamado Rubeus.exe, conocido por ser una herr
 
 En el campo Last Run, la marca de tiempo registrada para Rubeus.exe fue (2024-05-21 03:18:08) UTC, 1 segundo antes del evento malicioso registrado en los logs del controlador de dominio.
 
-![](assets/img/htb-writeup-campfire-1/campfire-112.png)
+![](/assets/img/htb-writeup-campfire-1/campfire-112.png)
 
 > **`A7.`** **2024-05-21 03:18:08**
 

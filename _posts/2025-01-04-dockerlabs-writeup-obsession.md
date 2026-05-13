@@ -107,20 +107,20 @@ Password: anonymous
 230 Login successful.
 ```
 
-![](assets/img/dockerlabs-writeup-obsession/obsession1.png)
-![](assets/img/dockerlabs-writeup-obsession/obsession2.png)
+![](/assets/img/dockerlabs-writeup-obsession/obsession1.png)
+![](/assets/img/dockerlabs-writeup-obsession/obsession2.png)
 
 ---
 ## Web Analysis
 
 Durante el análisis inicial del servicio web, detecto una página aparentemente funcional.
 
-![](assets/img/dockerlabs-writeup-obsession/obsession3.png)
+![](/assets/img/dockerlabs-writeup-obsession/obsession3.png)
 
 El formulario cercano al final no parece realizar ninguna acción. Al inspeccionar el código fuente, encuentro un comentario que contiene una pista clave.
 
-![](assets/img/dockerlabs-writeup-obsession/obsession4.png)
-![](assets/img/dockerlabs-writeup-obsession/obsession5.png)
+![](/assets/img/dockerlabs-writeup-obsession/obsession4.png)
+![](/assets/img/dockerlabs-writeup-obsession/obsession5.png)
 
 Utilizo dirb para enumerar directorios ocultos en el servidor web.
 
@@ -135,8 +135,8 @@ Utilizo dirb para enumerar directorios ocultos en el servidor web.
 
 De estos resultados, el directorio ```/backup/``` contiene un archivo interesante ```backup.txt```. El contenido de este archivo confirma la sospecha inicial.
 
-![](assets/img/dockerlabs-writeup-obsession/obsession6.png)
-![](assets/img/dockerlabs-writeup-obsession/obsession7.png)
+![](/assets/img/dockerlabs-writeup-obsession/obsession6.png)
+![](/assets/img/dockerlabs-writeup-obsession/obsession7.png)
 
 ---
 ## Vulnerability Exploitation
@@ -148,7 +148,7 @@ Con el nombre de usuario ```russoski```, realizo un ataque de fuerza bruta contr
 [22][ssh] host: 172.17.0.2   login: russoski   password: iloveme
 ```
 
-![](assets/img/dockerlabs-writeup-obsession/obsession8.png)
+![](/assets/img/dockerlabs-writeup-obsession/obsession8.png)
 
 El ataque tiene éxito y obtengo las credenciales SSH.
 

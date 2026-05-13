@@ -17,11 +17,11 @@ toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
 image:
-  path: /assets/images/posts/DockerLabs/minecraft/banner.png
+  path: /assets/img/posts/DockerLabs/minecraft/banner.png
   alt: "DockerLabs - Hackeando Minecraft"
   featured: true
   overlay_filter: 0.7
-#og_image: /assets/images/posts/DockerLabs/minecraft/banner.png
+#og_image: /assets/img/posts/DockerLabs/minecraft/banner.png
 seo_title: DockerLabs - Hackeando Minecraft - Backdoor, RCE y Root
 seo_description: Explotación de un plugin backdoor en servidor Minecraft que permite ejecutar comandos del sistema como root mediante el chat del juego. HTTrack, fuzzing y mineflayer.
 author: Maxi Barcia
@@ -620,7 +620,7 @@ node comandos.js
 ❯ node comandos.js
 ```
 
-![LFI](/assets/images/posts/DockerLabs/minecraft/consola.png)![[Pasted image 20260324182018.png]]
+![LFI](/assets/img/posts/DockerLabs/minecraft/consola.png)![[Pasted image 20260324182018.png]]
 
 **Hallazgos de la explotación:**
 

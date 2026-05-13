@@ -61,7 +61,7 @@ Utmp dump of wtmp
 ```terminal
 /home/kali/Documents/htb/sherlocks/brutus:-$ cat auth.log
 ```
-![](assets/img/htb-writeup-brutus/brutus1.png)
+![](/assets/img/htb-writeup-brutus/brutus1.png)
 
 ---
 ### **`Q1.`** **Analyzing the auth.log, can you identify the IP address used by the attacker to carry out a brute force attack?**
@@ -126,7 +126,7 @@ El mensaje 'Accepted password for root' confirma que el atacante logró autentic
 /home/kali/Documents/htb/sherlocks/brutus:-$ cat auth.log | grep sshd | less
 ```
 
-![](assets/img/htb-writeup-brutus/brutus2.png)
+![](/assets/img/htb-writeup-brutus/brutus2.png)
 
 Adicionalmente, el sistema abrió una sesión SSH para este usuario 'pam_unix(sshd:session): session opened for user root', lo que valida que el atacante obtuvo acceso con privilegios administrativos completos.
 
@@ -147,7 +147,7 @@ Mar  6 06:37:34 ip-172-31-35-28 sshd[2667]: Accepted password for cyberjunkie fr
 * 06:31:40: Representa el momento en que las credenciales de root fueron descubiertas mediante fuerza bruta.
 * 06:32:44: Un acceso posterior 1 minuto y 4 segundos despues.
 
-![](assets/img/htb-writeup-brutus/brutus3.png)
+![](/assets/img/htb-writeup-brutus/brutus3.png)
 
 Según los registros en 'wtmp' el atacante inició una sesión manual desde la dirección IP 65.2.161.68.
 
@@ -184,7 +184,7 @@ Después del inicio de sesión del atacante a las 06:32:44, encuentro evidencia 
 /home/kali/Documents/htb/sherlocks/brutus:-$ cat auth.log | grep -v sshd | sed -n '/06:32:44/,$p'
 ```
 
-![](assets/img/htb-writeup-brutus/brutus4.png)
+![](/assets/img/htb-writeup-brutus/brutus4.png)
 
 El usuario cyberjunkie fue creado y asignado a un nuevo grupo con los siguientes detalles:
 * UID: 1002
@@ -213,7 +213,7 @@ La técnica T1136 del MITRE ATT&CK se refiere a la creación de cuentas en el si
 
 <https://attack.mitre.org/techniques/T1136/001/>
 
-![](assets/img/htb-writeup-brutus/brutus5.png)
+![](/assets/img/htb-writeup-brutus/brutus5.png)
 
 * T1136 - Create Account: Los atacantes crean cuentas para garantizar el acceso persistente al sistema, incluso si las credenciales originales o métodos de acceso son bloqueados.
 

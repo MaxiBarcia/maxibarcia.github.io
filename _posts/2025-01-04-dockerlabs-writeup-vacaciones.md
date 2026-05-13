@@ -75,11 +75,11 @@ http://127.17.0.2 [200 OK] Apache[2.4.29], Country[RESERVED][ZZ], HTTPServer[Ubu
 
 Al analizar la página web, inicialmente parece estar completamente vacía. 
 
-![](assets/img/dockerlabs-writeup-vacaciones/vacaciones1.png)
+![](/assets/img/dockerlabs-writeup-vacaciones/vacaciones1.png)
 
 Sin embargo, al inspeccionar el código fuente, encuentro el siguiente comentario:
 
-![](assets/img/dockerlabs-writeup-vacaciones/vacaciones2.png)
+![](/assets/img/dockerlabs-writeup-vacaciones/vacaciones2.png)
 
 Este comentario sugiere dos posibles nombres de usuario ```Juan``` y ```Camilo```. Dado que no hay más pistas disponibles, decido enfocar la prueba en el servicio SSH para intentar un ataque de fuerza bruta utilizando uno de los nombres.
 
@@ -88,7 +88,7 @@ Este comentario sugiere dos posibles nombres de usuario ```Juan``` y ```Camilo``
 [22][ssh] host: 172.17.0.2   login: camilo   password: password1
 ```
 
-![](assets/img/dockerlabs-writeup-vacaciones/vacaciones3.png)
+![](/assets/img/dockerlabs-writeup-vacaciones/vacaciones3.png)
 
 El ataque tiene éxito y obtengo las credenciales SSH.
 

@@ -61,7 +61,7 @@ Utilizo strings para extraer cadenas de texto del binario, y revela una posible 
 /home/kali/Documents/htb/challenges/spookypass:-$ strings pass
 ```
 
-![](assets/img/htb-writeup-spookypass/spookypass1.png)
+![](/assets/img/htb-writeup-spookypass/spookypass1.png)
 
 Se ejecuta el binario con ltrace para observar las funciones que se llaman en tiempo de ejecución y analizar la comparación de la contraseña introducida.
 
@@ -69,7 +69,7 @@ Se ejecuta el binario con ltrace para observar las funciones que se llaman en ti
 /home/kali/Documents/htb/challenges/spookypass:-$ ltrace ./pass
 ```
 
-![](assets/img/htb-writeup-spookypass/spookypass2.png)
+![](/assets/img/htb-writeup-spookypass/spookypass2.png)
 
 La salida de ltrace muestra que el programa utiliza `strcmp` para comparar la entrada con la cadena `s3cr3t_p455_f0r_gh05t5_4nd_gh0ul5`, lo que confirma que esta es la contraseña correcta.
 

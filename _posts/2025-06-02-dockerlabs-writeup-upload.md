@@ -68,7 +68,7 @@ http://172.17.0.3 [200 OK] Apache[2.4.52], Country[RESERVED][ZZ], HTML5, HTTPSer
 
 El servicio web en el puerto 80 presenta un único formulario funcional, que permite subir archivos al servidor Apache. El formulario acepta archivos `.php`, lo que sugiere una posible vía de ejecución remota de código si el archivo es accesible públicamente.
 
-![](assets/img/dockerlabs-writeup-upload/upload1_1.png)
+![](/assets/img/dockerlabs-writeup-upload/upload1_1.png)
 
 Realizo un escaneo de rutas, lo que permite descubrir el directorio `/uploads/`, el cual está expuesto y accesible.
 
@@ -88,7 +88,7 @@ Descargó la reverse shell de PentestMonkey, modifico la IP y puerto y subo el a
 
 Luego de subir la shell, y acceder a `/uploads/` se puede ver que el archivo aparece listado correctamente.
 
-![](assets/img/dockerlabs-writeup-upload/upload1_2.png)
+![](/assets/img/dockerlabs-writeup-upload/upload1_2.png)
 
 
 Con esto definido, inicio un listener con netcat.

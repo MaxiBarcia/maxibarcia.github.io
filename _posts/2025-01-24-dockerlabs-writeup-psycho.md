@@ -76,11 +76,11 @@ http://127.17.0.2 [200 OK] Apache[2.4.58], Bootstrap, Country[RESERVED][ZZ], HTM
 
 Durante el análisis inicial de una página web estática, no se detecta contenido relevante.
 
-![](assets/img/dockerlabs-writeup-psycho/psycho1_1.png)
+![](/assets/img/dockerlabs-writeup-psycho/psycho1_1.png)
 
 Sin embargo, al inspeccionar el código fuente, se encuentra una línea peculiar fuera de las etiquetas HTML, `[!] ERROR [!]`. Esto sugiere que la página podría ser vulnerable a LFI, ya que errores de este tipo suelen revelar rutas accesibles o archivos cargados dinámicamente.
 
-![](assets/img/dockerlabs-writeup-psycho/psycho1_2.png)
+![](/assets/img/dockerlabs-writeup-psycho/psycho1_2.png)
 
 Enumero parámetros posibles en el sitio web, apuntando hacia la explotación de LFI.
 
@@ -95,7 +95,7 @@ ID           Response   Lines    Word       Chars       Payload
 
 El parámetro vulnerable detectado es `secret`. Verifico la vulnerabilidad cargando el archivo `/etc/passwd`.
 
-![](assets/img/dockerlabs-writeup-psycho/psycho1_3.png)
+![](/assets/img/dockerlabs-writeup-psycho/psycho1_3.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/psycho:-$ curl http://127.17.0.2/index.php?secret=/etc/passwd | grep /bash$
@@ -175,7 +175,7 @@ El archivo `/opt/paw.py` contiene varias funciones que simulan procesamiento de 
 luisillo@kali:~$ cat /opt/paw.py
 ```
 
-![](assets/img/dockerlabs-writeup-psycho/psycho2_1.png)
+![](/assets/img/dockerlabs-writeup-psycho/psycho2_1.png)
 
 Sin embargo, en la función `run_command`, el script ejecuta un comando mediante `subprocess.run`. Este es un punto explotable ya que `subprocess.run` intenta ejecutar `echo Hello!`, pero no encuentra el archivo, causando un error.
 
@@ -183,7 +183,7 @@ Sin embargo, en la función `run_command`, el script ejecuta un comando mediante
 luisillo@kali:~$ sudo python3 /opt/paw.py
 ```
 
-![](assets/img/dockerlabs-writeup-psycho/psycho2_2.png)
+![](/assets/img/dockerlabs-writeup-psycho/psycho2_2.png)
 
 El script usa la librería subprocess desde el directorio `/opt/`. Si creó un archivo malicioso llamado `subprocess.py` en dicho directorio, Python lo importará debido a su ubicación en el mismo directorio que el script.
 

@@ -20,12 +20,12 @@ seo_tittle: Unrecover - Medium (Dockerlabs)
 seo_description: Haz uso de fuerza bruta y análisis de archivos para comprometer vencer Unrecover.
 excerpt: Haz uso de fuerza bruta y análisis de archivos para comprometer vencer Unrecover.
 header:
-  overlay_image: /assets/images/headers/unrecover-dockerlabs.jpg
+  overlay_image: /assets/img/headers/unrecover-dockerlabs.jpg
   overlay_filter: 0.7
-  og_image: /assets/images/headers/unrecover-dockerlabs.jpg
+  og_image: /assets/img/headers/unrecover-dockerlabs.jpg
 ---
 
-![image-center](/assets/images/posts/unrecover-dockerlabs.png){: .align-center}
+![image-center](/assets/img/posts/unrecover-dockerlabs.png){: .align-center}
 
 **Habilidades:** MySQL Credentials Bruteforcing - `hydra`, Hash Cracking, Text Extraction from PDF File
 {: .notice--primary}
@@ -142,7 +142,7 @@ Podemos ver varios servicios como `ftp`, `http` y `mysql`, procederemos a intent
 
 Como el puerto `80` se encuentra expuesto, podemos dirigirnos a la IP o el nombre de dominio en el navegador
 
-![image-center](/assets/images/posts/unrecover-web.png){: .align-center}
+![image-center](/assets/img/posts/unrecover-web.png){: .align-center}
 
 La página corresponde a un `Zoo` de capybaras, muy tiernos por cierto. Además se nos da la bienvenida como el usuario `capybara`, esto ya nos da una pista sobre un usuario válido dentro de un servicio
 
@@ -347,7 +347,7 @@ Otra cosa que podemos hacer es ver el `pdf` (lógicamente). Si somos demasiado f
 open .
 ~~~
 
-![image-center](/assets/images/posts/unrecover-view-file.png){: .align-center}
+![image-center](/assets/img/posts/unrecover-view-file.png){: .align-center}
 
 ## Text Extraction
 

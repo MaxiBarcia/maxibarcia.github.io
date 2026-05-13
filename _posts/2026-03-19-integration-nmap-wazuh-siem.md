@@ -5,7 +5,7 @@ description: "Guía completa para integrar Nmap con Wazuh y detectar escaneos de
 categories: [wazuh, siem, nmap, threat-detection, soc]
 tags: [wazuh, nmap, siem, threat-hunting, mitre-attack, python, raspberry-pi, security-monitoring, network-scanning, t1046]
 image:
-  path: /assets/images/posts/project/nmap-wazuh/banner-integracion.png
+  path: /assets/img/posts/project/nmap-wazuh/banner-integracion.png
   alt: "Integración Nmap-Wazuh - Dashboard de alertas"
   featured: true
 author: maximiliano-barcia
@@ -320,7 +320,7 @@ Dado que los logs se generan en formato JSON, Wazuh puede procesarlos automátic
 
 Al introducir este log en la herramienta **Decoders Test** del dashboard de Wazuh, se confirma que alcanza la **Phase 2 (decoding)** sin necesidad de un decoder personalizado.
 
-![Decoders](/assets/images/posts/project/nmap-wazuh/decoder.png)
+![Decoders](/assets/img/posts/project/nmap-wazuh/decoder.png)
 
 _Captura: Resultado del test de decoder mostrando Phase 2._
 
@@ -392,7 +392,7 @@ _Desde el navegador:_
 
 Una vez realizados los pasos anteriores, al ejecutar un escaneo con el script, las alertas aparecen en el dashboard de Wazuh.
 
-![Wazuh-Manager](/assets/images/posts/project/nmap-wazuh/wazuh-report-log.png)
+![Wazuh-Manager](/assets/img/posts/project/nmap-wazuh/wazuh-report-log.png)
 _Captura: Eventos en Threat Hunting mostrando las reglas 200400, 200401 y 200402 activadas por los logs de Nmap._
 
 ---

@@ -16,14 +16,14 @@ cve: "CVE-2017-7269" # El exploit inicial de IIS
 toc: true
 hide_title_image: true # Añade esta línea
 image:
- path: /assets/images/headers/msf6.jpg
+ path: /assets/img/headers/msf6.jpg
 toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
 header:
-  overlay_image: /assets/images/headers/msf6.jpg
+  overlay_image: /assets/img/headers/msf6.jpg
   overlay_filter: 0.7
-og_image: /assets/images/headers/msf6.jpg
+og_image: /assets/img/headers/msf6.jpg
 ---
 
 

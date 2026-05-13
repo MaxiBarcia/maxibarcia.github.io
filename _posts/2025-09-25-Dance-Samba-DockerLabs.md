@@ -19,7 +19,7 @@ toc: true
 toc_label: Report Content
 toc_sticky: true
 image:
-  path: /assets/images/headers/dace-samba.png
+  path: /assets/img/headers/dace-samba.png
 seo_title: Samba-Dance Lab - Access and Privilege Escalation
 seo_description: Detailed Report on Vulnerability Exploitation in the Samba-Dance Lab, This report details the exploitation of vulnerabilities in the Samba-Dance Docker lab, focusing on bypassing anonymous FTP authentication, SSH key injection via Samba, and Sudoers privilege escalation.
 author: Maxi Barcia
@@ -27,7 +27,7 @@ date: 2025-09-25
 draft: false
 ---
 
-![image-center](/assets/images/headers/dace-samba.png){: .align-center}
+![image-center](/assets/img/headers/dace-samba.png){: .align-center}
 
 
 ## 0. Executive Summary 🎯
@@ -127,11 +127,11 @@ The possibility of **anonymous FTP access** was identified.
 **SMB Enumeration (smbmap):** We used **`smbmap`** to test common name combinations and the hint (`macarena`, `donald`).
 
 - **Credentials Found:** The successful combination was **`macarena`** (User) and the password **`donald`** (implied in the report due to the correlation of the note and subsequent success, although the final password from the hash was different).
-![SMB Client](/assets/images/posts/DockerLabs/dace-samba/smbclient.png){: .align-center width="600" }
+![SMB Client](/assets/img/posts/DockerLabs/dace-samba/smbclient.png){: .align-center width="600" }
         
 **Key Permissions:** Access to the `macarena` share was confirmed with **Read/Write** permissions.
 
-![SMB MAP](/assets/images/posts/DockerLabs/dace-samba/smbmap.png){: .align-center width="600" }
+![SMB MAP](/assets/img/posts/DockerLabs/dace-samba/smbmap.png){: .align-center width="600" }
 
 ## 3. Obtaining Additional Credentials (Hash)
 
@@ -147,12 +147,12 @@ Although cracking the hash was initially unsuccessful, the ability to **create a
 Using the user **`macarena`** and the password **`welcome1`**, we proceeded to inject an RSA key via the write access granted on the SMB share.
 
 1. **Key Generation:** An RSA key pair was generated: `ssh-keygen -t rsa -b 4096`.
-![RSA](/assets/images/posts/DockerLabs/dace-samba/rsa.png){: .align-center width="600" }
+![RSA](/assets/img/posts/DockerLabs/dace-samba/rsa.png){: .align-center width="600" }
     
  2. **Injection:** The **`.ssh`** directory was created, and the public key (`id_rsa.pub`) was uploaded and renamed to **`authorized_keys`** using `smbclient`.
     
 3. **Final Access:** SSH access was successfully achieved without a password: `ssh macarena@172.17.0.3`.
- ![Access](/assets/images/posts/DockerLabs/dace-samba/access.png){: .align-center width="600" }
+ ![Access](/assets/img/posts/DockerLabs/dace-samba/access.png){: .align-center width="600" }
     
 
 ## 5. Privilege Escalation to Root
@@ -164,10 +164,10 @@ Once the **`macarena`** shell was established, the **LinPEAS** enumeration scrip
     - This string was cracked in **CyberChef** (using double Base64 decoding) and resulted in the potential password **"rooteable2"**.
         
 2. **Exploitable Sudoers Binary:** The `sudo -l` permissions scan revealed that the user **`macarena`** was allowed to execute the **`file`** binary as **`root`** without a password (`NOPASSWD`).
-    ![Command File](/assets/images/posts/DockerLabs/dace-samba/file.png){: .align-center width="600" }
+    ![Command File](/assets/img/posts/DockerLabs/dace-samba/file.png){: .align-center width="600" }
     
 3. **Sudoers Exploitation (GTFOBins):** The **`file`** binary was used in conjunction with the discovered root password (**`rooteable2`**) from the `.txt` file in `/opt` (another LinPEAS finding) to obtain a **root shell**.
-    ![opt file](/assets/images/posts/DockerLabs/dace-samba/opt.png){: .align-center width="600" }
+    ![opt file](/assets/img/posts/DockerLabs/dace-samba/opt.png){: .align-center width="600" }
     
     
     ```bash
@@ -176,7 +176,7 @@ su root
 # Password: rooteable2
     ```
     
-![Root Pwrend](/assets/images/posts/DockerLabs/dace-samba/root.png){: .align-center width="600" }
+![Root Pwrend](/assets/img/posts/DockerLabs/dace-samba/root.png){: .align-center width="600" }
     
     
 

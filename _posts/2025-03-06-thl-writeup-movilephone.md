@@ -18,7 +18,7 @@ tags:
 ---
 ## Information Gathering
 
-![](assets/img/thl-writeup-movilephone/movilephone1_1.png)
+![](/assets/img/thl-writeup-movilephone/movilephone1_1.png)
 
 ```terminal
 /home/kali/Documents/thehackerslabs/movilephone:-# arp-scan -l | grep 08:00

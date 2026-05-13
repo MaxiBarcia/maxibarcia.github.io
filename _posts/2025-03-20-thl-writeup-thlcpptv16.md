@@ -88,7 +88,7 @@ http://192.168.0.138 [200 OK] Country[RESERVED][ZZ], HTML5, HTTPServer[nginx/1.2
 
 Accedo al servicio web utilizando la dirección IP de la máquina víctima y encuentro una interfaz que simula un examen. En la parte inferior de la página hay un botón `Ir al Examen` que redirige a un subdominio.
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_1.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_1.png)
 
 Para acceder correctamente al subdominio, agrego las entradas necesarias en el archivo `/etc/hosts`.
 
@@ -98,7 +98,7 @@ Para acceder correctamente al subdominio, agrego las entradas necesarias en el a
 
 ---
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_2.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_2.png)
 
 Al acceder al subdominio, identifico que el sitio web está utilizando WordPress.
 
@@ -113,8 +113,8 @@ Para obtener más información, realizo un escaneo con wpscan, enumerando temas,
 /home/kali/Documents/thl/thlcppt_v16:-$ wpscan --url http://examen.thlcpptv16.thl --api-token='<WPSCAN-TOKEN>' --enumerate tt,vp,u
 ```
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_4.png){: width="972" height="589" .w-75 .normal}
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_3.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_4.png){: width="972" height="589" .w-75 .normal}
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_3.png)
 
 El escaneo revela tres usuarios válidos y cuatro vulnerabilidades asociadas con la versión del plugin "My Calendar".
 
@@ -162,16 +162,16 @@ $P$BJrv/Sv/rBlufcIW5FiMdUW4lA5UrN1:iloveme2
 
 Una vez obtenida la contraseña del usuario `Tom`, accedo exitosamente al panel de WordPress.
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_5.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v161_5.png)
 
 ---
 ## Foothold
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v162_1.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v162_1.png)
 
 Una vez dentro del panel de WordPress como el usuario `Tom`, se observa una entrada con el título "Filtración de Datos". La nota hace referencia a un nuevo subdominio `examendos.thlcpptv16.thl`.
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v162_2.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v162_2.png)
 
 Se actualiza el archivo `/etc/hosts` para poder acceder al nuevo subdominio.
 
@@ -184,7 +184,7 @@ Se actualiza el archivo `/etc/hosts` para poder acceder al nuevo subdominio.
 
 Al acceder al nuevo subdominio, se encuentra un formulario que solicita una url junto con archivos `.json` o `.txt`. El texto `Filter it! WrapWrap it!` sugiere el uso de filtros y wrappers de PHP para manipular contenido.
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v162_3.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v162_3.png)
 
 Encuentro la herramienta [wrapwrap](https://github.com/ambionics/wrapwrap), que genera una cadena de `php://filter` para incluir prefijos y sufijos al contenido de un archivo. Según la descripción, permite envolver archivos y formatearlos como JSON bajo el esquema `{"message":"<contenido>"}`.
 
@@ -283,7 +283,7 @@ MUTAiZwQqBu9969N0LNR6
 
 De la cadena obtengo lo siguiente.
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v163_1.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v163_1.png)
 
 Aunque por ahora no es necesario usarla, es una información valiosa para futuro.
 
@@ -346,7 +346,7 @@ Al inspeccionar `tunnelRafael.conf`, identifico parámetros que indican la creac
 root@rafael:~# cat tunnelRafael.conf
 ```
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v164_1.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v164_1.png)
 
 Desde el contenedor, envío el contenido del fichero a mi máquina.
 
@@ -383,7 +383,7 @@ Posteriormente, ejecuto el proxy y el agente de Ligolo.
 /home/kali/Documents/thl/thlcppt_v16:-$ ./proxy -selfcert
 ```
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v164_2.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v164_2.png)
 
 * En el sistema víctima, ejecuto el agente para conectarse a mi proxy.
 
@@ -393,7 +393,7 @@ WARN[0000] warning, certificate validation disable
 INFO[0000] Connection established			addr="192.168.0.171:11601"
 ```
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v164_3.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v164_3.png)
 
 Una vez establecido el túnel de Ligolo-ng, levanto la interfaz de WireGuard utilizando el archivo de configuración `tunnelRafael.conf`.
 
@@ -401,7 +401,7 @@ Una vez establecido el túnel de Ligolo-ng, levanto la interfaz de WireGuard uti
 /home/kali/Documents/thl/thlcppt_v16:-$ wg-quick up tunnelRafael.conf
 ```
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v164_4.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v164_4.png)
 
 Utilizo fping para escanear la subred `10.13.13.0/24` y confirmar los hosts activos.
 
@@ -527,7 +527,7 @@ jerry@thlcpptv16:~$ chmod +x exploit.sh
 jerry@thlcpptv16:~$ ./exploit.sh
 ```
 
-![](assets/img/thl-writeup-thlcppt_v16/thlcppt_v165_1.png)
+![](/assets/img/thl-writeup-thlcppt_v16/thlcppt_v165_1.png)
 
 Una vez ejecutado, obtengo una clave privada válida para acceder como `root`.
 

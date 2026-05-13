@@ -89,7 +89,7 @@ http://realgob.dl [200 OK] Apache[2.4.58], Bootstrap[4.5.2], Country[RESERVED][Z
 
 Encuentro un servicio web con múltiples opciones y directorios disponibles.
 
-![](assets/img/dockerlabs-writeup-report/report1_1.png)
+![](/assets/img/dockerlabs-writeup-report/report1_1.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/report:-$ dirb http://realgob.dl
@@ -111,27 +111,27 @@ Encuentro un servicio web con múltiples opciones y directorios disponibles.
 
 El la página `admin.php` presenta un formulario de inicio de sesión. Utilizo credenciales básicas `admin:admin123`, logrando acceder con éxito.
 
-![](assets/img/dockerlabs-writeup-report/report1_2.png)
+![](/assets/img/dockerlabs-writeup-report/report1_2.png)
 
 Una vez dentro, soy redirigido a la página `cargas.php`, que permite subir archivos directamente al servidor.
 
-![](assets/img/dockerlabs-writeup-report/report1_3.png)
+![](/assets/img/dockerlabs-writeup-report/report1_3.png)
 
 ---
 ## Foothold
 
 Intento subir una reverse shell utilizando el script [pentestmonkey/php-reverse-shell](https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/refs/heads/master/php-reverse-shell.php). Sin embargo, al hacerlo, la página responde con el mensaje, "Tipo de archivo no permitido."
 
-![](assets/img/dockerlabs-writeup-report/report1_4.png)
-![](assets/img/dockerlabs-writeup-report/report1_5.png)
+![](/assets/img/dockerlabs-writeup-report/report1_4.png)
+![](/assets/img/dockerlabs-writeup-report/report1_5.png)
 
 Para analizar la restricción, intercepto la solicitud utilizando Burp Suite. En la solicitud HTTP, identifico el encabezado `Content-Type`, cuyo valor predeterminado es `application/x-php`. Modifico este valor a `image/jpeg` y reenvío la solicitud al servidor.
 
-![](assets/img/dockerlabs-writeup-report/report1_6.png)
+![](/assets/img/dockerlabs-writeup-report/report1_6.png)
 
 Como resultado, la carga del archivo es exitosa, y el servidor confirma con el mensaje, "Archivo cargado exitosamente."
 
-![](assets/img/dockerlabs-writeup-report/report1_7.png)
+![](/assets/img/dockerlabs-writeup-report/report1_7.png)
 
 A continuación, me pongo a la escucha en el puerto previamente definido y accedo a la página `uploads.php` para ejecutar la reverse shell cargada.
 
@@ -140,7 +140,7 @@ A continuación, me pongo a la escucha en el puerto previamente definido y acced
 	listening on [any] 1234 ...
 ```
 
-![](assets/img/dockerlabs-writeup-report/report1_8.png)
+![](/assets/img/dockerlabs-writeup-report/report1_8.png)
 
 
 ```terminal
@@ -186,13 +186,13 @@ Al inspeccionar los commits, identifico un commit sospechoso, "Acceso a Remote M
 www-data@kali:/var/www/html/desarrollo$ git log
 ```
 
-![](assets/img/dockerlabs-writeup-report/report2_1.png)
+![](/assets/img/dockerlabs-writeup-report/report2_1.png)
 
 ```terminal
 www-data@kali:/var/www/html/desarrollo$ git show 0baff
 ```
 
-![](assets/img/dockerlabs-writeup-report/report2_2.png)
+![](/assets/img/dockerlabs-writeup-report/report2_2.png)
 
 En los cambios del commit, encuentro credenciales explícitas del usuario `adm`, `adm:9fR8pLt@Q2uX7dM^sW3zE5bK8nQ@7pX`.
 
@@ -213,7 +213,7 @@ Inspecciono su archivo `.bashrc` en busca de información relevante o configurac
 adm@kali:~$ cat .bashrc
 ```
 
-![](assets/img/dockerlabs-writeup-report/report3_1.png)
+![](/assets/img/dockerlabs-writeup-report/report3_1.png)
 
 En el archivo, encuentro una cadena hexadecial definida como `MY_PASS`. Convierto esta cadena para revelar su contenido y el resultado es la contraseña del usuario `root`.
 

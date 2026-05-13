@@ -67,11 +67,11 @@ http://172.17.0.2 [200 OK] Apache[2.4.57], Country[RESERVED][ZZ], HTML5, HTTPSer
 
 El servicio web se presenta con una interfaz sencilla y sin funcionalidades visibles.
 
-![](assets/img/dockerlabs-writeup-whereismywebshell/whereismywebshell1_1.png)
+![](/assets/img/dockerlabs-writeup-whereismywebshell/whereismywebshell1_1.png)
 
 Al final del sitio se encuentra una posible pista.
 
-![](assets/img/dockerlabs-writeup-whereismywebshell/whereismywebshell1_2.png)
+![](/assets/img/dockerlabs-writeup-whereismywebshell/whereismywebshell1_2.png)
 
 Utilizo dirb para realizar un escaneo de extensiones comunes de configuración y scripts.
 
@@ -96,7 +96,7 @@ ID           Response   Lines    Word       Chars       Payload
 
 El parámetro `parameter` responde con código 200 y diferencias en el contenido, lo que indica su procesamiento por parte del script. Y por web, confirmo la presencia de ejecución remota de comandos.
 
-![](assets/img/dockerlabs-writeup-whereismywebshell/whereismywebshell1_3.png)
+![](/assets/img/dockerlabs-writeup-whereismywebshell/whereismywebshell1_3.png)
 
 ---
 ## Foothold

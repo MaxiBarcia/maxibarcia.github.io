@@ -74,7 +74,7 @@ http://172.17.0.3 [200 OK] Apache[2.4.62], Country[RESERVED][ZZ], HTTPServer[Deb
 
 Al acceder a la página principal, el navegador muestra una pista indicando que la clave para el usuario `A` puede encontrarse en los archivos.
 
-![](assets/img/dockerlabs-writeup-pequenas-mentirosas/pequenas-mentirosas1_1.png)
+![](/assets/img/dockerlabs-writeup-pequenas-mentirosas/pequenas-mentirosas1_1.png)
 
 Con base en esta sugerencia, ejecuto un ataque de fuerza bruta sobre el servicio SSH utilizando hydra y el diccionario `rockyou.txt`.
 

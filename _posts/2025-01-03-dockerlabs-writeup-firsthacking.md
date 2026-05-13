@@ -59,7 +59,7 @@ El escaneo revela que en el puerto 21 está corriendo ```vsftpd``` versión ```2
 /home/kali/Documents/dockerlabs/firsthacking:-$ searchsploit vsftpd 2.3.4
 ```
 
-![](assets/img/dockerlabs-writeup-firsthacking/firsthacking1.png)
+![](/assets/img/dockerlabs-writeup-firsthacking/firsthacking1.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/firsthacking:-$ cp /usr/share/exploitdb/exploits/unix/remote/49757.py .

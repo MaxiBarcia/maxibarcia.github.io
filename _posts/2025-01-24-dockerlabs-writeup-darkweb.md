@@ -89,7 +89,7 @@ Empiezo la enumeración explorando recursos compartidos de SMB.
 /home/kali/Documents/dockerlabs/darkweb:-$ smbclient -L //127.17.0.2/ -N
 ```
 
-![](assets/img/dockerlabs-writeup-darkweb/darkweb1_1.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb1_1.png)
 
 El resultado muestra un recurso compartido llamado `darkshare` que permite acceso anónimo.
 
@@ -97,7 +97,7 @@ El resultado muestra un recurso compartido llamado `darkshare` que permite acces
 /home/kali/Documents/dockerlabs/darkweb:-$ smbclient //127.17.0.2/darkshare -N 
 ```
 
-![](assets/img/dockerlabs-writeup-darkweb/darkweb1_2.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb1_2.png)
 
 Accedo al recurso `darkshare` y descargo los archivos dentro.
 
@@ -108,21 +108,21 @@ getting file \ilegal.txt of size 204 as ilegal.txt (199.2 KiloBytes/sec) (averag
 /home/kali/Documents/dockerlabs/darkweb:-$ cat ilegal.txt
 ```
 
-![](assets/img/dockerlabs-writeup-darkweb/darkweb1_3.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb1_3.png)
 
 El contenido del archivo `ilegal.txt` está cifrado utilizando el cifrado César. Utilizo un servicio en línea [Dcode](https://www.dcode.fr/cifrado-esar) para descifrar el archivo. El texto revelado contiene una dirección `.onion` que apunta a un servicio en la red Tor.
 
-![](assets/img/dockerlabs-writeup-darkweb/darkweb1_4.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb1_4.png)
 
 Al acceder al sitio `.onion`, exploro varias rutas sin encontrar contenido relevante.
 
-![](assets/img/dockerlabs-writeup-darkweb/darkweb2_1.png)
-![](assets/img/dockerlabs-writeup-darkweb/darkweb2_2.png)
-![](assets/img/dockerlabs-writeup-darkweb/darkweb2_3.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb2_1.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb2_2.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb2_3.png)
 
 Hasta que llego a la siguiente ruta, `Access the Darkest Web` > `Hidden Marketplace` > `Confidential List's Passwords`. En esta ubicación, se encuentra un archivo de texto que contiene una lista de contraseñas.
 
-![](assets/img/dockerlabs-writeup-darkweb/darkweb2_4.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb2_4.png)
 
 Dado que no obtuve nada más relevante, intento un ataque de fuerza bruta al servicio SSH. Basándome en la temática de la máquina, utilizo el nombre de usuario `dark` y la lista de contraseñas obtenida.
 
@@ -131,7 +131,7 @@ Dado que no obtuve nada más relevante, intento un ataque de fuerza bruta al ser
 [22][ssh] host: 172.17.0.2   login: dark   password: oniondarkgood
 ```
 
-![](assets/img/dockerlabs-writeup-darkweb/darkweb2_5.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb2_5.png)
 
 El ataque tiene éxito y obtengo las credenciales SSH.
 
@@ -169,7 +169,7 @@ El script ejecuta el archivo `/usr/local/bin/Update.sh` con permisos de `root`.
 dark@kali:~$ cat hidden.py 
 ```
 
-![](assets/img/dockerlabs-writeup-darkweb/darkweb3_1.png)
+![](/assets/img/dockerlabs-writeup-darkweb/darkweb3_1.png)
 
 ```terminal
 dark@kali:~$ sudo /home/dark/hidden.py

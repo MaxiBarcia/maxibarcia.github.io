@@ -63,7 +63,7 @@ http://127.17.0.2 [200 OK] Apache[2.4.58], Country[RESERVED][ZZ], HTTPServer[Ubu
 
 El sitio web muestra la plantilla predeterminada de Apache sin información relevante.
 
-![](assets/img/dockerlabs-writeup-tproot/tproot1.png)
+![](/assets/img/dockerlabs-writeup-tproot/tproot1.png)
 
 Al verificar la versión de FTP, identifico una variante vulnerable y ampliamente conocida.
 
@@ -71,7 +71,7 @@ Al verificar la versión de FTP, identifico una variante vulnerable y ampliament
 /home/kali/Documents/dockerlabs/tproot:-$ searchsploit vsftpd 2.3.4
 ```
 
-![](assets/img/dockerlabs-writeup-tproot/tproot2.png)
+![](/assets/img/dockerlabs-writeup-tproot/tproot2.png)
 
 > La vulnerabilidad [CVE-2011-2523](https://nvd.nist.gov/vuln/detail/CVE-2011-2523) ya fue abordada en la máquina [Firsthacking](https://litio7.github.io/posts/dockerlabs-writeup-firsthacking/) utilizando el exploit: '/unix/remote/49757.py'.
 {: .prompt-tip }
@@ -87,7 +87,7 @@ En esta ocasión, emplearé Metasploit para explotar la vulnerabilidad CVE-2011-
 msf6 > search vsftpd 2.3.4
 ```
 
-![](assets/img/dockerlabs-writeup-tproot/tproot3.png)
+![](/assets/img/dockerlabs-writeup-tproot/tproot3.png)
 
 * Selecciono el módulo de explotación correspondiente.
 * Configuró la dirección del objetivo 

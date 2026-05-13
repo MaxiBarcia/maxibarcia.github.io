@@ -425,11 +425,11 @@ https://haze.htb:8089/ [200 OK] Country[RESERVED][ZZ], HTTPServer[Splunkd], IP[1
 
 Al acceder al puerto 8000, el navegador redirige automáticamente a `/en-US/account/login?return_to=%2Fen-US%2F`, correspondiente al panel de autenticación de Splunk Enterprise.
 
-![](assets/img/htb-writeup-haze/haze1_1.png)
+![](/assets/img/htb-writeup-haze/haze1_1.png)
 
 El puerto 8089 expone la interfaz API REST de Splunk. Al visitarlo directamente, se muestra la cadena "Splunk Atom Feed", lo que confirma que la instancia se encuentra operativa y expuesta externamente.
 
-![](assets/img/htb-writeup-haze/haze1_2.png)
+![](/assets/img/htb-writeup-haze/haze1_2.png)
 
 En este caso, `Splunk Enterprise 9.2.1`, desplegada sobre Windows es susceptible a la vulnerabilidad [CVE-2024-36991](https://nvd.nist.gov/vuln/detail/cve-2024-36991), lo que permite a un atacante remoto sin autenticación acceder a archivos arbitrarios del sistema mediante path traversal <a id="path-traversal" href="#cwe-22" class="cwe-ref">(CWE-22)</a> en el endpoint `/modules/messaging/`.
 
@@ -460,7 +460,7 @@ Uno de los archivos más relevantes es `authentication.conf`, que en esta instan
 GET /en-US/modules/messaging/C:../C:../C:../C:../C:../C:../C:../C:/Program%20Files\Splunk/etc/system/local/authentication.conf HTTP/1.1
 ```
 
-![](assets/img/htb-writeup-haze/haze1_3.png)
+![](/assets/img/htb-writeup-haze/haze1_3.png)
 
 El valor `bindDNpassword` aparece en formato cifrado, lo que impide su utilización directa. Sin embargo, Splunk utiliza una clave interna de cifrado simétrico almacenada en el archivo, `C:/Program Files/Splunk/etc/auth/splunk.secret`.  La documentación oficial sobre [deploy-secure-passwords-across-multiple-servers](https://help.splunk.com/en/splunk-enterprise/administer/manage-users-and-security/9.2/install-splunk-enterprise-securely/deploy-secure-passwords-across-multiple-servers) aclara que `splunk.secret` funciona como una clave maestra que permite descifrar contraseñas presentes en archivos como `authentication.conf`, `server.conf` y otros.
 
@@ -468,7 +468,7 @@ El valor `bindDNpassword` aparece en formato cifrado, lo que impide su utilizaci
 GET /en-US/modules/messaging/C:../C:../C:../C:../C:../C:../C:../C:/Program%20Files\Splunk/etc/auth/splunk.secret HTTP/1.1
 ```
 
-![](assets/img/htb-writeup-haze/haze1_4.png)
+![](/assets/img/htb-writeup-haze/haze1_4.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/haze:-$ echo 'NfKeJCdFGKUQUqyQmnX/WM9xMn5uVF32qyiofYPHkEOGcpMsEN.lRPooJnBdEL5Gh2wm12jKEytQoxsAYA5mReU9.h0SYEwpFMDyyAuTqhnba9P2Kul0dyBizLpq6Nq5qiCTBK3UM516vzArIkZvWQLk3Bqm1YylhEfdUvaw1ngVqR1oRtg54qf4jG0X16hNDhXokoyvgb44lWcH33FrMXxMvzFKd5W3TaAUisO6rnN0xqB7cHbofaA1YV9vgD' > secret.txt
@@ -540,7 +540,7 @@ SMB         10.10.11.61     445    DC01             [-] haze.htb\Haze-IT-Backup$
 
 Encuentro que `mark.adams` forma parte del grupo `GMSA_MANAGERS`, lo que implica privilegios administrativos sobre cuentas de tipo Group Managed Service Account. Los Group Managed Service Accounts permiten el uso de cuentas administradas por el dominio con contraseñas largas, rotadas automáticamente y recuperables únicamente por usuarios autorizados. La pertenencia a `GMSA_MANAGERS` implica privilegios sobre al menos una cuenta de servicio de este tipo.
 
-![](assets/img/htb-writeup-haze/haze2_1.png)
+![](/assets/img/htb-writeup-haze/haze2_1.png)
 
 ---
 ## Lateral Movement
@@ -650,11 +650,11 @@ SMB         10.10.11.61     445    NONE             [+] \Haze-IT-Backup$:84d6a73
 
 BloodHound indica que la cuenta `Haze-IT-Backup$` posee el privilegio `WriteOwner` sobre el grupo `Support_Services`. Este privilegio permite modificar el propietario del objeto, lo que habilita la posibilidad de establecer controles totales sobre el mismo.
 
-![](assets/img/htb-writeup-haze/haze2_2.png)
+![](/assets/img/htb-writeup-haze/haze2_2.png)
 
 Por otro lado, el grupo `Support_Services` cuenta con los permisos `ForceChangePassword` y `AddKeyCredentialLink` sobre el usuario `edward.martin`. El primero habilita el cambio forzado de contraseña, mientras que el segundo permite anexar claves públicas al atributo `msDS-KeyCredentialLink`, lo cual habilita la ejecución de un [shadow credential attack](https://www.thehacker.recipes/ad/movement/kerberos/shadow-credentials#shadow-credentials).
 
-![](assets/img/htb-writeup-haze/haze2_3.png)
+![](/assets/img/htb-writeup-haze/haze2_3.png)
 
 ---
 ### Account Manipulation
@@ -796,14 +796,14 @@ Sp1unkadmin@2k24
 
 La contraseña desencriptada `Sp1unkadmin@2k24` resultó válida para la cuenta `admin`, lo que permite acceder a funciones administrativas a través de la interfaz web de Splunk.
 
-![](assets/img/htb-writeup-haze/haze3_1.png)
+![](/assets/img/htb-writeup-haze/haze3_1.png)
 
 ---
 ### Command and Scripting Interpreter
 
 Este nivel de acceso permite explotar la vulnerabilidad [CVE-2023-46214](https://nvd.nist.gov/vuln/detail/cve-2023-46214). Esta falla afecta a versiones de Splunk Enterprise anteriores a `9.0.7` y `9.1.2`, permitiendo ejecutar código arbitrario al procesar archivos maliciosos XSLT <a id="xml-injection" href="#cwe-91" class="cwe-ref">(CWE-91)</a> > <a id="code-injection" href="#cwe-94" class="cwe-ref">(CWE-94)</a>.
 
-![](assets/img/htb-writeup-haze/haze3_2.png)
+![](/assets/img/htb-writeup-haze/haze3_2.png)
 
 La explotación se realiza mediante la carga de una aplicación falsa en formato `.spl`, que al ser instalada desencadena la ejecución del payload malicioso. Utilicé como base el repositorio [0xjpuff/reverse_shell_splunk](https://github.com/0xjpuff/reverse_shell_splunk), el cual proporciona una estructura de aplicación válida para Splunk con un payload integrado en PowerShell.
 
@@ -894,7 +894,7 @@ Para validar que el exploit funciona, ejecuté GodPotato con un comando simple q
 PS C:\Windows\Temp\Priv> ./GodPotato-NET4.exe -cmd "cmd /c whoami"
 ```
 
-![](assets/img/htb-writeup-haze/haze4_1.png)
+![](/assets/img/htb-writeup-haze/haze4_1.png)
 
 Preparé un listener en mi equipo para recibir una conexión inversa.
 

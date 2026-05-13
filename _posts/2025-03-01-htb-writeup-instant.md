@@ -79,7 +79,7 @@ http://instant.htb [200 OK] Apache[2.4.58], Bootstrap[4.0.0], Country[RESERVED][
 
 Encuentro una web sin mucho contenido. El botón principal, me permite descargar un APK.
 
-![](assets/img/htb-writeup-instant/instant1_1.png)
+![](/assets/img/htb-writeup-instant/instant1_1.png)
 
 Descomprimo el archivo con apktool.
 
@@ -104,8 +104,8 @@ res/layout/activity_forgot_password.xml:        <TextView android:textSize="14.0
 /home/kali/Documents/htb/machines/instant:-$ echo '10.10.11.37\tinstant.htb\tmywalletv1.instant.htb\tswagger-ui.instant.htb' | sudo tee -a /etc/hosts
 ```
 
-![](assets/img/htb-writeup-instant/instant1_2.png)
-![](assets/img/htb-writeup-instant/instant1_3.png)
+![](/assets/img/htb-writeup-instant/instant1_2.png)
+![](/assets/img/htb-writeup-instant/instant1_3.png)
 
 ---
 ## Vulnerability Exploitation
@@ -116,8 +116,8 @@ Al analizar los archivos descompilados, encuentro un JWT con privilegios elevado
 /home/kali/Documents/htb/machines/instant/instant:-$ cat smali/com/instantlabs/instant/AdminActivities.smali
 ```
 
-![](assets/img/htb-writeup-instant/instant1_4.png)
-![](assets/img/htb-writeup-instant/instant1_5.png)
+![](/assets/img/htb-writeup-instant/instant1_4.png)
+![](/assets/img/htb-writeup-instant/instant1_5.png)
 
 Utilizo el JWT y confirmo que permite acceder a información restringida.
 

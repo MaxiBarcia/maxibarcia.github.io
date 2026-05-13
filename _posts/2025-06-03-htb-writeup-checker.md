@@ -108,19 +108,19 @@ Configuro esta resolución del dominio.
 
 Al navegar hacia `checker.htb`, aparece la pantalla de inicio de sesión de BookStack, una plataforma open source utilizada para gestionar documentación.
 
-![](assets/img/htb-writeup-checker/checker1_1.png)
+![](/assets/img/htb-writeup-checker/checker1_1.png)
 
 Al revisar el código fuente de la página, aparece la versión v23.10.2 de BookStack, vulnerable a [CVE-2023-6199](https://nvd.nist.gov/vuln/detail/cve-2023-6199). Sin embargo, la explotación requiere credenciales válidas.
 
-![](assets/img/htb-writeup-checker/checker1_2.png)
+![](/assets/img/htb-writeup-checker/checker1_2.png)
 
 En el puerto 8080 corre la aplicación TeamPass, un gestor de contraseñas.
 
-![](assets/img/htb-writeup-checker/checker1_2.png)
+![](/assets/img/htb-writeup-checker/checker1_2.png)
 
 La documentación oficial de [TeamPass](https://github.com/nilsteampassnet/TeamPass) indica que el archivo `changelog.txt` puede encontrarse por defecto. Allí aparece un mensaje que revela el uso de la versión 3.
 
-![](assets/img/htb-writeup-checker/checker1_4.png)
+![](/assets/img/htb-writeup-checker/checker1_4.png)
 
 Esta versión es vulnerable a [CVE-2023-1545](https://nvd.nist.gov/vuln/detail/cve-2023-1545).
 
@@ -156,8 +156,8 @@ cheerleader      (bob)
 
 Con las credenciales `bob`:`cheerleader` ingreso a la interfaz web de TeamPass. Dentro del sistema aparecen dos entradas, BookStack y SSH Access.
 
-![](assets/img/htb-writeup-checker/checker2_1.png)
-![](assets/img/htb-writeup-checker/checker2_2.png)
+![](/assets/img/htb-writeup-checker/checker2_1.png)
+![](/assets/img/htb-writeup-checker/checker2_2.png)
 
 Las credenciales SSH `reader`:`hiccup-publicly-genesis` no permiten acceso directo debido a un segundo factor requerido.
 
@@ -169,14 +169,14 @@ Las credenciales SSH `reader`:`hiccup-publicly-genesis` no permiten acceso direc
 
 Las credenciales para BookStack `bob@checker.htb`:`mYSeCr3T_w1kI_P4sSw0rD` permiten autenticación satisfactoria como el usuario bob. Una vez autenticado, avanzo con la explotación de la vulnerabilidad CVE-2023-6199.
 
-![](assets/img/htb-writeup-checker/checker2_3.png)
+![](/assets/img/htb-writeup-checker/checker2_3.png)
 
 
 ---
 ## CVE Exploitation 2
 ### Poc
 
-![](assets/img/htb-writeup-checker/checker3_1.png)
+![](/assets/img/htb-writeup-checker/checker3_1.png)
 
 Para aprovecharme de la vulnerabilidad [CVE-2023-6199](https://nvd.nist.gov/vuln/detail/cve-2023-6199) presente, que permite la lectura arbitraria de archivos locales mediante una cadena de PHP filter chains, debo realizar una serie de pasos.
 
@@ -373,7 +373,7 @@ b'root:x:0:0:root:/root:/bin/bash'
 
 El servicio SSH para el usuario reader está protegido mediante 2FA. Aunque la clave secreta suele ubicarse en /home/reader/.google_authenticator, el intento de lectura directa falla usando el script de explotación. Enumerando el contenido disponible en BookStack, se encuentra un libro llamado Linux Security con varias páginas. Una de ellas, titulada Basic Backup with cp, describe dos scripts de respaldo: uno seguro y otro inseguro. El script inseguro utiliza cp sin preservar permisos ni propietarios, exponiendo potencialmente archivos sensibles si se ejecuta en el sistema real.
 
-![](assets/img/htb-writeup-checker/checker3_3.png)
+![](/assets/img/htb-writeup-checker/checker3_3.png)
 
 Con base en esta información, intento leer el archivo /backup/home_backup/home/reader/.google_authenticator:
 
@@ -454,7 +454,7 @@ User will be notified via bob@checker.htb
 
 La función `write_to_shm` del binario `check_leak` se encarga de registrar un evento en memoria compartida, escribiendo un mensaje con marca temporal que indica que se detectó una filtración para el usuario recibido como argumento. Para ello, genera una clave pseudoaleatoria basada en `rand() % 0xfffff`, crea un segmento de `0x400` bytes con permisos 0666 mediante [shmget](https://man7.org/linux/man-pages/man2/shmget.2.html), lo adjunta al espacio del proceso con `shmat`, y utiliza `snprintf` para escribir el mensaje `Leaked hash detected at <timestamp> > <usuario>`. Luego lo desadjunta, pero nunca elimina el segmento, por lo que queda accesible por otros procesos e incluso entre ejecuciones. Esto introduce múltiples vulnerabilidades: los segmentos huérfanos pueden acumularse, los IDs de memoria pueden predecirse, y los datos son legibles/escribibles por cualquier usuario local, generando una superficie de ataque para persistencia o escalamiento lateral.
 
-![](assets/img/htb-writeup-checker/checker3_4.png)
+![](/assets/img/htb-writeup-checker/checker3_4.png)
 
 Aprovechando esta debilidad, se desarrolló un binario en C que replica el mismo proceso de generación de claves y escritura en memoria compartida. Define un payload con formato controlado que simula el mensaje utilizado por `check_leak`, pero incluyendo la cadena `;chmod +s /bin/bash;#` al final del contenido. Esta inserción tiene como objetivo evaluar si el binario `check_leak` o algún componente posterior interpreta esta entrada sin sanitización, provocando la ejecución del payload con privilegios elevados.
 

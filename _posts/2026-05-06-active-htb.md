@@ -13,7 +13,7 @@ tags:
   - DNS-Admin
   - Privilege-Escalation
 image:
-  path: /assets/images/posts/htb/active/active-banner.png
+  path: /assets/img/posts/htb/active/active-banner.png
   alt: "HTB Active Banner"
 toc: true
 toc_label: "Contenido"

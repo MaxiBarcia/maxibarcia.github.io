@@ -80,19 +80,19 @@ http://127.17.0.2:8089 [200 OK] Country[RESERVED][ZZ], HTTPServer[Werkzeug/2.2.2
 
 El puerto 80 muestra la plantilla predeterminada de Apache2 sin contenido relevante.
 
-![](assets/img/dockerlabs-writeup-verdejo/verdejo1_1.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo1_1.png)
 
 En el otro puerto HTTP, se encuentra un sitio sencillo con un único campo de entrada. A primera vista, no parece haber funcionalidad adicional ni características complejas.
 
-![](assets/img/dockerlabs-writeup-verdejo/verdejo1_2.png)
-![](assets/img/dockerlabs-writeup-verdejo/verdejo1_3.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo1_2.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo1_3.png)
 
 Realizando pruebas para identificar qué tipo de vulnerabilidad podría estar presente en el campo de entrada, descubro que este es vulnerable a SSTI.
 
-![](assets/img/dockerlabs-writeup-verdejo/verdejo2_1.png)
-![](assets/img/dockerlabs-writeup-verdejo/verdejo2_2.png)
-![](assets/img/dockerlabs-writeup-verdejo/verdejo2_3.png)
-![](assets/img/dockerlabs-writeup-verdejo/verdejo2_4.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo2_1.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo2_2.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo2_3.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo2_4.png)
 
 ---
 ## Foothold
@@ -105,7 +105,7 @@ Puedes revisar estas referencias para comprender mejor el ataque:
 
 * [OnSecurity: Server-Side Template Injection with Jinja2](https://www.onsecurity.io/blog/server-side-template-injection-with-jinja2/)
 
-![](assets/img/dockerlabs-writeup-verdejo/verdejo2_5.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo2_5.png)
 
 Para probar la vulnerabilidad, se utilizó la siguiente carga maliciosa que permite ejecutar comandos del sistema.
 
@@ -116,7 +116,7 @@ Para probar la vulnerabilidad, se utilizó la siguiente carga maliciosa que perm
 > Nota: Se debe eliminar la barra invertida `\` dentro de las llaves `{\{`.
 {: .prompt-warning }
 
-![](assets/img/dockerlabs-writeup-verdejo/verdejo2_6.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo2_6.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/verdejo:-$ nc -nvlp 4321           
@@ -132,7 +132,7 @@ Para obtener acceso a través de una reverse shell, se utilizó la siguiente car
 > Nota: Se debe eliminar la barra invertida `\` dentro de las llaves `{\{`.
 {: .prompt-warning }
 
-![](assets/img/dockerlabs-writeup-verdejo/verdejo2_7.png)
+![](/assets/img/dockerlabs-writeup-verdejo/verdejo2_7.png)
 
 ```terminal
 	... connect to [192.168.0.171] from (UNKNOWN) [192.168.0.171] 45380

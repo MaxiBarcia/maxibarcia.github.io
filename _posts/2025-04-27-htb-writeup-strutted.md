@@ -81,13 +81,13 @@ http://strutted.htb [200 OK] Bootstrap, Content-Language[en-US], Cookies[JSESSIO
 
 El sitio principal se presenta como una plataforma sencilla para subir imágenes y obtener enlaces compartibles de forma instantánea. La página está desplegada sobre un servidor Nginx en Ubuntu, con una aplicación Java corriendo en segundo plano.
 
-![](assets/img/htb-writeup-strutted/strutted1_1.png)
-![](assets/img/htb-writeup-strutted/strutted1_2.png)
-![](assets/img/htb-writeup-strutted/strutted1_3.png)
+![](/assets/img/htb-writeup-strutted/strutted1_1.png)
+![](/assets/img/htb-writeup-strutted/strutted1_2.png)
+![](/assets/img/htb-writeup-strutted/strutted1_3.png)
 
 El botón `Download` en la interfaz principal permite descargar un archivo comprimido, el cual contiene el código fuente de la aplicación.
 
-![](assets/img/htb-writeup-strutted/strutted1_4.png)
+![](/assets/img/htb-writeup-strutted/strutted1_4.png)
 
 Dentro del archivo `pom.xml`, se identifica que la aplicación utiliza Apache Struts2 en su versión 6.3.0.1.
 
@@ -95,7 +95,7 @@ Dentro del archivo `pom.xml`, se identifica que la aplicación utiliza Apache St
 /home/kali/Documents/htb/machines/strutted:-$ cat strutted/pom.xml
 ```
 
-![](assets/img/htb-writeup-strutted/strutted1_5.png)
+![](/assets/img/htb-writeup-strutted/strutted1_5.png)
 
 Además, al revisar el `Dockerfile` incluido en el mismo paquete, se confirma que la aplicación corre sobre un contenedor basado en openjdk:17-jdk-alpine y es desplegada en Tomcat 9.
 
@@ -103,7 +103,7 @@ Además, al revisar el `Dockerfile` incluido en el mismo paquete, se confirma qu
 /home/kali/Documents/htb/machines/strutted:-$ cat Dockerfile
 ```
 
-![](assets/img/htb-writeup-strutted/strutted1_6.png)
+![](/assets/img/htb-writeup-strutted/strutted1_6.png)
 
 Con la información obtenida hasta el momento, identifiqué que la aplicación podría ser vulnerable a [CVE-2023-50164](https://nvd.nist.gov/vuln/detail/cve-2023-50164). Esta vulnerabilidad afecta a Apache Struts2 y permite a un atacante manipular los parámetros de subida de archivos para lograr un path traversal. Esto puede permitir la carga de archivos maliciosos y conduzcan a una ejecución remota de código.
 
@@ -187,7 +187,7 @@ Busqué archivos pertenecientes al grupo tomcat `GID 998`.
 tomcat@strutted:~$ find / -group 998 2>/dev/null | grep -v '/proc/\|/var/\|/tmp/'
 ```
 
-![](assets/img/htb-writeup-strutted/strutted4_1.png)
+![](/assets/img/htb-writeup-strutted/strutted4_1.png)
 
 Dentro de `/etc/tomcat9/`, encontré el archivo `tomcat-users.xml`, que contené credenciales de un usuario administrador del panel web de Tomcat.
 
@@ -195,7 +195,7 @@ Dentro de `/etc/tomcat9/`, encontré el archivo `tomcat-users.xml`, que contené
 tomcat@strutted:~$ grep -rE 'password=' /etc/tomcat9/ 2>/dev/null
 ```
 
-![](assets/img/htb-writeup-strutted/strutted4_2.png)
+![](/assets/img/htb-writeup-strutted/strutted4_2.png)
 
 Probé estas credenciales para acceder vía SSH como el usuario `james`, lo cual fue exitoso.
 

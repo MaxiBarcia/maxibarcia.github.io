@@ -83,15 +83,15 @@ http://titanic.htb [200 OK] Bootstrap[4.5.2], Country[RESERVED][ZZ], HTML5, HTTP
 
 El dominio principal expone una aplicación desarrollada en Python. El servicio corresponde a una plataforma de reservas para el Titanic.
 
-![](assets/img/htb-writeup-titanic/titanic1_1.png)
+![](/assets/img/htb-writeup-titanic/titanic1_1.png)
 
 La funcionalidad más destacada es un botón llamado `Book your trip`, que habilita un formulario para cargar los datos del pasajero.
 
-![](assets/img/htb-writeup-titanic/titanic1_2.png)
+![](/assets/img/htb-writeup-titanic/titanic1_2.png)
 
 Al enviar el formulario, el servidor responde con un archivo `.json` descargable que contiene los datos ingresados manualmente.
 
-![](assets/img/htb-writeup-titanic/titanic1_3.png)
+![](/assets/img/htb-writeup-titanic/titanic1_3.png)
 
 ---
 
@@ -107,17 +107,17 @@ Dev                     [Status: 200, Size: 13982, Words: 1107, Lines: 276, Dura
 
 Actualizo el archivo `/etc/hosts` para incluir la resolución del nuevo subdominio. Y al consultar `dev.titanic.htb` con el navegador, la aplicación responde con una instancia de Gitea funcionando.
 
-![](assets/img/htb-writeup-titanic/titanic1_4.png)
+![](/assets/img/htb-writeup-titanic/titanic1_4.png)
 
 Dentro del Gitea, el usuario `developer` mantiene un repositorio público llamado `docker-config` que contiene dos carpetas relevantes, cada una con un archivo `docker-compose.yml`.
 
 Por otro lado, el archivo de configuración para el servicio MySQL expone credenciales en texto claro.
 
-![](assets/img/htb-writeup-titanic/titanic1_5.png)
+![](/assets/img/htb-writeup-titanic/titanic1_5.png)
 
 El archivo correspondiente al servicio Gitea revela el path local donde persisten los datos del contenedor.
 
-![](assets/img/htb-writeup-titanic/titanic1_6.png)
+![](/assets/img/htb-writeup-titanic/titanic1_6.png)
 
 ---
 ## Vulnerability Exploitation
@@ -233,7 +233,7 @@ El script, lo que hace es cambiar al directorio `/opt/app/static/assets/images`,
 developer@titanic:~$ cat /opt/scripts/identify_images.sh
 cd /opt/app/static/assets/images
 truncate -s 0 metadata.log
-find /opt/app/static/assets/images/ -type f -name "*.jpg" | xargs /usr/bin/magick identify >> metadata.log
+find /opt/app/static/assets/img/ -type f -name "*.jpg" | xargs /usr/bin/magick identify >> metadata.log
 ```
 
 Al verificar la versión de magick, confirmo que está ejecutando `ImageMagick 7.1.1-35` la cual, es vulnerable a [CVE-2024-41817](https://nvd.nist.gov/vuln/detail/cve-2024-41817). Según [ImageMagick/GHSA-8rxc-922v-phg8](https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-8rxc-922v-phg8), esta vulnerabilidad permite la ejecución arbitraria de código cuando el binario intenta cargar la biblioteca `libxcb.so.1` desde el directorio actual, en lugar de las rutas estándar del sistema. Permitiendo inyectar una librería manipulada que se ejecute con los privilegios del proceso, en este caso, como `root`.

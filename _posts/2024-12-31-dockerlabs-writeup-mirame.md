@@ -73,12 +73,12 @@ http://127.17.0.2 [200 OK] Apache[2.4.61], Country[RESERVED][ZZ], HTML5, HTTPSer
 
 En el servicio web se encuentra un panel de inicio de sesión.
 
-![](assets/img/dockerlabs-writeup-mirame/mirame1_1.png)
-![](assets/img/dockerlabs-writeup-mirame/mirame1_2.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame1_1.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame1_2.png)
 
 Rápidamente identifico que el sistema utiliza MariaDB, el cual es vulnerable a SQL injection.
 
-![](assets/img/dockerlabs-writeup-mirame/mirame1_3.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame1_3.png)
 
 Utilizando la siguiente consulta, verifico la cantidad de columnas disponibles en la consulta actual:
 
@@ -86,7 +86,7 @@ Utilizando la siguiente consulta, verifico la cantidad de columnas disponibles e
 ' ORDER BY 3-- -
 ```
 
-![](assets/img/dockerlabs-writeup-mirame/mirame1_4.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame1_4.png)
 
 El panel de inicio de sesión puede ser bypassado con la siguiente query:
 
@@ -94,11 +94,11 @@ El panel de inicio de sesión puede ser bypassado con la siguiente query:
 admin'-- -
 ```
 
-![](assets/img/dockerlabs-writeup-mirame/mirame1_5.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame1_5.png)
 
 Sin embargo, al analizar la página ```page.php```, no logro identifica ninguna vulnerabilidad.
 
-![](assets/img/dockerlabs-writeup-mirame/mirame1_6.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame1_6.png)
 
 ---
 ## Vulnerability Exploitation
@@ -107,7 +107,7 @@ La inyección SQL parece ser de tipo blind, por lo que la opción más rápida e
 
 Primero, intercepto la consulta del panel con BurpSuite y guardo la request en un archivo ```request.txt```.
 
-![](assets/img/dockerlabs-writeup-mirame/mirame2_1.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame2_1.png)
 
 Luego, ejecuto SQLmap para identificar las bases de datos disponibles. Se detectan dos: ```infomation_schema``` y ```users```.
 
@@ -115,7 +115,7 @@ Luego, ejecuto SQLmap para identificar las bases de datos disponibles. Se detect
 /home/kali/Documents/dockerlabs/mirame:-$ sqlmap -r request.txt --dbs --dbms=mysql --batch
 ```
 
-![](assets/img/dockerlabs-writeup-mirame/mirame2_2.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame2_2.png)
 
 Ajusto el comando para apuntar a la base de datos ```users``` y enumero las tablas. Solo encuentro una: ```usuarios```.
 
@@ -123,7 +123,7 @@ Ajusto el comando para apuntar a la base de datos ```users``` y enumero las tabl
 /home/kali/Documents/dockerlabs/mirame:-$ sqlmap -r request.txt -D users --tables --dbms=mysql --batch
 ```
 
-![](assets/img/dockerlabs-writeup-mirame/mirame2_3.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame2_3.png)
 
 Luego, ajusto el comando nuevamente para enumerar las columnas de la tabla ```usuarios```, verificando que efectivamente son las tres mencionadas: ```id```, ```password``` y ```username```.
 
@@ -131,7 +131,7 @@ Luego, ajusto el comando nuevamente para enumerar las columnas de la tabla ```us
 /home/kali/Documents/dockerlabs/mirame:-$ sqlmap -r request.txt -D users -T usuarios --columns --dbms=mysql --batch
 ```
 
-![](assets/img/dockerlabs-writeup-mirame/mirame2_4.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame2_4.png)
 
 Finalmente, dumpeo los datos de las columnas.
 
@@ -139,14 +139,14 @@ Finalmente, dumpeo los datos de las columnas.
 /home/kali/Documents/dockerlabs/mirame:-$ sqlmap -r request.txt -D users -T usuarios --dump --dbms=mysql --batch
 ```
 
-![](assets/img/dockerlabs-writeup-mirame/mirame2_5.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame2_5.png)
 
 Ninguna de las credenciales dumpeadas resulta útil, pero la fila número 4 es definitivamente sospechosa.
 
 Tras investigar más a fondo, encuentro que existe un directorio oculto que contiene una imagen llamada ```miramebien.jpg```.
 
-![](assets/img/dockerlabs-writeup-mirame/mirame3_1.png)
-![](assets/img/dockerlabs-writeup-mirame/mirame3_2.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame3_1.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame3_2.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/mirame:-$ wget http://127.17.0.2/directoriotravieso/miramebien.jpg
@@ -201,7 +201,7 @@ Ejecuto john sobre el archivo ```oculto.txt``` para realizar un ataque de fuerza
 /home/kali/Documents/dockerlabs/mirame:-$ john oculto.txt
 ```
 
-![](assets/img/dockerlabs-writeup-mirame/mirame3_3.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame3_3.png)
 
 Una vez que obtengo la contraseña, intento nuevamente descomprimir el archivo  ```ocultito.zip``` donde se encuentra el archivo ```secret.txt``` y encuentro las credenciales para conectarme por SSH.
 
@@ -252,7 +252,7 @@ carlos@kali:~$ find / -perm -4000 2>/dev/null
 
 <https://gtfobins.github.io/gtfobins/find/#suid>
 
-![](assets/img/dockerlabs-writeup-mirame/mirame4_1.png)
+![](/assets/img/dockerlabs-writeup-mirame/mirame4_1.png)
 
 Utilizo ```find``` con un comando ```-exec``` que ejecuta ```/bin/sh``` en un entorno con privilegios elevados ```-p```, lo que me otorga privilegios de administrador en el sistema.
 

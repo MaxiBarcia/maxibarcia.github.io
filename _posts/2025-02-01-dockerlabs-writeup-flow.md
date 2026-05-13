@@ -76,11 +76,11 @@ http://127.17.0.2 [200 OK] Apache[2.4.58], Country[RESERVED][ZZ], HTML5, HTTPSer
 
 La web presenta un formulario de inicio de sesión.
 
-![](assets/img/dockerlabs-writeup-flow/flow1_1.png)
+![](/assets/img/dockerlabs-writeup-flow/flow1_1.png)
 
 Al inspeccionar el código fuente, encuentro un comentario con un nombre de usuario.
 
-![](assets/img/dockerlabs-writeup-flow/flow1_2.png)
+![](/assets/img/dockerlabs-writeup-flow/flow1_2.png)
 
 Utilizo Hydra para realizar un ataque de fuerza bruta sobre el formulario, empleando el usuario encontrado.
 
@@ -89,7 +89,7 @@ Utilizo Hydra para realizar un ataque de fuerza bruta sobre el formulario, emple
 [80][http-post-form] host: 127.17.0.2   login: d1se0   password: amigos
 ```
 
-![](assets/img/dockerlabs-writeup-flow/flow1_3.png)
+![](/assets/img/dockerlabs-writeup-flow/flow1_3.png)
 
 Consigo acceder con las credenciales `d1se0`:`amigos`.
 
@@ -98,7 +98,7 @@ Consigo acceder con las credenciales `d1se0`:`amigos`.
 
 Una vez autenticado, accedo al panel de administración en `/gestionAdminPanel.php`. A simple vista, no parece contener información relevante.
 
-![](assets/img/dockerlabs-writeup-flow/flow2_1.png)
+![](/assets/img/dockerlabs-writeup-flow/flow2_1.png)
 
 Sin embargo, al modificar el valor del encabezado `User-Agent`, descubro que es vulnerable a command injection.
 
@@ -107,7 +107,7 @@ GET /gestionAdminPanel.php HTTP/1.1
 User-Agent: id
 ```
 
-![](assets/img/dockerlabs-writeup-flow/flow2_2.png)
+![](/assets/img/dockerlabs-writeup-flow/flow2_2.png)
 
 Consulto el archivo `/etc/passwd` para identificar usuarios con acceso al sistema.
 
@@ -116,7 +116,7 @@ GET /gestionAdminPanel.php HTTP/1.1
 User-Agent: cat /etc/passwd | grep sh$
 ```
 
-![](assets/img/dockerlabs-writeup-flow/flow2_3.png)
+![](/assets/img/dockerlabs-writeup-flow/flow2_3.png)
 
 Busco archivos y directorios accesibles por el usuario `flow` o con permisos de escritura para otros.
 
@@ -125,7 +125,7 @@ GET /gestionAdminPanel.php HTTP/1.1
 User-Agent: find / '(' -type f -or -type d ')' '(' '(' -user flow ')' -or '(' -perm -o=w ')' ')' 2>/dev/null | grep -v '/proc/'
 ```
 
-![](assets/img/dockerlabs-writeup-flow/flow2_4.png)
+![](/assets/img/dockerlabs-writeup-flow/flow2_4.png)
 
 Encuentro el archivo `/usr/bin/secret` que podría contener información sensible.
 
@@ -134,7 +134,7 @@ GET /gestionAdminPanel.php HTTP/1.1
 User-Agent: cat /usr/bin/secret
 ```
 
-![](assets/img/dockerlabs-writeup-flow/flow2_5.png)
+![](/assets/img/dockerlabs-writeup-flow/flow2_5.png)
 
 Decodifico el contenido con Base32 y obtengo una posible contraseña.
 
@@ -178,7 +178,7 @@ key = 1234
 
 Al ejecutar el binario `manager`, solicita una clave. Si la clave ingresada es incorrecta, muestra un mensaje de error indicando falta de permisos para abrir un archivo.
 
-![](assets/img/dockerlabs-writeup-flow/flow3_1.png)
+![](/assets/img/dockerlabs-writeup-flow/flow3_1.png)
 
 Esto sugiere que el programa intenta acceder a un archivo protegido y que la clave ingresada podría ser verificada contra algún valor interno.
 
@@ -197,7 +197,7 @@ flow@kali:~$ python3 -m http.server -d /usr/local/bin/
 
 Dentro de la función `main`, identifico varios aspectos clave que permiten elevar privilegios.
 
-![](assets/img/dockerlabs-writeup-flow/flow3_2.png)
+![](/assets/img/dockerlabs-writeup-flow/flow3_2.png)
 
 * Tamaño del buffer de entrada
 
@@ -225,7 +225,7 @@ void execute_command(void) {
 
 La función `write_key_to_file()` escribe el valor de `local_c` en `/tmp/key_output.txt`.
 
-![](assets/img/dockerlabs-writeup-flow/flow3_3.png)
+![](/assets/img/dockerlabs-writeup-flow/flow3_3.png)
 
 Dado que `local_c` se inicializa con `0x4d2`, el archivo `/tmp/key_output.txt` contendrá la línea `1234`.
 
@@ -248,7 +248,7 @@ El programa tiene una variable `local_c` que almacena la clave utilizada en la c
 
 > 76 'A' → key = 0
 
-![](assets/img/dockerlabs-writeup-flow/flow3_4.png)
+![](/assets/img/dockerlabs-writeup-flow/flow3_4.png)
 
 El buffer `local_58` tiene 76 bytes. Cuando se introduce exactamente 76 caracteres, el siguiente valor en la memoria (`local_c`) se sobrescribe con `0x00000000` (cero), lo que explica por qué `key = 0`.
 
@@ -258,7 +258,7 @@ El buffer `local_58` tiene 76 bytes. Cuando se introduce exactamente 76 caracter
 
 > 78 'A' → key = 16705
 
-![](assets/img/dockerlabs-writeup-flow/flow3_5.png)
+![](/assets/img/dockerlabs-writeup-flow/flow3_5.png)
 
 `A` en ASCII es `0x41` (decimal 65). Con 77 caracteres, `local_c` se sobrescribe con `0x00000041`, lo que equivale a 65 en decimal. Con 78 caracteres, `local_c` se sobrescribe con `0x00004141`, que es 16705 en decimal.
 
@@ -268,7 +268,7 @@ Esto confirma que estamos escribiendo directamente en la variable `local_c`, lo 
 
 > 76 'A' + 1 'B' → key = 66
 
-![](assets/img/dockerlabs-writeup-flow/flow3_6.png)
+![](/assets/img/dockerlabs-writeup-flow/flow3_6.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/flow:-$ printf "%x\n" 66 | xxd -r -p
@@ -281,7 +281,7 @@ El carácter `B` en ASCII es `0x42`, 66 en decimal. Al escribir `76 'A' + 1 'B'`
 
 El objetivo es sobrescribir la variable `local_c` con el valor `0x726f6f74`, que es la representación en hexadecimal de "toor" en little-endian. Esto nos permitirá activar el modo administrador y ejecutar comandos como `root`.
 
-![](assets/img/dockerlabs-writeup-flow/flow3_7.png)
+![](/assets/img/dockerlabs-writeup-flow/flow3_7.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/flow:-$ printf "%x\n" 1919905652 | xxd -r -p
@@ -297,7 +297,7 @@ Utilizo Python para generar la entrada maliciosa y enviarla al programa vulnerab
 flow@kali:~$ python3 -c 'print("A" * 76 + "\x74\x6f\x6f\x72" + "\nid\n")' | sudo /usr/local/bin/manager
 ```
 
-![](assets/img/dockerlabs-writeup-flow/flow3_8.png)
+![](/assets/img/dockerlabs-writeup-flow/flow3_8.png)
 
 Activo el bit SUID en `/bin/bash`, permitiendo ejecutar bash con privilegios de `root` sin necesidad de sudo.
 

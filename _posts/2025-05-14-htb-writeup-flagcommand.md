@@ -20,26 +20,26 @@ tags:
 ---
 ## Web Analysis
 
-![](assets/img/htb-writeup-flagcommand/flagcommand1.png)
+![](/assets/img/htb-writeup-flagcommand/flagcommand1.png)
 
 El sitio web presenta una interfaz de juego con múltiples caminos narrativos, donde cada conjunto de opciones conduce a diferentes finales.
 
-![](assets/img/htb-writeup-flagcommand/flagcommand2.png)
+![](/assets/img/htb-writeup-flagcommand/flagcommand2.png)
 
 ---
 ## Misconfiguration Exploitation
 
 Desde la pestaña Network en DevTools, identifico un endpoint `/api/options` que responde con datos en formato JSON.
 
-![](assets/img/htb-writeup-flagcommand/flagcommand3.png)
+![](/assets/img/htb-writeup-flagcommand/flagcommand3.png)
 
 Inspeccionando su contenido, se listan todas las opciones posibles del juego, incluyendo una cadena secreta no visible en la interfaz principal.
 
-![](assets/img/htb-writeup-flagcommand/flagcommand4.png)
+![](/assets/img/htb-writeup-flagcommand/flagcommand4.png)
 
 Al reiniciar el juego y enviar el valor oculto `Blip-blop, in a pickle with a hiccup! Shmiggity-shmack`, se revela la flag del reto.
 
-![](assets/img/htb-writeup-flagcommand/flagcommand5.png)
+![](/assets/img/htb-writeup-flagcommand/flagcommand5.png)
 
 > <a href="https://www.hackthebox.com/achievement/challenge/1521382/646" target="_blank">Flag Command Challenge from Hack The Box has been Pwned</a>
 {: .prompt-tip }

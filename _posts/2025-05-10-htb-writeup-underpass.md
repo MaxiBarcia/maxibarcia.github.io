@@ -75,7 +75,7 @@ http://10.10.11.48 [200 OK] Apache[2.4.52], Country[RESERVED][ZZ], HTTPServer[Ub
 
 El puerto 80 muestra un servidor Apache con la plantilla por defecto de Ubuntu. No obtengo mas información adicional desde el navegador.
 
-![](assets/img/htb-writeup-underpass/underpass1_1.png)
+![](/assets/img/htb-writeup-underpass/underpass1_1.png)
 
 El sitio web no contiene contenido interesante, por tanto decido realizar un escaneo de puertos UDP, apuntando a descubrir otros servicios.
 
@@ -176,7 +176,7 @@ El nombre daloradius llama particularmente la atención, una búsqueda en línea
 
 El servidor responde con un `403 Forbidden`, lo que confirma la existencia del directorio `/daloradius/` y el uso de este software.
 
-![](assets/img/htb-writeup-underpass/underpass1_2.png)
+![](/assets/img/htb-writeup-underpass/underpass1_2.png)
 
 ---
 ## Misconfiguration & Data Leak Exploitation
@@ -185,15 +185,15 @@ Consultando [documentacion](https://kb.ct-group.com/radius-holding-post-watch-th
 
 Mediante una búsqueda adicional, descubro que las credenciales por defecto de la plataforma son `administrator`:`radius`. Credenciales resultan válidas para iniciar sesión.
 
-![](assets/img/htb-writeup-underpass/underpass1_3.png)
+![](/assets/img/htb-writeup-underpass/underpass1_3.png)
 
 Una vez autenticado, accedo al dashboard con privilegios administrativos.
 
-![](assets/img/htb-writeup-underpass/underpass1_4.png)
+![](/assets/img/htb-writeup-underpass/underpass1_4.png)
 
 Dentro del panel, en la sección `Management` > `Users Listing`, identifico un usuario llamado `svcMosh` junto a una cadena que aparenta ser una contraseña cifrada.
 
-![](assets/img/htb-writeup-underpass/underpass1_5.png)
+![](/assets/img/htb-writeup-underpass/underpass1_5.png)
 
 En este caso, hashcat indica que el hash es del tipo MD5. Por tanto, procedo a crackear el hash mediante fuerza bruta.
 

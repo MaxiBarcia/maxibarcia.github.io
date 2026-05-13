@@ -19,12 +19,12 @@ toc: true
 toc_label: "Table of Contents"
 toc_sticky: true
 header:
-  overlay_image: /assets/images/headers/vulnhub-banner.jpg
+  overlay_image: /assets/img/headers/vulnhub-banner.jpg
   overlay_filter: 0.7
-  og_image: /assets/images/posts/symfonos-report/banner.png
+  og_image: /assets/img/posts/symfonos-report/banner.png
 ---
 
-![image-center](/assets/images/headers/vulnhub-banner.jpg)
+![image-center](/assets/img/headers/vulnhub-banner.jpg)
 {: .align-center}
 
 ### **Project Overview**
@@ -84,7 +84,7 @@ The first step was to identify the target machine within the network. A successf
 
 #### Port and Service Scanning with Nmap
 
-![Nmap scan](/assets/images/posts/symfonos-report/nmap-scan.png)
+![Nmap scan](/assets/img/posts/symfonos-report/nmap-scan.png)
 {: .align-center}
 
 A comprehensive Nmap scan was performed to identify open ports, running services, and the operating system of the target. The scan revealed the following services:
@@ -103,7 +103,7 @@ A comprehensive Nmap scan was performed to identify open ports, running services
 
 Fuzzing the web server on port 80 with `gobuster` was crucial for discovering hidden directories. Using a large wordlist (`directory-list-2.3-big.txt`), the `/flyspray` directory was found, which became the primary attack vector.
 
-![Gobuster](/assets/images/posts/symfonos-report/gobuster.png)
+![Gobuster](/assets/img/posts/symfonos-report/gobuster.png)
 {: .align-center}
 
 ---
@@ -129,7 +129,7 @@ When an administrator viewed the malicious profile, the script executed in their
 - **Result:** A new administrator account was created, allowing login to the application's administrative panel.
     
 
-![Exploit](/assets/images/posts/symfonos-report/fly.png)
+![Exploit](/assets/img/posts/symfonos-report/fly.png)
 {: .align-center}
 
 ### Additional Findings
@@ -141,12 +141,12 @@ During the post-exploitation phase, further vulnerabilities were discovered:
 - **YAML Configuration Files:** An API was found on port 3000, and its routes were exposed via a YAML file (`appies.yml`). This type of file can contain sensitive information and represents a potential attack surface.
     
 
-![Exploit](/assets/images/posts/symfonos-report/user-create.png)
+![Exploit](/assets/img/posts/symfonos-report/user-create.png)
 
 {: .align-center}
 
 
-![PHP Vulneravbility](/assets/images/posts/symfonos-report/php-vuln.png)
+![PHP Vulneravbility](/assets/img/posts/symfonos-report/php-vuln.png)
 
 ---
 

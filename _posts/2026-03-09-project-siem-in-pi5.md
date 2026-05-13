@@ -5,7 +5,7 @@ description: "Guía completa para montar tu propio centro de operaciones de segu
 categories: [ciberseguridad, wazuh, raspberry-pi, siem, homelab]
 tags: [wazuh, raspberry-pi-5, siem, soc, elastic-stack, docker, arm64, threat-hunting, mitre-attack, cybersecurity]
 image:
-  path: /assets/images/posts/project/wazuh/banner-wazuh.png
+  path: /assets/img/posts/project/wazuh/banner-wazuh.png
   alt: "Banner del proyecto - Laboratorio SIEM con Wazuh en Raspberry Pi 5"
   featured: true
 author: maxibarcia
@@ -82,7 +82,7 @@ https://www.youtube.com/watch?v=-7vvELophxU&t
 
 **4.1.4. Generación de Certificados**  
 Utilizamos las herramientas oficiales para generar la infraestructura de clave pública (PKI) necesaria para la comunicación segura entre los componentes.
-![Certificados](/assets/images/posts/project/wazuh/cert.png)
+![Certificados](/assets/img/posts/project/wazuh/cert.png)
  
 
 
@@ -107,13 +107,13 @@ nyx-pi@Nyx-Pi:/mnt/datos/wazuh-docker/wazuh-demo1 $ docker compose up -d
 
 **Estado de los Contenedores**  
 Verificamos que todos los servicios estuvieran en estado `Up` (saludable):  
-![Docker Up](/assets/images/posts/project/wazuh/docker-up.png)
+![Docker Up](/assets/img/posts/project/wazuh/docker-up.png)
 
 _Captura: Contenedores de Wazuh corriendo junto a Pi-hole y Portainer._
 
 **4.1.7. Acceso al Dashboard**  
 Finalmente, accedimos a la interfaz web a través del puerto configurado (**8443**).  
-![Wazuh Dashboard](/assets/images/posts/project/wazuh/wazuh_1.png)
+![Wazuh Dashboard](/assets/img/posts/project/wazuh/wazuh_1.png)
 
 _Captura: Dashboard de Wazuh operativo tras el Health Check inicial._
 
@@ -200,7 +200,7 @@ sudo apt update
 sudo apt install wazuh-agent -y
 ```
 
-![Agente Wazuh](/assets/images/posts/project/wazuh/agent.png)  
+![Agente Wazuh](/assets/img/posts/project/wazuh/agent.png)  
 
 _Captura: Instalación del agente Wazuh en la máquina CTF-Labs._
 
@@ -426,7 +426,7 @@ El archivo de configuración completo del agente en `/var/ossec/etc/ossec.conf` 
 **4.2.5. Verificación de la Conexión del Agente**  
 Una vez configurado, verificamos que el agente se conectaba correctamente al manager desde el dashboard de Wazuh.
 
-![Agente conectado](/assets/images/posts/project/wazuh/wazuh_2.png)
+![Agente conectado](/assets/img/posts/project/wazuh/wazuh_2.png)
 
 _Captura: Agente 'CTF-Labs-nyx' conectado y activo en el panel de Wazuh._
 

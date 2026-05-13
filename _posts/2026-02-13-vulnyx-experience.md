@@ -14,7 +14,7 @@ tags:
   - Vulnerability-Assessment
 estado: Completado
 image:
-  path: /assets/images/posts/vulnyx/experience/experience.png
+  path: /assets/img/posts/vulnyx/experience/experience.png
 toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
@@ -165,7 +165,7 @@ Nmap done: 1 IP address (1 host up) scanned in 28.87 seconds
 
   
 
-![Nmap](/assets/images/posts/vulnyx/experience/nmap.png)
+![Nmap](/assets/img/posts/vulnyx/experience/nmap.png)
 
 
 ##### Script de nmap para reconocimiento.

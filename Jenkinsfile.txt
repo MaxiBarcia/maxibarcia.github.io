@@ -1,0 +1,158 @@
+pipeline {
+    agent any
+    
+    environment {
+        RUBY_VERSION = '3.1'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Validate Repository Structure') {
+            steps {
+                script {
+                    bat '''
+                        @echo off
+                        echo ============================================
+                        echo [1/6] CHECKING FOR DOUBLE EXTENSION FILES
+                        echo ============================================
+                        FOR /R _posts %%f IN (*.md.md) DO (
+                            echo [ERROR] Double extension found: %%f
+                            exit /b 1
+                        )
+                        
+                        echo ============================================
+                        echo [2/6] CHECKING FOR TEMPORARY/BACKUP FILES
+                        echo ============================================
+                        FOR /R assets\img %%f IN (*_original*) DO (
+                            echo [ERROR] Backup/original file should not be committed: %%f
+                            exit /b 1
+                        )
+                        
+                        echo ============================================
+                        echo [3/6] CHECKING FOR EMPTY IMAGE FOLDERS
+                        echo ============================================
+                        FOR /D %%d IN (assets\img\*) DO (
+                            dir "%%d\*.png" /b 2>nul | findstr /r "." >nul
+                            if errorlevel 1 (
+                                echo [WARNING] Empty or non-PNG image folder: %%d
+                            )
+                        )
+                    '''
+                }
+            }
+        }
+        
+        stage('Validate YAML Front Matter') {
+            steps {
+                script {
+                    bat '''
+                        @echo off
+                        echo ============================================
+                        echo [4/6] VALIDATING ALL YAML FRONT MATTER
+                        echo ============================================
+                        
+                        set HAS_ERRORS=0
+                        
+                        FOR %%f IN (_posts\*.md) DO (
+                            ruby -e "require 'yaml'; begin; content = File.read('%%f'); 
+                            if content.match(/^---\\s*\\n(.*?)\\n---/m)
+                                YAML.safe_load(\$1)
+                            end; rescue => e; puts \"[ERROR] %%f: #{e.message}\"; exit 1; end" 2>&1
+                            if errorlevel 1 set HAS_ERRORS=1
+                        )
+                        
+                        if %HAS_ERRORS% == 1 (
+                            echo [FAIL] YAML validation errors found
+                            exit /b 1
+                        )
+                        
+                        echo [OK] All YAML front matter is valid
+                    '''
+                }
+            }
+        }
+        
+        stage('Validate Image References') {
+            steps {
+                script {
+                    bat '''
+                        @echo off
+                        echo ============================================
+                        echo [5/6] VALIDATING IMAGE REFERENCES
+                        echo ============================================
+                        
+                        REM Run the PowerShell validation script
+                        powershell -ExecutionPolicy Bypass -File tools\validate-images.ps1
+                        
+                        if errorlevel 1 (
+                            echo [FAIL] Broken image references found
+                            exit /b 1
+                        )
+                        
+                        echo [OK] All image references are valid
+                    '''
+                }
+            }
+        }
+        
+        stage('Check Route Consistency') {
+            steps {
+                script {
+                    bat '''
+                        @echo off
+                        echo ============================================
+                        echo [6/6] CHECKING IMAGE PATH CONSISTENCY
+                        echo ============================================
+                        
+                        powershell -Command "
+                            \$mdFiles = Get-ChildItem -Path '_posts' -Filter '*.md' -Recurse
+                            \$errors = 0
+                            
+                            foreach (\$file in \$mdFiles) {
+                                \$content = Get-Content \$file.FullName -Raw
+                                
+                                # Check for old-style image paths
+                                if (\$content -match '/assets/images/') {
+                                    Write-Host \"[WARNING] Old-style path '/assets/images/' in: \$(\$file.Name)\"
+                                    \$errors++
+                                }
+                                
+                                # Check for inconsistent slashes (some with /, some without)
+                                \$withSlash = ([regex]::Matches(\$content, '\\]\\(/assets/')).Count
+                                \$withoutSlash = ([regex]::Matches(\$content, '\\]\\(assets/')).Count
+                                
+                                if (\$withSlash -gt 0 -and \$withoutSlash -gt 0) {
+                                    Write-Host \"[WARNING] Mixed path styles in: \$(\$file.Name) - Found \$withSlash with '/' and \$withoutSlash without '/'\"
+                                    \$errors++
+                                }
+                            }
+                            
+                            if (\$errors -gt 0) {
+                                Write-Host \"`n[WARNING] Found \$errors inconsistencies - review recommended\"
+                            } else {
+                                Write-Host '[OK] All image paths are consistent'
+                            }
+                        "
+                    '''
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Pipeline finished. Check results above.'
+        }
+        success {
+            echo 'All validations passed! Ready to deploy.'
+        }
+        failure {
+            echo 'Some validations failed. Review the logs and fix the issues before deploying.'
+        }
+    }
+}

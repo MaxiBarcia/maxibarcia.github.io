@@ -596,17 +596,17 @@ INFO: Compressing output into 20250528184956_bloodhound.zip
 
 Analizando la base de datos en BloodHound, detecto que el usuario `ryan` posee la propiedad `WriteOwner` sobre el usuario `ca_svc`.
 
-![](assets/img/htb-writeup-escapetwo/escapetwo1_1.png)
+![](/assets/img/htb-writeup-escapetwo/escapetwo1_1.png)
 
 Esta derecho otorga a `ryan` la capacidad de tomar el control total del objeto `ca_svc`, permitiendo cambiar su propiedad, otorgarse privilegios o incluso establecer una contraseña arbitraria. Este control es suficiente para ejecutar un Shadow Credentials Attack.
 
-![](assets/img/htb-writeup-escapetwo/escapetwo1_2.png)
+![](/assets/img/htb-writeup-escapetwo/escapetwo1_2.png)
 
 Consultando las propiedades de `ca_svc`, identifico que es miembro del grupo `CERT PUBLISHERS`. Según la descripción del grupo: “Members of this group are permitted to publish certificates to the directory”
 
 Este rol confirma que el usuario tiene privilegios sobre la infraestructura de certificados del dominio, lo cual sugiere que Active Directory Certificate Services está configurado.
 
-![](assets/img/htb-writeup-escapetwo/escapetwo1_3.png)
+![](/assets/img/htb-writeup-escapetwo/escapetwo1_3.png)
 
 ---
 

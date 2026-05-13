@@ -21,9 +21,9 @@ toc: true
 toc_label: Report Contents
 toc_sticky: true
 header:
-  overlay_image: /assets/images/headers/atrium-project-banner.jpg
+  overlay_image: /assets/img/headers/atrium-project-banner.jpg
   overlay_filter: 0.7
-og_image: /assets/images/headers/atrium-project-banner.jpg
+og_image: /assets/img/headers/atrium-project-banner.jpg
 seo_title: Forensic Report.
 seo_description: Professional Forensic Report on Phishing
 author: Fabián Maximiliano Barcia
@@ -33,7 +33,7 @@ license: CC-BY-4.0
 
 ---
 
-![image-center](/assets/images/headers/atrium-project-banner.jpg){: .align-center}
+![image-center](/assets/img/headers/atrium-project-banner.jpg){: .align-center}
 
 
 
@@ -112,7 +112,7 @@ El primer hallazgo confirmó la exfiltración del usuario `mgarcia` (Línea **10
 en la siguiente captura se puede apreciar el paquete en detalle de WireShark con el contenido de la cadena en Base64, ip y port y todo lo necesario para iniciar la investigacion.
 
 
-![WireShark](assets/images/posts/analisisforense/wireshark.png)
+![WireShark](/assets/img/posts/analisisforense/wireshark.png)
 
 |LÍNEA|HORA|VÍCTIMA (IP)|C2 (IP)|_PAYLOAD_|
 |---|---|---|---|---|
@@ -126,7 +126,7 @@ Al investigar la URL secundaria (`https://pastebin.com/2R0Fem3C`), se obtuvo una
 
 
 
-![Users](assets/images/posts/analisisforense/users.png)
+![Users](/assets/img/posts/analisisforense/users.png)
 
 |Correo Electrónico Afectado|Contraseña Robada|Estatus|
 |---|---|---|

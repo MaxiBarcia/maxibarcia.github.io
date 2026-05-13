@@ -75,7 +75,7 @@ http://172.17.0.3 [200 OK] Apache[2.4.58], Country[RESERVED][ZZ], HTTPServer[Ubu
 
 La página principal entrega únicamente la plantilla por defecto de Apache Ubuntu.
 
-![](assets/img/dockerlabs-writeup-library/library1_1.png)
+![](/assets/img/dockerlabs-writeup-library/library1_1.png)
 
 Ejecuto fuzzing sobre la raíz y detecto la presencia del archivo `index.php`.
 
@@ -90,7 +90,7 @@ Ejecuto fuzzing sobre la raíz y detecto la presencia del archivo `index.php`.
 
 Accedo al recurso y visualizo una cadena de texto.
 
-![](assets/img/dockerlabs-writeup-library/library1_2.png)
+![](/assets/img/dockerlabs-writeup-library/library1_2.png)
 
 ---
 ## Data Leak Exploitation

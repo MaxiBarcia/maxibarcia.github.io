@@ -187,7 +187,7 @@ http://172.17.0.3:3000/login [200 OK] Country[RESERVED][ZZ], Grafana[8.3.0], HTM
 
 El servicio en el puerto 80 entrega únicamente la página predeterminada de Apache sobre Debian, sin funcionalidad expuesta.
 
-![](assets/img/dockerlabs-writeup-move/move1_1.png)
+![](/assets/img/dockerlabs-writeup-move/move1_1.png)
 
 Durante el fuzzing de de la web, aparece el archivo `maintenance.html`.
 
@@ -205,11 +205,11 @@ Finished
 
 Aunque parece genérico, contiene una pista relevante indicando la existencia de un archivo de texto con información confidencial ubicado en `/tmp/pass.txt`.
 
-![](assets/img/dockerlabs-writeup-move/move1_2.png)
+![](/assets/img/dockerlabs-writeup-move/move1_2.png)
 
 Por otro lado, el puerto 3000 presenta un login panel de Grafana en su versión 8.3.0, confirmada por el banner y el análisis de WhatWeb.
 
-![](assets/img/dockerlabs-writeup-move/move1_3.png)
+![](/assets/img/dockerlabs-writeup-move/move1_3.png)
 
 Esta versión es vulnerable a [CVE-2021-43798](https://nvd.nist.gov/vuln/detail/cve-2021-43798), una falla en plugins malformados que permite leer archivos arbitrarios en el sistema.
 

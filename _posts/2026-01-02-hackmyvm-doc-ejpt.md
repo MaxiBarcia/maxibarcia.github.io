@@ -12,7 +12,7 @@ tags:
   - File-Upload-Bypass
 estado: "Completado"
 image:
-  path: /assets/images/posts/hackmyvm/doc/banner.png
+  path: /assets/img/posts/hackmyvm/doc/banner.png
 toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
@@ -147,7 +147,7 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 El archivo subido es procesado y almacenado en el directorio `/uploads/` con un timestamp prefijado. Se ejecuta la shell visitando la ruta: `http://doc.hmv/uploads/1770113100_prueba.php`
 
 
-![Acceso al sistema](/assets/images/posts/hackmyvm/doc/1.png)
+![Acceso al sistema](/assets/img/posts/hackmyvm/doc/1.png)
 
 Se obtiene acceso como el usuario `www-data` en el servidor objetivo.
 - **Tratamiento de la TTY:** Para que la shell no se te cierre y puedas usar flechas o `Ctrl+C`:

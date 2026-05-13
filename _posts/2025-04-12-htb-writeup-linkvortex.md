@@ -82,15 +82,15 @@ http://linkvortex.htb [200 OK] Apache, Country[RESERVED][ZZ], HTML5, HTTPServer[
 
 Se identifica un servicio web con funcionalidades limitadas.
 
-![](assets/img/htb-writeup-linkvortex/linkvortex1_1.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex1_1.png)
 
 Tras revisar archivos comunes, detecto la existencia de un `robots.txt`. En su contenido se listan varios directorios, entre ellos `/ghost/`.
 
-![](assets/img/htb-writeup-linkvortex/linkvortex1_2.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex1_2.png)
 
 El directorio `/ghost/` redirige a un formulario de inicio de sesión. Al no disponer de credenciales válidas, se continúo con el análisis.
 
-![](assets/img/htb-writeup-linkvortex/linkvortex1_3.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex1_3.png)
 
 ---
 
@@ -110,7 +110,7 @@ Actualizo el archivo `/etc/hosts` para poder acceder al nuevo subdominio.
 
 En principio, el subdominio muestra una página sin contenido relevante.
 
-![](assets/img/htb-writeup-linkvortex/linkvortex2_1.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex2_1.png)
 
 Sin embargo, al hacer fuzzing, encuentro un repositorio `.git` expuesto.
 
@@ -123,7 +123,7 @@ Sin embargo, al hacer fuzzing, encuentro un repositorio `.git` expuesto.
 /.git/index           (Status: 200) [Size: 707577]
 ```
 
-![](assets/img/htb-writeup-linkvortex/linkvortex2_2.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex2_2.png)
 
 Utilizo [Git Dumper](https://github.com/arthaud/git-dumper) para descargar el repositorio completo.
 
@@ -137,7 +137,7 @@ Busco información sensible filtrando por la palabra `password` y encuentro posi
 /home/kali/Documents/htb/machines/linkvortex/git:-$ grep -rE 'password ='
 ```
 
-![](assets/img/htb-writeup-linkvortex/linkvortex2_3.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex2_3.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/linkvortex/git:-$ cat ghost/core/test/regression/api/admin/authentication.test.js | grep -B 3 'OctopiFociPilfer45'
@@ -148,12 +148,12 @@ Busco información sensible filtrando por la palabra `password` y encuentro posi
 
 Intento iniciar sesión en el formulario con el usuario `admin@linkvortex.htb` y la contraseña encontrada `OctopiFociPilfer45`, y tengo éxito.
 
-![](assets/img/htb-writeup-linkvortex/linkvortex2_4.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex2_4.png)
 
 ---
 ## Vulnerability Exploitation
 
-![](assets/img/htb-writeup-linkvortex/linkvortex3_1.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex3_1.png)
 
 Una vez autenticado como usuario válido, y recordando que whatweb detectó la versión `[Ghost 5.58]`, identifico la vulnerabilidad [CVE-2023-40028](https://nvd.nist.gov/vuln/detail/CVE-2023-40028), la cual puede ser explotada en este entorno. Las versiones anteriores a la `5.59.1` son vulnerables a una condición que permite a usuarios autenticados subir archivos simbólicos, lo que puede ser aprovechado para realizar lecturas arbitrarias de archivos en el sistema operativo.
 
@@ -166,7 +166,7 @@ Utilizo el exploit [0xyassine-CVE-2023-40028](https://github.com/0xyassine/CVE-2
 file> /etc/passwd
 ```
 
-![](assets/img/htb-writeup-linkvortex/linkvortex3_2.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex3_2.png)
 
 Analizando el archivo `Dockerfile.ghost` del repositorio `.git`, observo que el archivo de configuración `config.production.json` es copiado a `/var/lib/ghost/config.production.json`.
 
@@ -174,7 +174,7 @@ Analizando el archivo `Dockerfile.ghost` del repositorio `.git`, observo que el 
 /home/kali/Documents/htb/machines/linkvortex/git:-$ cat Dockerfile.ghost
 ```
 
-![](assets/img/htb-writeup-linkvortex/linkvortex3_3.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex3_3.png)
 
 Al leer este archivo de configuración desde el sistema, encuentro credenciales de acceso ssh para el usuario `bob`.
 
@@ -182,7 +182,7 @@ Al leer este archivo de configuración desde el sistema, encuentro credenciales 
 file> /var/lib/ghost/config.production.json
 ```
 
-![](assets/img/htb-writeup-linkvortex/linkvortex3_4.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex3_4.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/linkvortex:-$ ssh bob@linkvortex.htb
@@ -216,7 +216,7 @@ User bob may run the following commands on linkvortex:
 bob@linkvortex:~$ cat /opt/ghost/clean_symlink.sh
 ```
 
-![](assets/img/htb-writeup-linkvortex/linkvortex4_1.png)
+![](/assets/img/htb-writeup-linkvortex/linkvortex4_1.png)
 
 Este script está diseñado para procesar únicamente enlaces `.png`, Si es un symlink, revisa a qué apunta, si apunta a algo con `etc` o `root`, lo borra por seguridad, si no, lo mueve a `/var/quarantined`. Si la variable `CHECK_CONTENT` es igual a `true` expone el contenido de cualquier archivo apuntado una vez pasado el filtro de seguridad.
 

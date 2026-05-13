@@ -96,11 +96,11 @@ http://sightless.htb [200 OK] Country[RESERVED][ZZ], Email[sales@sightless.htb],
 
 Al acceder a la página web inicial, se presenta un diseño simple, sin muchas opciones disponibles.
 
-![](assets/img/htb-writeup-sightless/sightless1_1.png)
+![](/assets/img/htb-writeup-sightless/sightless1_1.png)
 
 Durante la inspección, al hacer hovering sobre el botón `Start Now` de SQLPad, se observa un subdirectorio en el enlace del botón.
 
-![](assets/img/htb-writeup-sightless/sightless1_2.png)
+![](/assets/img/htb-writeup-sightless/sightless1_2.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/sightless:-$ sudo sed -i '$d' /etc/hosts
@@ -109,8 +109,8 @@ Durante la inspección, al hacer hovering sobre el botón `Start Now` de SQLPad,
 
 Me encuentro con el servicio Sqlpad en su versión 6.10.0. Este servicio es vulnerable a RCE [CVE-2022-0944](https://nvd.nist.gov/vuln/detail/CVE-2022-0944).
 
-![](assets/img/htb-writeup-sightless/sightless1_3.png)
-![](assets/img/htb-writeup-sightless/sightless1_4.png)
+![](/assets/img/htb-writeup-sightless/sightless1_3.png)
+![](/assets/img/htb-writeup-sightless/sightless1_4.png)
 
 ---
 ## Foothold
@@ -133,7 +133,7 @@ La explotación comienza creando una conexión maliciosa en Sqlpad.
 
 Este código crea un script en el sistema objetivo que, al ejecutarse, inicia una conexión inversa hacia mi máquina.
 
-![](assets/img/htb-writeup-sightless/sightless1_5.png)
+![](/assets/img/htb-writeup-sightless/sightless1_5.png)
 
 B. Ponerse en escucha
 
@@ -158,11 +158,11 @@ Creo una segunda conexión maliciosa en Sqlpad.
 > Nota: Se debe eliminar la barra invertida `\`
 {: .prompt-warning }
 
-![](assets/img/htb-writeup-sightless/sightless1_6.png)
+![](/assets/img/htb-writeup-sightless/sightless1_6.png)
 
 El payload ejecuta el script `/tmp/exploit.sh`, que inicia una conexión inversa a mi máquina atacante.
 
-![](assets/img/htb-writeup-sightless/sightless1_7.png)
+![](/assets/img/htb-writeup-sightless/sightless1_7.png)
 
 
 ---
@@ -201,7 +201,7 @@ Tras obtener acceso al contenedor como usuario `root`, busco en el archivo `/etc
 root@c184118df0a6:/# cat /etc/shadow
 ```
 
-![](assets/img/htb-writeup-sightless/sightless1_8.png)
+![](/assets/img/htb-writeup-sightless/sightless1_8.png)
 
 Encuentro el hash de la contraseña del usuario `michael`. El hash está en el formato `$6$salt$hash`, indicando el uso del algoritmo SHA-512 junto con `salt`.
 
@@ -247,14 +247,14 @@ Encuentro varios puertos funcionando, entre ellos el 8080 que puede estar corrie
 michael@sightless:~$ ss -tulnp
 ```
 
-![](assets/img/htb-writeup-sightless/sightless2_1.png)
+![](/assets/img/htb-writeup-sightless/sightless2_1.png)
 
 El archivo `/etc/hosts` revela un subdominio funcionando en local.
 
 ```terminal
 michael@sightless:~$ cat /etc/hosts
 ```
-![](assets/img/htb-writeup-sightless/sightless2_2.png)
+![](/assets/img/htb-writeup-sightless/sightless2_2.png)
 
 Para acceder al servicio en el puerto 8080, realizo un túnel SSH.
 
@@ -265,20 +265,20 @@ michael@sightless.htb's password: insaneclownposse
 
 Accedo al servicio Froxlor mediante el navegador, encontrando un formulario de inicio de sesión.
 
-![](assets/img/htb-writeup-sightless/sightless2_3.png)
+![](/assets/img/htb-writeup-sightless/sightless2_3.png)
 
 
 Utilizo una técnica para obtener información sensible desde el depurador remoto de Chrome.
 
 Referencia: [Chrome Remote Debugger Pentesting](https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/chrome-remote-debugger-pentesting/).
 
-![](assets/img/htb-writeup-sightless/sightless2_4.png)
+![](/assets/img/htb-writeup-sightless/sightless2_4.png)
 
 En `chrome://inspect/#devices`, agregué los puertos mas altos uno por uno en el formato localhost:puerto.
 
 En mi caso el puerto clave es el `39303`.
 
-![](assets/img/htb-writeup-sightless/sightless2_5.png)
+![](/assets/img/htb-writeup-sightless/sightless2_5.png)
 
 Después de la configuración, ejecuté el port-forwarding de los puertos locales.
 
@@ -292,7 +292,7 @@ michael@sightless.htb's password: insaneclownposse
 Bajo el apartado Remote Target, apareció la página local del servicio Froxlor.
 Hice clic en `Inspect` para abrir el DevTools de la página.
 
-![](assets/img/htb-writeup-sightless/sightless2_6.png)
+![](/assets/img/htb-writeup-sightless/sightless2_6.png)
 
 En el DevTools, reviso la pestaña `Network`.
 
@@ -300,7 +300,7 @@ Analizo las solicitudes de la página `index.php`.
 
 En la sección `Payload`, obtengo credenciales en texto plano: `admin:ForlorfroxAdmin`.
 
-![](assets/img/htb-writeup-sightless/sightless2_7.png)
+![](/assets/img/htb-writeup-sightless/sightless2_7.png)
 
 Una vez obtenidas las credenciales de administrador de Froxlor, pude acceder al admin dashboard de Froxlor.
 
@@ -310,12 +310,12 @@ Navegué a `PHP` > `PHP-FPM Versions` y allí creé una nueva versión de PHP `C
 
 Esto copiaría la clave privada de `root` al directorio `/tmp`.
 
-![](assets/img/htb-writeup-sightless/sightless3_1.png)
-![](assets/img/htb-writeup-sightless/sightless3_2.png)
+![](/assets/img/htb-writeup-sightless/sightless3_1.png)
+![](/assets/img/htb-writeup-sightless/sightless3_2.png)
 
 Para que el cambio surta efecto, fui a `System` > `Settings`, active la opcion `Eneable php-fpm` y guardé la configuración.
 
-![](assets/img/htb-writeup-sightless/sightless3_3.png)
+![](/assets/img/htb-writeup-sightless/sightless3_3.png)
 
 Al revisar el directorio `/tmp`, encontré el archivo `id_rsa` que había sido copiado.
 
@@ -323,11 +323,11 @@ Al revisar el directorio `/tmp`, encontré el archivo `id_rsa` que había sido c
 michael@sightless:/tmp$ ls -al
 ```
 
-![](assets/img/htb-writeup-sightless/sightless3_4.png)
+![](/assets/img/htb-writeup-sightless/sightless3_4.png)
 
 Luego edité la configuración anterior para ejecutar el siguiente comando: `chmod 644 /tmp/id_rsa`.
 
-![](assets/img/htb-writeup-sightless/sightless3_5.png)
+![](/assets/img/htb-writeup-sightless/sightless3_5.png)
 
 Esto me permitió cambiar los permisos del archivo `id_rsa` para que pudiera leerlo.
 
@@ -335,7 +335,7 @@ Esto me permitió cambiar los permisos del archivo `id_rsa` para que pudiera lee
 michael@sightless:/tmp$ ls -al
 ```
 
-![](assets/img/htb-writeup-sightless/sightless3_6.png)
+![](/assets/img/htb-writeup-sightless/sightless3_6.png)
 
 Ahora pude acceder al archivo y copiarlo para acceder como `root` al servidor.
 

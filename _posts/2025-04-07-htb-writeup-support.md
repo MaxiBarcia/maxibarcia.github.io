@@ -117,7 +117,7 @@ Enumero los recursos compartidos del servidor, donde confirmo que tengo permisos
 /home/kali/Documents/htb/machines/support:-$ smbmap -H 10.10.11.174 -u guest
 ```
 
-![](assets/img/htb-writeup-support/support1_2.png)
+![](/assets/img/htb-writeup-support/support1_2.png)
 
 Accedo al recurso compartido `support-tools` y verifico su contenido.
 
@@ -126,7 +126,7 @@ Accedo al recurso compartido `support-tools` y verifico su contenido.
 smb: \> dir
 ```
 
-![](assets/img/htb-writeup-support/support1_3.png)
+![](/assets/img/htb-writeup-support/support1_3.png)
 
 Este recurso contiene varias herramientas públicas, salvo una que llama la atención, `UserInfo.exe`. Asi que descargo el archivo para analizarlo en local.
 
@@ -185,7 +185,7 @@ La utilidad parece estar diseñada para mostrar información de usuarios en un e
 C:\Users\litio7\Documents\htb\support> UserInfo.exe
 ```
 
-![](assets/img/htb-writeup-support/support2_1.png)
+![](/assets/img/htb-writeup-support/support2_1.png)
 
 Sin embargo, para que la herramienta funcione correctamente, necesita establecer una conexión con el servicio ldap de la máquina objetivo.
 
@@ -211,7 +211,7 @@ C:\Users\litio7\Documents\htb\support\UserInfo> UserInfo.exe find
 C:\Users\litio7\Documents\htb\support\UserInfo> UserInfo.exe find -first * -last *
 ```
 
-![](assets/img/htb-writeup-support/support2_2.png)
+![](/assets/img/htb-writeup-support/support2_2.png)
 
 ---
 
@@ -219,11 +219,11 @@ Cuento con usuarios válidos pero no con credenciales, por lo que analizo el eje
 
 El punto de entrada más prometedor es la clase LdapQuery, que contiene dos funciones principales, `printUser` y `query`, probablemente asociadas con los comandos que permite ejecutar la herramienta. Sin embargo, el constructor es el fragmento más interesante.
 
-![](assets/img/htb-writeup-support/support2_3.png)
+![](/assets/img/htb-writeup-support/support2_3.png)
 
 El ejecutable se conecta directamente al servicio ldap utilizando el usuario `support\ldap` y una contraseña obtenida dinámicamente mediante la función `Protected.getPassword()`.
 
-![](assets/img/htb-writeup-support/support2_4.png)
+![](/assets/img/htb-writeup-support/support2_4.png)
 
 En el constructor de `LdapQuery`, la llamada a
 
@@ -299,7 +299,7 @@ Realizo una búsqueda por ldap utilizando las credenciales previamente obtenidas
 /home/kali/Documents/htb/machines/support:-$ ldapsearch -x -H ldap://10.10.11.174 -D 'ldap@support.htb' -w 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -b "DC=support,DC=htb" > ldapinfo
 ```
 
-![](assets/img/htb-writeup-support/support3_1.png)
+![](/assets/img/htb-writeup-support/support3_1.png)
 
 En la entrada correspondiente al usuario `support`, dentro del campo `info`, se encuentra una cadena con el formato de una posible contraseña.
 
@@ -332,7 +332,7 @@ Utilizo bloodhound-python para recolectar información.
 /home/kali/Documents/htb/machines/support:-$ bloodhound-python -u support -p Ironside47pleasure40Watchful -ns 10.10.11.174 --zip -c All -d support.htb
 ```
 
-![](assets/img/htb-writeup-support/support4_1.png)
+![](/assets/img/htb-writeup-support/support4_1.png)
 
 Levanto la interfaz de BloodHound para analizar los resultados.
 
@@ -343,7 +343,7 @@ Levanto la interfaz de BloodHound para analizar los resultados.
 
 A través del análisis en BloodHound, detecto que el usuario `support` es miembro del grupo `Shared Support Accounts`, el cual posee el permiso `GenericAll` sobre el objeto del equipo `DC.SUPPORT.HTB`.
 
-![](assets/img/htb-writeup-support/support4_2.png)
+![](/assets/img/htb-writeup-support/support4_2.png)
 
 Esto habilita la posibilidad de llevar a cabo un ataque de [Resource Based Constrained Delegation Attack](https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/resource-based-constrained-delegation.html)
 

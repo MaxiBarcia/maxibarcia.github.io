@@ -21,9 +21,9 @@ toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
 header:
-  overlay_image: /assets/images/headers/phishing-banner.jpg
+  overlay_image: /assets/img/headers/phishing-banner.jpg
   overlay_filter: 0.7
-og_image: /assets/images/headers/phishing-banner.jpg
+og_image: /assets/img/headers/phishing-banner.jpg
 seo_title: Análisis de Vulnerabilidades en APKs (MobSF, Drozer, Burp) - OWASP Mobile Top 10
 seo_description: Auditoría profesional de seguridad en aplicaciones Android. Metodología de análisis estático y dinámico para explotar riesgos M4 (Content Providers) y M3 (Clear Text Traffic) según el estándar OWASP.
 author: [Tu Nombre Completo]

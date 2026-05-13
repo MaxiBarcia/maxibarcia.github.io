@@ -83,11 +83,11 @@ http://cybersec.dl [200 OK] Country[RESERVED][ZZ], HTML5, HTTPServer[Werkzeug/2.
 
 El análisis de la web revela dos puntos de interés: un formulario de contacto y una funcionalidad inusual que se desliza por la página.
 
-![](assets/img/dockerlabs-writeup-smashing/smashing1_1.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing1_1.png)
 
 Al inspeccionar el código fuente, identifico que se utiliza la función `fetch` para realizar solicitudes a `/api/1passwsecu0`.
 
-![](assets/img/dockerlabs-writeup-smashing/smashing1_2.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing1_2.png)
 
 Ejecuto un escaneo de directorios sobre `/api/`, encontrando un archivo llamado `login`.
 
@@ -98,7 +98,7 @@ Ejecuto un escaneo de directorios sobre `/api/`, encontrando un archivo llamado 
 
 Sin embargo, el intento de acceso devuelve un código `405 Method Not Allowed`, indicando que la ruta existe pero no permite solicitudes con el método utilizado.
 
-![](assets/img/dockerlabs-writeup-smashing/smashing2_1.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing2_1.png)
 
 ---
 ## Vulnerability Exploitation
@@ -110,7 +110,7 @@ POST /api/login HTTP/1.1
 Host: cybersec.dl
 ```
 
-![](assets/img/dockerlabs-writeup-smashing/smashing2_2.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing2_2.png)
 
 Ahora la respuesta cambia, indicando que espera contenido en formato JSON.
 
@@ -122,7 +122,7 @@ Host: cybersec.dl
 Content-Type: application/json
 ```
 
-![](assets/img/dockerlabs-writeup-smashing/smashing2_3.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing2_3.png)
 
 Aún así, la solicitud falla, ya que no estoy enviando un cuerpo en formato JSON.
 
@@ -139,7 +139,7 @@ Content-Type: application/json
 }
 ```
 
-![](assets/img/dockerlabs-writeup-smashing/smashing2_5.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing2_5.png)
 
 Aunque la respuesta devuelve `401 UNAUTHORIZED`, confirmo que el servicio procesa las credenciales.
 
@@ -157,7 +157,7 @@ ID           Response   Lines    Word       Chars       Payload
 
 De esta manera, descubro las credenciales `admin`:`undertaker`.
 
-![](assets/img/dockerlabs-writeup-smashing/smashing2_6.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing2_6.png)
 
 Al autenticarse, el sistema devuelve información adicional, incluyendo varias rutas y subdominios.
 
@@ -195,7 +195,7 @@ internal.cybersec.dl
 
 Dentro del subdominio `0internal_down.cybersec.dl`, encuentro dos archivos: un binario y un archivo de texto.
 
-![](assets/img/dockerlabs-writeup-smashing/smashing2_7.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing2_7.png)
 
 El archivo de texto menciona que el binario contiene una contraseña perteneciente al usuario `flipsy`.
 
@@ -218,8 +218,8 @@ smashing: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically l
 
 Al ejecutar la aplicación, se muestra un mensaje de bienvenida y se me solicita un nombre, como parte de una aplicación interactiva.
 
-![](assets/img/dockerlabs-writeup-smashing/smashing3_2.png){: width="972" height="589" .w-75 .normal}
-![](assets/img/dockerlabs-writeup-smashing/smashing3_1.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing3_2.png){: width="972" height="589" .w-75 .normal}
+![](/assets/img/dockerlabs-writeup-smashing/smashing3_1.png)
 
 Extraigo cadenas en ASCII del binario y obtengo varias palabras sospechosas, aunque ninguna contiene la contraseña "completa".
 
@@ -242,7 +242,7 @@ Procedo a cambiarla con el siguiente comando.
 [0x000023dc]> pd 3
 ```
 
-![](assets/img/dockerlabs-writeup-smashing/smashing3_3.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing3_3.png)
 
 Verifico que el cambio ha tenido efecto al ejecutar el binario nuevamente, y ahora se devuelve la información en formato base58.
 
@@ -342,7 +342,7 @@ $ find / -group 1002 2>/dev/null
 $ cat /var/www/html/serverpi.py
 ```
 
-![](assets/img/dockerlabs-writeup-smashing/smashing4_1.png)
+![](/assets/img/dockerlabs-writeup-smashing/smashing4_1.png)
 
 Copio el contenido y lo decodifico en mi máquina local.
 

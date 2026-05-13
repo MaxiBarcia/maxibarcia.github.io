@@ -146,7 +146,7 @@ Recolecto información del entorno Active Directory utilizando Bloodhound.
 /home/kali/Documents/htb/machines/administrator:-$ bloodhound-python -u Olivia -p 'ichliebedich' --zip -c All -d administrator.htb -ns 10.10.11.42
 ```
 
-![](assets/img/htb-writeup-administrator/administrator1_2.png)
+![](/assets/img/htb-writeup-administrator/administrator1_2.png)
 
 ```terminal
 /home/kali/Documents/tools/bloodhound:-# ./bloodhound-cli install
@@ -154,11 +154,11 @@ Recolecto información del entorno Active Directory utilizando Bloodhound.
 
 El usuario `OLIVIA@ADMINISTRATOR.HTB` tiene el permiso `GenericAll` sobre `MICHAEL@ADMINISTRATOR.HTB`. Este tipo de permiso otorga control total sobre el objeto, permitiendo realizar acciones como cambiar su contraseña.
 
-![](assets/img/htb-writeup-administrator/administrator1_3.png)
+![](/assets/img/htb-writeup-administrator/administrator1_3.png)
 
 Y el usuario `MICHAEL@ADMINISTRATOR.HTB` posee privilegios `ForceChangePassword` sobre `BENJAMIN@ADMINISTRATOR.HTB`. Esto permite forzar un cambio de contraseña sobre la cuenta objetivo, incluso sin conocer la actual.
 
-![](assets/img/htb-writeup-administrator/administrator1_4.png)
+![](/assets/img/htb-writeup-administrator/administrator1_4.png)
 
 ---
 ## Active Directory Exploitation
@@ -191,7 +191,7 @@ Password: 123456789
 
 Revisando el contenido disponible en el servicio FTP, identifico un archivo potencialmente sensible llamado `Backup.psafe3`.
 
-![](assets/img/htb-writeup-administrator/administrator2_1.png)
+![](/assets/img/htb-writeup-administrator/administrator2_1.png)
 
 El archivo pertenece al gestor de contraseñas Password Safe, por lo que es probable que contenga credenciales válidas.
 
@@ -203,7 +203,7 @@ El archivo pertenece al gestor de contraseñas Password Safe, por lo que es prob
 
 Para acceder al contenido, necesito una contraseña maestra.
 
-![](assets/img/htb-writeup-administrator/administrator2_2.png)
+![](/assets/img/htb-writeup-administrator/administrator2_2.png)
 
 Para intentar romper la protección, extraigo el hash de la contraseña maestra con pwsafe2john y ejecuto un ataque de diccionario.
 
@@ -214,7 +214,7 @@ Para intentar romper la protección, extraigo el hash de la contraseña maestra 
 tekieromucho     (Backu)
 ```
 
-![](assets/img/htb-writeup-administrator/administrator2_3.png)
+![](/assets/img/htb-writeup-administrator/administrator2_3.png)
 
 Al acceder a la base de datos, encuentro múltiples credenciales. Sólo una de ellas resulta válida `emily`:`UXLCI5iETUsIBoFVTj8yQFKoHjXmb`.
 
@@ -237,11 +237,11 @@ WINRM       administrator.htb 5985   DC               [+] administrator.htb\emil
 
 `Emily` tiene permisos de tipo `GenericWrite` sobre el usuario `ETHAN@ADMINISTRATOR.HTB`. Esto permite modificar ciertos atributos del objeto `Ethan`, como por ejemplo el `servicePrincipalName`.
 
-![](assets/img/htb-writeup-administrator/administrator4_1.png)
+![](/assets/img/htb-writeup-administrator/administrator4_1.png)
 
 Por otro lado, el usuario `ETHAN@ADMINISTRATOR.HTB` posee privilegios extendidos sobre el objeto del controlador de dominio `ADMINISTRATOR.HTB`. Específicamente, cuenta con los permisos `GetChanges`, `GetChangesInFilteredSet` y `GetChangesAll`. Este conjunto de permisos indica que el usuario tiene capacidad para ejecutar un ataque [DCSync](https://www.thehacker.recipes/ad/movement/credentials/dumping/dcsync#dcsync), el cual permite replicar hashes de contraseñas directamente desde el controlador de dominio, simulando el comportamiento de un Domain Controller.
 
-![](assets/img/htb-writeup-administrator/administrator4_2.png)
+![](/assets/img/htb-writeup-administrator/administrator4_2.png)
 
 Esta relación puede aprovecharse mediante un ataque de [Targeted Kerberoast](https://www.thehacker.recipes/ad/movement/dacl/targeted-kerberoasting#targeted-kerberoasting), que consiste en establecer temporalmente un SPN personalizado, forzar la emisión de un ticket Kerberos (TGS), capturar su hash y posteriormente eliminar el SPN. Para llevar a cabo esta técnica se utiliza la herramienta [targetedKerberoast](https://github.com/ShutdownRepo/targetedKerberoast.git), que automatiza todo el proceso.
 
@@ -249,7 +249,7 @@ Esta relación puede aprovecharse mediante un ataque de [Targeted Kerberoast](ht
 /home/kali/Documents/htb/machines/administrator:-$ sudo ntpdate administrator.htb
 (venv)-/home/kali/Documents/htb/machines/administrator:-$ sudo python /home/kali/Documents/tools/targetedKerberoast/targetedKerberoast.py -u "emily" -p "UXLCI5iETUsIBoFVTj8yQFKoHjXmb" -d "Administrator.htb" --dc-ip 10.10.11.42
 ```
-![](assets/img/htb-writeup-administrator/administrator4_3.png)
+![](/assets/img/htb-writeup-administrator/administrator4_3.png)
 
 Una vez obtenido el hash Kerberos, se procede a crackearlo con John the Ripper utilizando el diccionario `rockyou.txt`. El resultado revela que la contraseña asociada al usuario `ethan` es `limpbizkit`.
 
@@ -265,7 +265,7 @@ Con esta credencial se ejecuta un ataque DCSync mediante la herramienta impacket
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:3dc553ce4b9fd20bd016e098d2d2fd2e:::
 ```
 
-![](assets/img/htb-writeup-administrator/administrator4_4.png)
+![](/assets/img/htb-writeup-administrator/administrator4_4.png)
 
 Finalmente, se utiliza evil-winrm para establecer una sesión remota como el usuario `Administrator`, utilizando el hash NTLM obtenido en la etapa anterior. El acceso exitoso confirma el compromiso completo del dominio.
 

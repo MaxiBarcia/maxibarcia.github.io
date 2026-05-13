@@ -78,11 +78,11 @@ http://172.17.0.3 [200 OK] Apache[2.4.58], Cookies[67f8fae1a4d19f3cd42b155a572e0
 
 Identifico un servicio web activo sobre Apache 2.4.58 en un entorno Ubuntu. El header indica que el sitio está construido con Joomla. Al acceder a la página principal, se presenta un formulario de autenticación.
 
-![](assets/img/dockerlabs-writeup-candy/candy1_1.png)
+![](/assets/img/dockerlabs-writeup-candy/candy1_1.png)
 
 Enumerando archivos comunes descubro la presencia de `/robots.txt`, que revela múltiples rutas internas y sensibles, incluyendo `/administrator/`.
 
-![](assets/img/dockerlabs-writeup-candy/candy1_2.png)
+![](/assets/img/dockerlabs-writeup-candy/candy1_2.png)
 
 Al final del archivo, aparece una línea con lo que parecen ser credenciales `admin:c2FubHVpczEyMzQ1` la ultima cadena se encuentra en base64 que, al decodificarla, revela la contraseña del usuario `admin`.
 
@@ -93,8 +93,8 @@ sanluis12345
 
 Ahora si, utilizo las credenciales `admin`:`sanluis12345` para iniciar sesión en el panel de administración de Joomla accesible desde `/administrator/`
 
-![](assets/img/dockerlabs-writeup-candy/candy1_3.png)
-![](assets/img/dockerlabs-writeup-candy/candy1_4.png)
+![](/assets/img/dockerlabs-writeup-candy/candy1_3.png)
+![](/assets/img/dockerlabs-writeup-candy/candy1_4.png)
 
 ---
 ## Vulnerability Exploitation

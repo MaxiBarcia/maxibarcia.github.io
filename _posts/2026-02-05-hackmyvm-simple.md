@@ -12,7 +12,7 @@ tags:
   - Privilege-Escalation
 estado: Completado
 image:
-  path: /assets/images/posts/hackmyvm/simple/simple-banner1.png
+  path: /assets/img/posts/hackmyvm/simple/simple-banner1.png
 toc: true
 toc_label: Contenido del Reporte
 toc_sticky: true
@@ -209,7 +209,7 @@ En la siguiente imagen se puede ver como se lista los archivo scompartidos en la
 seguido por la ventana de abajo donde se crea el archivo **test.txt** para podre subirlo con el comando `put`
 
 
-![SMB](/assets/images/posts/hackmyvm/simple/1.png)
+![SMB](/assets/img/posts/hackmyvm/simple/1.png)
 
 #### Subiendo archivo malisioso a SMB
 luego de probar el subir archivos y tener exito se procede a crear un payload malisoso con *msfvenom*
@@ -290,7 +290,7 @@ Alternativa a otro CMD #cmdaspx
 
 Una vez el cmd.aspx esta en la maquina se puede ver como nos representa RCE
 
-![RCE](/assets/images/posts/hackmyvm/simple/2.png)
+![RCE](/assets/img/posts/hackmyvm/simple/2.png)
 
 ##### 1. impacket-smbserver -smb2support kali .`
 `impacket-smbserver -smb2support kali .`

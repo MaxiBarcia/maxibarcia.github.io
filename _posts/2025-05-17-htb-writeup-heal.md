@@ -88,23 +88,23 @@ http://heal.htb [200 OK] Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][
 
 El servicio web presenta inicialmente un formulario de inicio de sesión.
 
-![](assets/img/htb-writeup-heal/heal1_1.png)
+![](/assets/img/htb-writeup-heal/heal1_1.png)
 
 Luego de registrarme, ingreso y accedo al endpoint `/resume`.
 
-![](assets/img/htb-writeup-heal/heal1_3.png)
+![](/assets/img/htb-writeup-heal/heal1_3.png)
 
 Este endpoint, titulado "Resume Builder", permite construir un currículum que puede descargarse como PDF mediante un botón al final de la página.
 
-![](assets/img/htb-writeup-heal/heal1_4.png)
+![](/assets/img/htb-writeup-heal/heal1_4.png)
 
 Desde la pestaña `Network` en DevTools, detecto peticiones a un subdominio no descubierto anteriormente, `api.heal.htb`.
 
-![](assets/img/htb-writeup-heal/heal1_5.png)
+![](/assets/img/htb-writeup-heal/heal1_5.png)
 
 En la ruta `/survey`, se muestra un botón "Take the Survey" que redirige a otro subdominio, `take-survey.heal.htb`.
 
-![](assets/img/htb-writeup-heal/heal1_7.png)
+![](/assets/img/htb-writeup-heal/heal1_7.png)
 
 Con esta información, configuro el archivo `/etc/hosts` para incluir todos los subdominios identificados.
 
@@ -118,11 +118,11 @@ http://api.heal.htb [200 OK] Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Lin
 
 Identifico que `api.heal.htb` utiliza Ruby on Rails versión 7.1.4, tecnología que puede ser relevante durante la explotación.
 
-![](assets/img/htb-writeup-heal/heal1_6.png)
+![](/assets/img/htb-writeup-heal/heal1_6.png)
 
 Por el lado de `take-survey.heal.htb`, inicialmente lo único destacable es la mención del usuario Administrador llamado `ralph` y la presencia del software LimeSurvey.
 
-![](assets/img/htb-writeup-heal/heal1_8.png)
+![](/assets/img/htb-writeup-heal/heal1_8.png)
 
 Luego, ejecutando un escaneo de directorios, identifico múltiples rutas válidas.
 
@@ -151,7 +151,7 @@ Luego, ejecutando un escaneo de directorios, identifico múltiples rutas válida
 
 Una de ellas, es un panel de login.
 
-![](assets/img/htb-writeup-heal/heal1_9.png)
+![](/assets/img/htb-writeup-heal/heal1_9.png)
 
 ---
 ## Vulnerability Exploitation
@@ -180,7 +180,7 @@ Solicité el archivo `Gemfile` y confirmé que la aplicación utiliza sqlite3 co
 GET /download?filename=../../Gemfile HTTP/1.1
 ```
 
-![](assets/img/htb-writeup-heal/heal2_2.png)
+![](/assets/img/htb-writeup-heal/heal2_2.png)
 
 La base de datos debía estar en el directorio `/storage`, accedí al archivo de configuración `database.yml` donde encontré el nombre de la base de datos definida como `development.sqlite3`.
 
@@ -188,7 +188,7 @@ La base de datos debía estar en el directorio `/storage`, accedí al archivo de
 GET /download?filename=../../config/database.yml HTTP/1.1
 ```
 
-![](assets/img/htb-writeup-heal/heal2_3.png)
+![](/assets/img/htb-writeup-heal/heal2_3.png)
 
 Con esta información, localicé la base da datos y la descargué a mi máquina.
 
@@ -196,7 +196,7 @@ Con esta información, localicé la base da datos y la descargué a mi máquina.
 GET /download?filename=../../storage/development.sqlite3 HTTP/1.1
 ```
 
-![](assets/img/htb-writeup-heal/heal2_4.png)
+![](/assets/img/htb-writeup-heal/heal2_4.png)
 
 ---
 
@@ -224,15 +224,15 @@ $2a$12$dUZ/O7KJT3.zE4TOK8p4RuxH3t.Bz45DSr7A94VLvY9SWx1GCSZnG:147258369
 
 Así obtuve credenciales válidas `ralph`:`147258369`, para iniciar sesión como administrador en LimeSurvey.
 
-![](assets/img/htb-writeup-heal/heal3_1.png)
-![](assets/img/htb-writeup-heal/heal3_2.png)
+![](/assets/img/htb-writeup-heal/heal3_1.png)
+![](/assets/img/htb-writeup-heal/heal3_2.png)
 
 ---
 ## CVE Exploitation
 
 Desde el panel de administración de LimeSurvey, puedo confirmar que el sistema está utilizando la versión 6.6.4. Esta versión resulta vulnerable a RCE [CVE-2021-44967](https://nvd.nist.gov/vuln/detail/cve-2021-44967). El fallo permite a un administrador subir e instalar plugins personalizados desde la interfaz, permitiendo ejecutar código PHP arbitrario si se carga un plugin malicioso, lo que habilita una shell inversa sin necesidad de explotación adicional.
 
-![](assets/img/htb-writeup-heal/heal3_3.png)
+![](/assets/img/htb-writeup-heal/heal3_3.png)
 
 Para aprovechar esta falla, utilizo el método publicado por [Y1LD1R1M-1337](https://github.com/Y1LD1R1M-1337/Limesurvey-RCE), el cual consiste en empaquetar una [reverse shell en PHP](https://github.com/pentestmonkey/php-reverse-shell/blob/master/php-reverse-shell.php) junto con un archivo `config.xml` estructurado como un plugin válido. Este archivo XML declara la metadata del plugin, así como las versiones de LimeSurvey compatibles.
 
@@ -340,7 +340,7 @@ Al inspeccionar el archivo `config.php`, encuentro credenciales en texto plano.
 www-data@heal:/$ cat limesurvey/application/config/config.php
 ```
 
-![](assets/img/htb-writeup-heal/heal4_1.png)
+![](/assets/img/htb-writeup-heal/heal4_1.png)
 
 Esta contraseña `AdmiDi0_pA$$w0rd`, es reutilizada en el servicio SSH por el usuario `ron`.
 
@@ -363,7 +363,7 @@ Desde la sesión con el usuario ron, inspecciono los servicios en ejecución.
 ron@heal:~$ ss -tulnp
 ```
 
-![](assets/img/htb-writeup-heal/heal4_2.png)
+![](/assets/img/htb-writeup-heal/heal4_2.png)
 
 El puerto 8500 expone un servicio web que aparentemente no está accesible de forma remota. Al realizar una solicitud HTTP local, observo un redireccionamiento hacia `/ui/`, lo que sugiere la presencia de una interfaz web.
 
@@ -397,7 +397,7 @@ ron@heal.htb's password: AdmiDi0_pA$$w0rd
 
 Al acceder al panel web desde el navegador, confirmo que se trata de Consul v1.19.2. Una búsqueda rápida revela que esta versión es vulnerable a ejecución remota de comandos mediante la API de health checks.
 
-![](assets/img/htb-writeup-heal/heal4_3.png)
+![](/assets/img/htb-writeup-heal/heal4_3.png)
 
 Inicio un listener en mi máquina.
 

@@ -73,11 +73,11 @@ http://127.17.0.2 [200 OK] Apache[2.4.59], Country[RESERVED][ZZ], HTTPServer[Deb
 
 Al analizar el servicio web, solo se muestra una página vacía que contiene una imagen. 
 
-![](assets/img/dockerlabs-writeup-borazuwarahctf/borazuwarahctf1.png)
+![](/assets/img/dockerlabs-writeup-borazuwarahctf/borazuwarahctf1.png)
 
 Al inspeccionar el código fuente de la página, confirmo que el único contenido relevante es la referencia a una imagen con el nombre `imagen.jpeg`.
 
-![](assets/img/dockerlabs-writeup-borazuwarahctf/borazuwarahctf2.png)
+![](/assets/img/dockerlabs-writeup-borazuwarahctf/borazuwarahctf2.png)
 
 ```terminal
 /home/kali/Documents/dockerlabs/borazuwarahctf:-$ wget http://127.17.0.2/imagen.jpeg
@@ -99,7 +99,7 @@ Después de descargar la imagen del servidor, utilizo exiftool para analizar los
 /home/kali/Documents/dockerlabs/borazuwarahctf:-$ exiftool imagen.jpeg
 ```
 
-![](assets/img/dockerlabs-writeup-borazuwarahctf/borazuwarahctf3.png)
+![](/assets/img/dockerlabs-writeup-borazuwarahctf/borazuwarahctf3.png)
 
 Con el nombre de usuario `borazuwarah`, realizo un ataque de fuerza bruta contra el servicio SSH.
 
@@ -111,7 +111,7 @@ Con el nombre de usuario `borazuwarah`, realizo un ataque de fuerza bruta contra
 [22][ssh] host: 172.17.0.2   login: borazuwarah   password: 123456
 ```
 
-![](assets/img/dockerlabs-writeup-borazuwarahctf/borazuwarahctf4.png)
+![](/assets/img/dockerlabs-writeup-borazuwarahctf/borazuwarahctf4.png)
 
 El ataque tiene éxito y obtengo las credenciales SSH.
 
