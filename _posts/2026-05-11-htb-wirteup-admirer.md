@@ -19,7 +19,7 @@ hashtags:
   - "#PythonHijacking"
   - "#HTB"
 image:
-  path: /assets/images/posts/htb/admirer/admirer-banner.png
+  path: /assets/img/posts/htb/admirer/admirer-banner.png
   alt: "HTB Admirer Banner"
 toc: true
 toc_label: "📑 Contenido"
