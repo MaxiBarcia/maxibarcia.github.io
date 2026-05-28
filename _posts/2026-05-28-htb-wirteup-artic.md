@@ -18,7 +18,7 @@ hashtags:
   - "#HTB"
   - "#Arctic"
 image:
-  path: /assets/images/posts/htb/arctic/arctic-banner.png
+  path: /assets/img/posts/htb/arctic/arctic-banner.png
   alt: "HTB Arctic Banner"
 toc: true
 toc_label: "📑 Contenido"
@@ -150,7 +150,7 @@ nikto -h http://$(target):8500/ -timeout 5 -maxtime 30
 
 Lo **interesante** para atacar es el **8500** (HTTP).
 
-![Archivos expuestos](/assets/img/posts/htb/artic/20260520122125.png)
+![Archivos expuestos](/assets/img/posts/htb/arctic/20260520122125.png)
 
 Al acceder a `http://10.129.35.190:8500` se observa un **directory listing** (listado de directorios). Navegando se encuentra el panel de administración de **ColdFusion** en `/CFIDE/administrator/`.
 
@@ -158,7 +158,7 @@ Al intentar iniciar sesión con la contraseña `admin`, el sistema transforma au
 
 `2B838992B5ED586A0BA1A4B1F1249CF0472B08EA`
 
-![Panel](/assets/img/posts/htb/artic/20260520122205.png)
+![Panel](/assets/img/posts/htb/arctic/20260520122205.png)
 
 
 Este hash no es crackeable con diccionarios comunes (se probó con rockyou.txt).
@@ -181,7 +181,7 @@ Existe un exploit de Remote Command Execution para ColdFusion 8 que permite ejec
 Adobe ColdFusion 8 - Remote Command Execution (RCE)    | cfm/webapps/50057.py
 ------------------------------------------------------- ---------------------------
 ```
-![Access](/assets/img/posts/htb/artic/20260520160010.png)
+![Access](/assets/img/posts/htb/arctic/20260520160010.png)
 
 
 ### Opción 2: Directory Traversal para leer archivos
@@ -207,7 +207,7 @@ Dentro del archivo descargado se observa cómo realizar un path traversal para e
 http://10.129.35.190:8500/CFIDE/administrator/enter.cfm?locale=../../../../../../../../../../ColdFusion8/lib/password.properties%00en
 # LLsecurity added another admin page filename: "/CFIDE/administrator/enter.cfm"
 ```
-![Coldfusion](/assets/img/posts/htb/artic/20260520123228.png)
+![Coldfusion](/assets/img/posts/htb/arctic/20260520123228.png)
 
 
 
@@ -226,7 +226,7 @@ Session..........: hashcat
 Status...........: Exhausted
 Hash.Mode........: 100 (SHA1)
 ```
-![crackstation](/assets/img/posts/htb/artic/20260520124744.png)
+![crackstation](/assets/img/posts/htb/arctic/20260520124744.png)
 
 
 > **Nota:** El hash no fue crackeable con rockyou.txt, por lo que se procedió con otros métodos de explotación.
@@ -251,7 +251,7 @@ Saved as: reverse.jsp
 Este archivo se sube en la ruta que muestra el mapping del panel:  
 **C:\ColdFusion8\wwwroot\CFIDE**
 
-![Task](/assets/img/posts/htb/artic/20260520143731.png)
+![Task](/assets/img/posts/htb/arctic/20260520143731.png)
 
 
 Se levanta un servidor HTTP simple en Kali para que la máquina víctima pueda descargar el payload:
@@ -296,7 +296,7 @@ Esto permite modificar/inspeccionar el tráfico y evitar problemas de compatibil
 
 ## Acceso al sistema
 
-![Acces system](/assets/img/posts/htb/artic/20260520154854.png)
+![Acces system](/assets/img/posts/htb/arctic/20260520154854.png)
 
 
 Nos ponemos en escucha con netcat (usando `rlwrap` para mantener la historia de comandos):
@@ -305,7 +305,7 @@ Nos ponemos en escucha con netcat (usando `rlwrap` para mantener la historia de 
 rlwrap nc -lvnp 443
 ```
 
-![Root](/assets/img/posts/htb/artic/20260525182509.png)
+![Root](/assets/img/posts/htb/arctic/20260525182509.png)
 
 
 Una vez ejecutado el exploit (o la tarea con el JSP), obtenemos una shell en el sistema como el usuario `tolis`.
