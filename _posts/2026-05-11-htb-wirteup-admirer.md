@@ -22,14 +22,14 @@ image:
   path: /assets/img/posts/htb/admirer/admirer-banner.png
   alt: "HTB Admirer Banner"
 toc: true
-toc_label: "📑 Contenido"
+toc_label: "Contenido"
 toc_sticky: true
 
 ---
 
 # HTB - Admirer
 
-## 📊 Resumen Ejecutivo
+## Resumen Ejecutivo
 
 Se realizó un compromiso exitoso contra la máquina **Admirer** de HackTheBox, un sistema **Linux** que expone los servicios **FTP (21)**, **SSH (22)** y **HTTP (80)**.
 
@@ -39,7 +39,7 @@ Con las credenciales de FTP se descargaron archivos que permitieron continuar la
 
 El acceso SSH con las credenciales de `waldo` permitió ingresar al sistema. La escalada de privilegios se logró mediante **path hijacking** de una librería de Python (`shutil`) aprovechando que el script `/opt/scripts/admin_tasks.sh` se ejecutaba con `SETENV` y buscaba módulos en el directorio actual.
 
-### 🚨 Riesgos Identificados
+### Riesgos Identificados
 
 | Riesgo | Impacto | Probabilidad | Severidad |
 |--------|---------|--------------|-----------|
@@ -49,7 +49,7 @@ El acceso SSH con las credenciales de `waldo` permitió ingresar al sistema. La 
 | MySQL con `LOAD DATA LOCAL INFILE` habilitado | Alto | Confirmado | 🟠 ALTO |
 | Script Python ejecutándose con `SETENV` sin ruta absoluta | Crítico | Confirmado | 🔴 CRÍTICO |
 
-### ✅ Plan de Remediación
+### Plan de Remediación
 
 1. **Inmediato:** Eliminar archivos `credentials.txt` y `contacts.txt` del servidor web.
 2. **Inmediato:** Rotar todas las contraseñas expuestas (FTP, MySQL, WordPress, usuario `waldo`).
@@ -59,7 +59,7 @@ El acceso SSH con las credenciales de `waldo` permitió ingresar al sistema. La 
 
 ---
 
-## 🖼️ Machine Info
+## Machine Info
 
 | Clave | Valor |
 |-------|-------|
@@ -72,9 +72,9 @@ El acceso SSH con las credenciales de `waldo` permitió ingresar al sistema. La 
 
 ---
 
-## 🔍 Reconocimiento (Reconnaissance)
+## Reconocimiento (Reconnaissance)
 
-### 🎯 Target Scoping
+### Target Scoping
 
 - **IP Objetivo:** `10.129.229.101`
 - **Hostname Detectado:** `admirer` (por el título de la web)
@@ -115,7 +115,7 @@ Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 nmap -p21,22,80 -sCV -v -Pn $target -oN detailedServices
 ```
 
-### 📊 Servicios Identificados
+### Servicios Identificados
 
 | Puerto | Servicio | Versión | Notas |
 |--------|----------|---------|-------|
@@ -127,7 +127,7 @@ nmap -p21,22,80 -sCV -v -Pn $target -oN detailedServices
 
 ---
 
-## 📁 Enumeración de subdirectorios (Fuzzing)
+## Enumeración de subdirectorios (Fuzzing)
 
 ### Fuzzing inicial
 
@@ -208,7 +208,7 @@ Email: b.rauch@admirer.htb
 
 ---
 
-## 📡 Enumeración FTP
+## Enumeración FTP
 
 Con las credenciales obtenidas (`ftpuser:%n?4Wz}R$tTF7`), se accedió al servicio FTP:
 
@@ -224,7 +224,7 @@ Se descargaron archivos del servidor FTP para su análisis posterior.
 
 ---
 
-## 🔄 Enumeración adicional con fuzzing
+## Enumeración adicional con fuzzing
 
 Se realizó un nuevo fuzzing excluyendo códigos de estado 403 y 404 para descubrir rutas ocultas:
 
@@ -242,7 +242,7 @@ http://10.129.229.101/utility-scripts/adminer.php
 
 ---
 
-## 🗄️ Explotación de Adminer + MySQL
+## Explotación de Adminer + MySQL
 
 ### Configuración de MySQL en el atacante
 
@@ -315,7 +315,7 @@ $dbname = "admirerdb";
 
 ---
 
-## 🚪 Acceso al sistema
+## Acceso al sistema
 
 Las credenciales obtenidas funcionaron para acceso SSH:
 
@@ -340,7 +340,7 @@ User waldo may run the following commands on admirer:
 
 ---
 
-## 📈 Escalada de privilegios
+## Escalada de privilegios
 
 ### Análisis del script
 
@@ -423,7 +423,7 @@ root@admirer:~# cat /root/root.txt
 
 ---
 
-## 🛠️ Herramientas utilizadas
+## Herramientas utilizadas
 
 | Herramienta | Uso |
 |-------------|-----|
@@ -438,7 +438,7 @@ root@admirer:~# cat /root/root.txt
 
 ---
 
-## 📚 Referencias
+## Referencias
 
 - [HackTheBox - Admirer](https://www.hackthebox.com/machines/Admirer)
 - [Adminer - LOAD DATA LOCAL INFILE exploitation](https://www.exploit-db.com/exploits/50457)
@@ -446,7 +446,7 @@ root@admirer:~# cat /root/root.txt
 
 ---
 
-## 💡 Lecciones aprendidas
+## Lecciones aprendidas
 
 1. **`robots.txt` no debe contener rutas sensibles** → un atacante las usará como punto de partida.
 2. **Nunca guardar credenciales en archivos de texto dentro del servidor web** → son fácilmente enumerables.
