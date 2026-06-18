@@ -1,3 +1,36 @@
+---
+title: "HTB - Buff"
+project: "Buff Corp"
+platform: "Windows 10 Pro x86"
+os: "Windows 10 Pro (Build 17763)"
+tags:
+  - Windows
+  - Apache
+  - PHP
+  - FileUpload
+  - RCE
+  - BufferOverflow
+  - PortForwarding
+  - Chisel
+  - HTB
+hashtags:
+  - "#Windows"
+  - "#Apache"
+  - "#PHP"
+  - "#FileUpload"
+  - "#RCE"
+  - "#BufferOverflow"
+  - "#PortForwarding"
+  - "#Chisel"
+  - "#HTB"
+image:
+  path: /assets/img/posts/htb/buff/banner.png
+  alt: "Buff - Máquina HTB Windows"
+toc: true
+toc_label: "📑 Contenido"
+toc_sticky: true
+---
+
 ## Resumen Ejecutivo
 
 Se realizó un compromiso exitoso contra la máquina **Buff** de HackTheBox, un sistema **Windows 10 Pro (x86)** que expone los puertos **8080 (Apache/PHP)** y **7680 (desconocido)**.
