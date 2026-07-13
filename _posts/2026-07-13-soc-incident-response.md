@@ -126,7 +126,7 @@ El nombre embebido `20221108T1243` corresponde al timestamp propio de la herrami
   
 **Consulta SPL de partida:**
 
-```spl
+```bash
 index="main" EventCode=10 lsass
 | stats count by SourceImage
 ```
@@ -140,7 +140,7 @@ index="main" EventCode=10 lsass
 
 **Pivoteo por host y franja horaria (`DESKTOP-EGSS5IS`, 11:52):**
 
-```spl
+```bash
 
 index="main" host="DESKTOP-EGSS5IS" EventCode=1 "rundll32.exe" sourcetype="WinEventLog:Sysmon"
 
@@ -206,13 +206,13 @@ El atacante listó el contenido de `C:\Temp` justo 10 segundos después (11:52:5
 
 **Consultas SPL:**
 
-```spl
+```bash
 
 index="*main" sourcetype="WinEventLog:Sysmon" EventCode=10 lsass rundll32.exe
 
 ```
 
-```spl
+```bash
 
 index="*main" sourcetype="WinEventLog:Sysmon" EventCode=10 TargetImage="*lsass*" SourceImage="*rundll32*" rundll32.exe CallTrace!="*UNKNOWN*"
 
@@ -255,7 +255,7 @@ rundll32.exe → comsvcs.dll (+220f2, MiniDump) → dbgcore.dll → KERNEL32.dll
 
 **Consulta SPL:**
 
-```spl
+```bash
 
 index="main" EventCode=1 (Image="*notepad.exe" OR Image="*rundll32.exe")
 
@@ -274,22 +274,21 @@ index="main" EventCode=1 (Image="*notepad.exe" OR Image="*rundll32.exe")
 
 1. **Tres exportaciones DCSync distintas, en 9 minutos**, todas abiertas manualmente con `notepad.exe`:
 
-   ```
+´´´bash
 
    "C:\Windows\system32\NOTEPAD.EXE" C:\temp\20221108T1243_DCSYNC\20221108T1243_DCSync_NTLM_LOGFILE.txt
 
    "C:\Windows\system32\NOTEPAD.EXE" C:\temp\20221108T1246_DCSYNC\20221108T1246_DCSync_NTLM_LOGFILE.txt
 
    "C:\Windows\system32\NOTEPAD.EXE" C:\temp\20221108T1252_DCSYNC\CUSTOMER\20221108T1252_DCSync_NTLM_CUSTOMER_Importfile_FINAL.txt
-
-   ```
+´´´
 
    El tercer archivo usa un **nombre señuelo** (`CUSTOMER_Importfile_FINAL.txt`), disfrazando un volcado de credenciales como si fuera un archivo de importación de datos de cliente. Esto es un indicador de **intención de exfiltración encubierta**, pensado para pasar desapercibido ante una revisión superficial de la carpeta `C:\temp\`.
 
 
 2. **Múltiples variantes de sintaxis de `rundll32 comsvcs.dll`**, todas apuntando a `C:\Users\waldo\Downloads\file.dmp`:
 
-   ```
+´´´bash
 
    rundll32 ".\comsvcs (1).dll",Start
 
@@ -304,8 +303,7 @@ index="main" EventCode=1 (Image="*notepad.exe" OR Image="*rundll32.exe")
    rundll32.exe C:\Windows\System32\comsvcs.dll,MiniDump 640 C:\Users\waldo\Downloads\file.dmp
 
    rundll32.exe C:\Windows\System32\comsvcs.dll,MiniDump 640 C:\Users\waldo\Downloads\file.dmp full
-
-   ```
+´´´
 
    La variación en la sintaxis (con y sin extensión `.dll` duplicada, mayúsculas/minúsculas en `Start`/`start`, con y sin el parámetro `full`) sugiere **tanteo manual del atacante**, probablemente ejecutando el comando de forma interactiva y ajustándolo hasta obtener el resultado esperado, más que un script automatizado y depurado de antemano.
 
@@ -342,7 +340,7 @@ index="main" EventCode=1 (Image="*notepad.exe" OR Image="*rundll32.exe")
 
 **Evento de creación de archivo asociado (`EventCode=11`, 2022-11-08 20:43:36 UTC):**
 
-```
+```bash
 
 Image: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
 
@@ -442,7 +440,7 @@ La combinación `ParentImage=explorer.exe` + `TerminalSessionId=2` es un indicad
 ---
 ## 9. Consultas SPL de Referencia
 
-```spl
+```bash
 
 # Macro base usado en todas las búsquedas
 
