@@ -32,9 +32,11 @@ hashtags:
 - "#DCSync"
 - "#MITREATTACK"
 - "#BlueTeam"
+
 image:
-  path: /assets/img/posts/SOC/informe-lsass-13-07-26/banner.png
-toc_label: "📑 Contenido"
+  path: /assets/img/posts/SOC/informe-lsass-13-07-26/banner.png
+
+toc_label: "Contenido"
 toc_sticky: true
 ---
 
