@@ -34,7 +34,7 @@ hashtags:
 - "#BlueTeam"
 
 image:
-  path: /assets/img/posts/SOC/informe-lsass-13-07-26/banner.png
+  path: /assets/img/posts/SOC/banner.png
 
 toc_label: "Contenido"
 toc_sticky: true
