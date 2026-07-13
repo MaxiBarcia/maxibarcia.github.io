@@ -32,9 +32,8 @@ hashtags:
 - "#DCSync"
 - "#MITREATTACK"
 - "#BlueTeam"
-
 image:
-  path: /assets/img/posts/SOC/informe-lsass-13-07-26/banner.png
+  path: /assets/img/posts/SOC/informe-lsass-13-07-26/banner.png
 toc_label: "📑 Contenido"
 toc_sticky: true
 ---
@@ -229,7 +228,7 @@ Al comparar dos eventos `EventCode=10` (ProcessAccess) sobre el mismo host `DESK
 
 **CallTrace (idéntico en ambos eventos, leído de derecha a izquierda, proceso origen a función invocada):**
 
-```
+```bash
 
 rundll32.exe → comsvcs.dll (+220f2, MiniDump) → dbgcore.dll → KERNEL32.dll → ntdll.dll
 
@@ -274,21 +273,25 @@ index="main" EventCode=1 (Image="*notepad.exe" OR Image="*rundll32.exe")
 
 1. **Tres exportaciones DCSync distintas, en 9 minutos**, todas abiertas manualmente con `notepad.exe`:
 
-´´´bash
+
+```bash
 
    "C:\Windows\system32\NOTEPAD.EXE" C:\temp\20221108T1243_DCSYNC\20221108T1243_DCSync_NTLM_LOGFILE.txt
 
    "C:\Windows\system32\NOTEPAD.EXE" C:\temp\20221108T1246_DCSYNC\20221108T1246_DCSync_NTLM_LOGFILE.txt
 
    "C:\Windows\system32\NOTEPAD.EXE" C:\temp\20221108T1252_DCSYNC\CUSTOMER\20221108T1252_DCSync_NTLM_CUSTOMER_Importfile_FINAL.txt
-´´´
+
+```
+
 
    El tercer archivo usa un **nombre señuelo** (`CUSTOMER_Importfile_FINAL.txt`), disfrazando un volcado de credenciales como si fuera un archivo de importación de datos de cliente. Esto es un indicador de **intención de exfiltración encubierta**, pensado para pasar desapercibido ante una revisión superficial de la carpeta `C:\temp\`.
 
 
 2. **Múltiples variantes de sintaxis de `rundll32 comsvcs.dll`**, todas apuntando a `C:\Users\waldo\Downloads\file.dmp`:
 
-´´´bash
+```bash
+
 
    rundll32 ".\comsvcs (1).dll",Start
 
@@ -303,7 +306,8 @@ index="main" EventCode=1 (Image="*notepad.exe" OR Image="*rundll32.exe")
    rundll32.exe C:\Windows\System32\comsvcs.dll,MiniDump 640 C:\Users\waldo\Downloads\file.dmp
 
    rundll32.exe C:\Windows\System32\comsvcs.dll,MiniDump 640 C:\Users\waldo\Downloads\file.dmp full
-´´´
+```
+
 
    La variación en la sintaxis (con y sin extensión `.dll` duplicada, mayúsculas/minúsculas en `Start`/`start`, con y sin el parámetro `full`) sugiere **tanteo manual del atacante**, probablemente ejecutando el comando de forma interactiva y ajustándolo hasta obtener el resultado esperado, más que un script automatizado y depurado de antemano.
 
