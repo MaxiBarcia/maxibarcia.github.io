@@ -1,14 +1,8 @@
 ---
-layout: single
 title: "SOC Investigation: Process Injection (T1055) - randomfile.exe"
 project: "Incident Response - Process Injection"
 platform: "Windows 10 / Sysmon / Splunk"
 os: "Windows 10"
-author_profile: true
-read_time: true
-comments: true
-share: true
-related: true
 tags:
   - ProcessInjection
   - T1055
@@ -31,10 +25,8 @@ hashtags:
   - "#CreateRemoteThread"
 image:
   path: /assets/img/SOC/informe-injection-randomfile-21-07-26/banner.png
-  thumbnail: /assets/img/SOC/informe-injection-randomfile-21-07-26/banner.png
 toc_label: "📑 Contenido"
 toc_sticky: true
-toc: true
 ---
 
 **Clasificación:** Confidencial – Uso Interno
