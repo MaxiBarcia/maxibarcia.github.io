@@ -1,8 +1,14 @@
 ---
+layout: single
 title: "SOC Investigation: Process Injection (T1055) - randomfile.exe"
 project: "Incident Response - Process Injection"
 platform: "Windows 10 / Sysmon / Splunk"
 os: "Windows 10"
+author_profile: true
+read_time: true
+comments: true
+share: true
+related: true
 tags:
   - ProcessInjection
   - T1055
@@ -25,8 +31,10 @@ hashtags:
   - "#CreateRemoteThread"
 image:
   path: /assets/img/SOC/informe-injection-randomfile-21-07-26/banner.png
+  thumbnail: /assets/img/SOC/informe-injection-randomfile-21-07-26/banner.png
 toc_label: "📑 Contenido"
 toc_sticky: true
+toc: true
 ---
 
 **Clasificación:** Confidencial – Uso Interno
@@ -87,7 +95,8 @@ index="main" sourcetype="WinEventLog:Sysmon" EventCode=8
 
 Esta consulta permite aislar procesos cuyo comportamiento de inyección de hilos se desvía significativamente del patrón habitual del entorno, sin depender de firmas o listas de indicadores conocidos, un enfoque efectivo frente a binarios no catalogados previamente.
 
-![Resultado del filtro de anomalías - EventCode 8](Pasted_image_20260721125954.png)
+![Resultado del filtro de anomalías - EventCode 8](/assets/img/SOC/informe-injection-randomfile-21-07-26/Pasted%20image%2020260721125954.png)
+
 
 ---
 
@@ -105,7 +114,8 @@ index="main" sourcetype="WinEventLog:Sysmon" EventCode=1 Image="*randomfile.exe*
 ```
 
 
-![Resultado de ejecución inicial - EventCode 1](Pasted_image_20260721130729.png)
+![Resultado de ejecución inicial - EventCode 1](/assets/img/SOC/informe-injection-randomfile-21-07-26/Pasted%20image%2020260721130729.png)
+
 
 **Hallazgos:**
 
@@ -131,7 +141,9 @@ index="main" sourcetype="WinEventLog:Sysmon" EventCode=3 Image="*randomfile.exe*
 | sort _time
 ```
 
-![Resultado de conexiones de red - EventCode 3](Pasted_image_20260721131355.png)
+![Resultado de conexiones de red - EventCode 3](/assets/img/SOC/informe-injection-randomfile-21-07-26/Pasted%20image%2020260721131355.png)
+
+
 
 **Hallazgos:**
 
@@ -176,9 +188,12 @@ index="main" sourcetype="WinEventLog:Sysmon" EventCode=8 SourceImage="*randomfil
 
 ```
 
-![Resultado de inyección de procesos - Parte 1](Pasted_image_20260721132055.png)
+![Resultado de inyección de procesos - Parte 1](/assets/img/SOC/informe-injection-randomfile-21-07-26/Pasted%20image%2020260721132055.png)
 
-![Resultado de inyección de procesos - Parte 2](Pasted_image_20260721132218.png)
+
+![Resultado de inyección de procesos - Parte 2](/assets/img/SOC/informe-injection-randomfile-21-07-26/Pasted%20image%2020260721132218.png)
+
+
 
 **Interpretación:** la inyección sobre procesos legítimos del sistema operativo (`notepad.exe`, `rundll32.exe`, `winlogon.exe`) es una técnica de **defense evasion / process injection** orientada a ejecutar código malicioso bajo la identidad de un proceso confiable, dificultando su detección por soluciones EDR/AV basadas en reputación de procesos y complicando el análisis de causa raíz durante la respuesta al incidente.
 
