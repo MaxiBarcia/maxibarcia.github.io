@@ -642,68 +642,99 @@ LocalAddress LocalPort
 5. Retirar material sensible de los recursos compartidos y evaluar compartir en solo lectura.
 6. Integrar una **IA local** (Ollama) y la base de conocimiento personal.
 
+
 ---
+  
+
+  
 
 ## 9. Operación Diaria
+  
 
 Un sistema no está terminado cuando "funciona una vez", sino cuando se puede **levantar, verificar y apagar** de forma repetible. Este es el procedimiento operativo.
 
+  
 ### 9.1 Arranque
+ 
 
 | Paso | Acción | Comando | ¿Obligatorio? |
 |---|---|---|---|
 | 1 | Abrir JARVIS | `cd /d M:\Jarvis` y luego `claude` | ✅ Sí |
 | 2 | Encender la Kali | Pedírselo a JARVIS (usa `vm_start` del MCP) o con `VBoxManage` | Según la tarea |
 | 3 | Habilitar SSH Kali → host | `net start sshd` (consola **como administrador**) | Solo si se usa |
+  
 
 ```cmd
+
 :: 1) IA central (el MCP kali-lab se carga solo: está registrado a nivel de usuario)
+
 cd /d M:\Jarvis
+
 claude
 
+  
+
 :: 2) Encender la Kali manualmente (alternativa a pedírselo a JARVIS)
+
 "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" startvm Kali_Laboratorio
 
+  
+
 :: 3) Solo si la Kali necesita entrar al host (requiere consola de administrador)
+
 net start sshd
+
 ```
 
-> El servicio SSH **no arranca con Windows a propósito**: cada minuto que no está escuchando es un minuto menos de superficie de ataque.
-{: .prompt-info }
+
+  
 
 ### 9.2 Verificación rápida
 
+  
 | Qué se comprueba | Cómo | Resultado esperado |
 |---|---|---|
 | MCP conectado | `/mcp` dentro de Claude Code | `kali-lab` → connected |
 | Kali accesible | Pedir a JARVIS `kali_status` | hostname, usuario e IP `10.0.2.3` |
 | SSH Kali → host | En la Kali: `ssh windows whoami` | `<host>\labclaude` |
 | sshd solo en loopback | `Get-NetTCPConnection -LocalPort 22 -State Listen` (PowerShell) | `127.0.0.1:22` únicamente |
+  
 
 ### 9.3 Apagado
 
 ```cmd
+
 :: Cerrar SSH (consola de administrador)
+
 net stop sshd
 
+  
+
 :: Apagar la Kali de forma ordenada (o pedírselo a JARVIS: vm_stop)
+
 "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" controlvm Kali_Laboratorio acpipowerbutton
+
 ```
+
 
 Antes de cerrar, JARVIS actualiza `estado/ahora.md` con lo hecho y lo pendiente, para que la próxima sesión arranque con contexto.
 
+
 ### 9.4 Continuidad entre sesiones
+ 
 
 | Comando | Qué hace |
 |---|---|
 | `claude` | Nueva conversación. JARVIS recupera el contexto leyendo `CLAUDE.md` y `estado/ahora.md`. |
 | `claude --continue` | Retoma la última conversación **de esa carpeta**. |
 | `claude --resume` | Permite elegir una conversación anterior de esa carpeta. |
+  
 
 La conversación es efímera; **la memoria real son los archivos**. Por eso siempre se trabaja desde `M:\Jarvis` y cada sesión termina actualizando el estado.
 
-
----
+  
+  
+--- 
 
   
 
@@ -711,11 +742,11 @@ La conversación es efímera; **la memoria real son los archivos**. Por eso siem
 
 
 Esta fase dejó una base funcional y, sobre todo, **defendible**: la IA central puede administrar el laboratorio y la Kali puede colaborar con el host sin que un compromiso del entorno de pruebas se traduzca automáticamente en un compromiso de la PC.
-
+  
 El proyecto también demostró el valor de revisar críticamente el propio diseño: el hallazgo más grave lo introdujo la misma infraestructura que se estaba construyendo, y se detectó y corrigió antes de usarla en un escenario real.
 
 
----
+--- 
 
   
 
