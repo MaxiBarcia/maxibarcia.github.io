@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#14213d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g stroke="#1f3b63" stroke-width="1">
+    <path d="M0 105H1200M0 210H1200M0 315H1200M0 420H1200M0 525H1200"/>
+    <path d="M150 0V630M300 0V630M450 0V630M600 0V630M750 0V630M900 0V630M1050 0V630"/>
+  </g>
+  <!-- Nodos -->
+  <g font-family="Consolas, 'Courier New', monospace" font-size="22" text-anchor="middle">
+    <rect x="90" y="330" width="300" height="120" rx="14" fill="#10243f" stroke="#38bdf8" stroke-width="3"/>
+    <text x="240" y="380" fill="#e2e8f0" font-weight="bold">WINDOWS HOST</text>
+    <text x="240" y="415" fill="#94a3b8" font-size="18">Jarvis · Claude Code · MCP</text>
+
+    <rect x="810" y="330" width="300" height="120" rx="14" fill="#10243f" stroke="#f472b6" stroke-width="3"/>
+    <text x="960" y="380" fill="#e2e8f0" font-weight="bold">KALI LINUX</text>
+    <text x="960" y="415" fill="#94a3b8" font-size="18">operador de laboratorio</text>
+
+    <path d="M390 370H810" stroke="#38bdf8" stroke-width="3"/>
+    <path d="M810 410H390" stroke="#f472b6" stroke-width="3" stroke-dasharray="10 8"/>
+    <text x="600" y="358" fill="#38bdf8" font-size="17">MCP kali-lab → SSH</text>
+    <text x="600" y="440" fill="#f472b6" font-size="17">SSH · usuario limitado · solo loopback</text>
+  </g>
+  <g font-family="Segoe UI, Arial, sans-serif" text-anchor="middle">
+    <text x="600" y="150" fill="#f8fafc" font-size="56" font-weight="bold">Proyecto JARVIS</text>
+    <text x="600" y="210" fill="#cbd5e1" font-size="28">Infraestructura de IA para un laboratorio de ciberseguridad</text>
+    <text x="600" y="560" fill="#64748b" font-size="20">Claude Code · VirtualBox · OpenSSH · Fronteras de confianza</text>
+  </g>
+</svg>
