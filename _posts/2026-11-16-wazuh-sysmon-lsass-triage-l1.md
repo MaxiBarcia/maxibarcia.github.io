@@ -29,7 +29,7 @@ hashtags:
  - "#DFIR"
 
 image:
-  path: /assets/img/SOC/wazuh-sysmon-lsass-16-11-26/02-diez-alertas-100101.png
+  path: /assets/img/SOC/wazuh-sysmon-lsass-16-11-26/banner.jpg
 
 toc_label: "Contenido"
 toc_sticky: true
