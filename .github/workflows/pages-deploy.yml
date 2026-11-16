@@ -35,6 +35,9 @@ jobs:
           # If using the 'assets' git submodule from Chirpy Starter, uncomment above
           # (See: https://github.com/cotes2020/chirpy-starter/tree/main/assets)
 
+      - name: Validar posts (guard de publicación)
+        run: python3 tools/check-posts.py
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4

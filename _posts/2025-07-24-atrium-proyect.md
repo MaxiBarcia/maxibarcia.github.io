@@ -5,7 +5,7 @@ seo_description: "A complete penetration testing analysis and write-up of the At
 categories:
   - Report
   - Ethical-Hacking
-  - write-up
+  - Write-up
 tags:
   - pentesting
   - cybersecurity

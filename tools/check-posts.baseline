@@ -1,0 +1,14 @@
+# Errores de publicacion ya conocidos (previos al 2026-11-16).
+# Formato: <ruta del post>|<tipo>
+#   tipos: embed | marcador | ruta-lab | imagen | frontmatter
+# El guard (tools/check-posts.py) los ignora para que el CI no quede rojo,
+# pero cualquier defecto NUEVO en estos mismos posts sigue bloqueando el deploy.
+# Objetivo: vaciar este archivo a medida que se corrigen.
+_posts/2025-09-04-SSTI-Labs.md|embed
+_posts/2025-11-10-Atrium-Analisis.md|embed
+_posts/2026-01-02-symphonos_1_.md|embed
+_posts/2026-02-13-vulnyx-experience.md|embed
+_posts/2026-03-25-dockerlabs-minecraft.md|embed
+_posts/2026-03-09-project-siem-in-pi5.md|ruta-lab
+_posts/2026-08-31-project-wazuh-home-labs.md|ruta-lab
+_posts/2026-07-21-soc-incident-response-randomfile.md|imagen
